@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54565AB32CCE610400B5A354 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB22CCE610400B5A354 /* BaseView.swift */; };
+		54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */; };
+		54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */; };
 		5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546589892CCE4FC500736BA9 /* AppDelegate.swift */; };
 		5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */; };
 		5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898D2CCE4FC500736BA9 /* AuthorizationViewController.swift */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		54565AB22CCE610400B5A354 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
+		54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindable.swift; sourceTree = "<group>"; };
 		546589862CCE4FC500736BA9 /* ServiceLevelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceLevelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546589892CCE4FC500736BA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +59,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		54565AB12CCE60FB00B5A354 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				54565AB22CCE610400B5A354 /* BaseView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		54565AB42CCE62E000B5A354 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */,
+				54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		5465897D2CCE4FC500736BA9 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +118,8 @@
 		546589A82CCE56A500736BA9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				54565AB42CCE62E000B5A354 /* Protocol */,
+				54565AB12CCE60FB00B5A354 /* CustomView */,
 				546589A92CCE56B900736BA9 /* Presentation */,
 			);
 			path = Sources;
@@ -214,8 +239,11 @@
 				687605532CCE5D67008167B0 /* HomeViewController.swift in Sources */,
 				5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */,
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
+				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
+				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
+				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
