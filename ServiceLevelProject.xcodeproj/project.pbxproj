@@ -24,6 +24,8 @@
 		6876054A2CCE5960008167B0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 687605492CCE5960008167B0 /* Kingfisher */; };
 		687605502CCE5CA3008167B0 /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 6876054F2CCE5CA3008167B0 /* SideMenu */; };
 		687605532CCE5D67008167B0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605522CCE5D67008167B0 /* HomeViewController.swift */; };
+		687605562CCE6991008167B0 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605552CCE6991008167B0 /* UIView+.swift */; };
+		687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605572CCE69A9008167B0 /* UIStackView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		5465899D2CCE50D100736BA9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		687605572CCE69A9008167B0 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,7 @@
 		546589A82CCE56A500736BA9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				687605542CCE691D008167B0 /* Extension */,
 				54565AB42CCE62E000B5A354 /* Protocol */,
 				54565AB12CCE60FB00B5A354 /* CustomView */,
 				546589A92CCE56B900736BA9 /* Presentation */,
@@ -148,6 +153,15 @@
 				687605522CCE5D67008167B0 /* HomeViewController.swift */,
 			);
 			path = Workspace;
+			sourceTree = "<group>";
+		};
+		687605542CCE691D008167B0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				687605552CCE6991008167B0 /* UIView+.swift */,
+				687605572CCE69A9008167B0 /* UIStackView+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,7 +255,9 @@
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
+				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
 				5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */,
+				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
 			);
