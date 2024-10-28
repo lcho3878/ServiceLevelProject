@@ -15,6 +15,7 @@
 		54565AC02CCF63DF00B5A354 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565ABF2CCF63DF00B5A354 /* AuthorizationView.swift */; };
 		54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AC42CCF721C00B5A354 /* UIFont+.swift */; };
 		54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */; };
+		54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565ACF2CCF977800B5A354 /* BaseViewController.swift */; };
 		5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546589892CCE4FC500736BA9 /* AppDelegate.swift */; };
 		5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */; };
 		5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898D2CCE4FC500736BA9 /* AuthorizationViewController.swift */; };
@@ -42,6 +43,7 @@
 		54565ABF2CCF63DF00B5A354 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		54565AC42CCF721C00B5A354 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColorButton.swift; sourceTree = "<group>"; };
+		54565ACF2CCF977800B5A354 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		546589862CCE4FC500736BA9 /* ServiceLevelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceLevelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546589892CCE4FC500736BA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				54565AB22CCE610400B5A354 /* BaseView.swift */,
+				54565ACF2CCF977800B5A354 /* BaseViewController.swift */,
 				54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */,
 			);
 			path = CustomView;
@@ -286,6 +289,7 @@
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
+				54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
 				54565AC02CCF63DF00B5A354 /* AuthorizationView.swift in Sources */,
 			);
