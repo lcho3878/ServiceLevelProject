@@ -40,8 +40,8 @@ final class OnboardingView: BaseView {
         
         onboardingImageView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(89)
-            $0.size.equalTo(368)
             $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(25)
+            $0.height.equalTo(onboardingImageView.snp.width)
         }
         
         loginButton.snp.makeConstraints {

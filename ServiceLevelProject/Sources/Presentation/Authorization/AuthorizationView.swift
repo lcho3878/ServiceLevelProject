@@ -18,16 +18,10 @@ final class AuthorizationView: BaseView {
         $0.configuration?.baseBackgroundColor = .brandYellow
     }
     let emailButton = BrandColorButton(title: "이메일로 계속하기", image: UIImage.email)
-//    let signupButton = UIButton().then {
-//        var configuration = UIButton.Configuration.plain()
-//        var attributedString = AttributedString(stringLiteral: "또는 새롭게 회원가입 하기")
-//        attributedString.font = UIFont.title2
-//        configuration.attributedTitle = attributedString
-//        $0.configuration = configuration
-//    }
+    lazy var signupButton = attributedButton()
     
     override func addSubviews() {
-        addSubviews([appleButton, kakaoButton, emailButton])
+        addSubviews([appleButton, kakaoButton, emailButton, signupButton])
     }
     
     override func setConstraints() {
@@ -48,5 +42,36 @@ final class AuthorizationView: BaseView {
             $0.horizontalEdges.equalTo(appleButton)
             $0.height.equalTo(appleButton)
         }
+        
+        signupButton.snp.makeConstraints {
+            $0.top.equalTo(emailButton.snp.bottom).offset(16)
+            $0.horizontalEdges.equalTo(appleButton)
+            $0.height.equalTo(20)
+        }
+    }
+}
+
+extension AuthorizationView {
+    private func attributedButton() -> UIButton {
+        let button = UIButton()
+            var configuration = UIButton.Configuration.plain()
+            let fullString = "또는 새롭게 회원가입 하기"
+            let highlightedText = "새롭게 회원가입 하기"
+            let attributedString = NSMutableAttributedString(
+                string: fullString,
+                attributes: [
+                    .foregroundColor: UIColor.brandBlack,
+                    .font: UIFont.title2
+                ]
+            )
+
+            if let range = fullString.range(of: highlightedText) {
+                let nsRange = NSRange(range, in: fullString)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.brand, range: nsRange)
+            }
+            configuration.attributedTitle = AttributedString(attributedString)
+        button.configuration = configuration
+        
+        return button
     }
 }
