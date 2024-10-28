@@ -41,7 +41,7 @@ extension HomeViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem()
         menu.leftSide = true
         menu.presentationStyle = .menuSlideIn
-        menu.menuWidth = 300
+        menu.menuWidth = 317
     }
     
     private func leftBarButtonItem() -> UIBarButtonItem {

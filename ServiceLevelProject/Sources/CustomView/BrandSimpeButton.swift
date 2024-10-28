@@ -18,7 +18,7 @@ final class BrandSimpeButton: UIButton {
         configuration.attributedTitle = attributedString
         configuration.baseForegroundColor = .textPrimary
         configuration.image = image
-        configuration.imagePadding = 10
+        configuration.imagePadding = 16
         self.configuration = configuration
     }
     
