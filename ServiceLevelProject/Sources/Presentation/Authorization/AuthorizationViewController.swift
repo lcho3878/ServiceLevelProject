@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class AuthorizationViewController: UIViewController {
+final class AuthorizationViewController: BaseViewController {
 
     private let authorizationView = AuthorizationView()
     private let disposeBag = DisposeBag()
