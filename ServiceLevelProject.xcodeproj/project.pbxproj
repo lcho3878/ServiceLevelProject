@@ -35,6 +35,7 @@
 		6876055C2CCF81AE008167B0 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876055B2CCF81AE008167B0 /* HomeViewModel.swift */; };
 		6876055E2CCF851E008167B0 /* WorkspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876055D2CCF851E008167B0 /* WorkspaceViewController.swift */; };
 		687605632CCF8D68008167B0 /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605622CCF8D68008167B0 /* WorkspaceView.swift */; };
+		687605652CCF99CC008167B0 /* BrandSimpeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605642CCF99CC008167B0 /* BrandSimpeButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		6876055B2CCF81AE008167B0 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		6876055D2CCF851E008167B0 /* WorkspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewController.swift; sourceTree = "<group>"; };
 		687605622CCF8D68008167B0 /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
+		687605642CCF99CC008167B0 /* BrandSimpeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandSimpeButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 			children = (
 				54565AB22CCE610400B5A354 /* BaseView.swift */,
 				54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */,
+				687605642CCF99CC008167B0 /* BrandSimpeButton.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
+				687605652CCF99CC008167B0 /* BrandSimpeButton.swift in Sources */,
 				54565AC02CCF63DF00B5A354 /* AuthorizationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

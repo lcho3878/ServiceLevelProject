@@ -31,9 +31,12 @@ final class WorkspaceView: BaseView {
     private let workspaceEmptyView = UIView().then {
         $0.backgroundColor = .systemBrown
     }
+    
+    let addWorkspaceButton = BrandSimpeButton(title: "워크스페이스 추가", image: UIImage(resource: .plus))
+    let questionButton = BrandSimpeButton(title: "도움말", image: UIImage(resource: .question))
 
     override func addSubviews() {
-        addSubviews([bgView, topTitleView, workspaceEmptyView])
+        addSubviews([bgView, topTitleView, workspaceEmptyView, addWorkspaceButton, questionButton])
         topTitleView.addSubview(topTitleLabel)
     }
     
@@ -56,7 +59,17 @@ final class WorkspaceView: BaseView {
         }
         
         workspaceEmptyView.snp.makeConstraints {
-            $0.
+            $0.center.equalTo(bgView.snp.center)
+        }
+        
+        addWorkspaceButton.snp.makeConstraints {
+            $0.bottom.equalTo(questionButton.snp.top).offset(-10)
+            $0.leading.equalTo(safeArea.snp.leading).offset(20)
+        }
+        
+        questionButton.snp.makeConstraints {
+            $0.bottom.equalTo(safeArea).offset(-20)
+            $0.leading.equalTo(safeArea.snp.leading).offset(20)
         }
     }
     
