@@ -28,16 +28,42 @@ final class WorkspaceView: BaseView {
         $0.font = .title1
     }
     
-    private let workspaceEmptyView = UIView().then {
-        $0.backgroundColor = .systemBrown
+    let workspaceEmptyView = UIView().then {
+        $0.backgroundColor = .clear
     }
     
+    private let emptyViewElementsStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .center
+        $0.spacing = 20
+    }
+    
+    private let cannotFindTitleLabel = UILabel().then {
+        $0.text = "워크스페이스를\n찾을 수 없어요."
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
+        $0.font = .title1
+        $0.textColor = .brandBlack
+    }
+    
+    private let guideLabel = UILabel().then {
+        $0.text = "관리자에게 초대를 요청하거나,\n다른 이메일로 시도하거나\n새로운 워크스페이스를 생성해주세요."
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
+        $0.font = .body
+        $0.textColor = .brandBlack
+    }
+    
+    let createWorkspaceButton = BrandColorButton(title: "워크스페이스 생성")
     let addWorkspaceButton = BrandSimpeButton(title: "워크스페이스 추가", image: UIImage(resource: .plus))
     let questionButton = BrandSimpeButton(title: "도움말", image: UIImage(resource: .question))
 
+    // MARK: Functions
     override func addSubviews() {
         addSubviews([bgView, topTitleView, workspaceEmptyView, addWorkspaceButton, questionButton])
         topTitleView.addSubview(topTitleLabel)
+        workspaceEmptyView.addSubview(emptyViewElementsStackView)
+        emptyViewElementsStackView.addArrangedSubviews([cannotFindTitleLabel, guideLabel, createWorkspaceButton])
     }
     
     override func setConstraints() {
@@ -50,26 +76,41 @@ final class WorkspaceView: BaseView {
         topTitleView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalTo(safeArea)
-            $0.height.equalTo(130)
+            $0.height.equalTo(98)
         }
         
         topTitleLabel.snp.makeConstraints {
-            $0.bottom.equalTo(topTitleView.snp.bottom).offset(-20)
-            $0.leading.equalTo(topTitleView.snp.leading).offset(30)
+            $0.top.equalTo(topTitleView.snp.top).offset(51)
+            $0.leading.equalTo(topTitleView.snp.leading).offset(16)
+            $0.height.equalTo(30)
         }
         
         workspaceEmptyView.snp.makeConstraints {
-            $0.center.equalTo(bgView.snp.center)
+            $0.top.equalTo(topTitleView.snp.bottom)
+            $0.horizontalEdges.equalTo(bgView.snp.horizontalEdges)
+            $0.bottom.equalTo(addWorkspaceButton.snp.top)
+        }
+        
+        emptyViewElementsStackView.snp.makeConstraints {
+            $0.center.equalTo(workspaceEmptyView.snp.center)
+            $0.horizontalEdges.equalTo(workspaceEmptyView.snp.horizontalEdges).inset(16)
+        }
+        
+        createWorkspaceButton.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(emptyViewElementsStackView.snp.horizontalEdges)
+            $0.height.equalTo(44)
         }
         
         addWorkspaceButton.snp.makeConstraints {
-            $0.bottom.equalTo(questionButton.snp.top).offset(-10)
-            $0.leading.equalTo(safeArea.snp.leading).offset(20)
+            $0.leading.equalTo(safeArea.snp.leading).offset(16)
+            $0.bottom.equalTo(questionButton.snp.top)
+            $0.height.equalTo(41)
         }
         
         questionButton.snp.makeConstraints {
-            $0.bottom.equalTo(safeArea).offset(-20)
-            $0.leading.equalTo(safeArea.snp.leading).offset(20)
+            $0.leading.equalTo(safeArea.snp.leading).offset(16)
+            $0.bottom.equalTo(safeArea)
+            $0.height.equalTo(41)
         }
     }
     
