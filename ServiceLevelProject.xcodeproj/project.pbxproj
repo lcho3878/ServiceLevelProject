@@ -16,6 +16,8 @@
 		54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AC42CCF721C00B5A354 /* UIFont+.swift */; };
 		54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */; };
 		54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565ACF2CCF977800B5A354 /* BaseViewController.swift */; };
+		54565AD92CD0EEB600B5A354 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AD82CD0EEB600B5A354 /* SignupViewController.swift */; };
+		54565ADB2CD0EEBA00B5A354 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565ADA2CD0EEBA00B5A354 /* SignupView.swift */; };
 		5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546589892CCE4FC500736BA9 /* AppDelegate.swift */; };
 		5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */; };
 		5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898D2CCE4FC500736BA9 /* AuthorizationViewController.swift */; };
@@ -49,6 +51,8 @@
 		54565AC42CCF721C00B5A354 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColorButton.swift; sourceTree = "<group>"; };
 		54565ACF2CCF977800B5A354 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		54565AD82CD0EEB600B5A354 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		54565ADA2CD0EEBA00B5A354 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		546589862CCE4FC500736BA9 /* ServiceLevelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceLevelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546589892CCE4FC500736BA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +118,15 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		54565AD72CD0EEA200B5A354 /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				54565AD82CD0EEB600B5A354 /* SignupViewController.swift */,
+				54565ADA2CD0EEBA00B5A354 /* SignupView.swift */,
+			);
+			path = Signup;
+			sourceTree = "<group>";
+		};
 		5465897D2CCE4FC500736BA9 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +182,7 @@
 			children = (
 				54565ABC2CCF630400B5A354 /* Onboarding */,
 				546589AA2CCE56D000736BA9 /* Authorization */,
+				54565AD72CD0EEA200B5A354 /* Signup */,
 				687605612CCF8D58008167B0 /* Home */,
 				687605512CCE5CC1008167B0 /* Workspace */,
 			);
@@ -301,6 +315,7 @@
 			files = (
 				54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */,
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
+				54565AD92CD0EEB600B5A354 /* SignupViewController.swift in Sources */,
 				687605532CCE5D67008167B0 /* HomeViewController.swift in Sources */,
 				6876055E2CCF851E008167B0 /* WorkspaceViewController.swift in Sources */,
 				687605632CCF8D68008167B0 /* WorkspaceView.swift in Sources */,
@@ -320,6 +335,7 @@
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
 				687605652CCF99CC008167B0 /* BrandSimpeButton.swift in Sources */,
 				54565AC02CCF63DF00B5A354 /* AuthorizationView.swift in Sources */,
+				54565ADB2CD0EEBA00B5A354 /* SignupView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
