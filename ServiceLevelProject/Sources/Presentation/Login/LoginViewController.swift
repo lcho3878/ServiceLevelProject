@@ -1,5 +1,5 @@
 //
-//  SignupViewController.swift
+//  LoginViewController.swift
 //  ServiceLevelProject
 //
 //  Created by 이찬호 on 10/29/24.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class SignupViewController: BaseViewController, DismissButtonPresentable {
-    private let signupView = SignupView()
+final class LoginViewController: BaseViewController, DismissButtonPresentable {
+    private let loginView = LoginView()
     
     override func loadView() {
-        view = signupView
+        view = loginView
     }
     
     override func viewDidLoad() {
@@ -19,7 +19,8 @@ final class SignupViewController: BaseViewController, DismissButtonPresentable {
     }
     
     override func configureNavigation() {
-        title = "회원가입"
+        title = "이메일 로그인"
         setDismissButton()
     }
 }
+
