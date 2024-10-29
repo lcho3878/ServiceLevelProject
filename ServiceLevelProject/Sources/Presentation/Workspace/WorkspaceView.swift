@@ -28,6 +28,11 @@ final class WorkspaceView: BaseView {
         $0.font = .title1
     }
     
+    let tableView = UITableView().then {
+        $0.rowHeight = 72
+        $0.separatorColor = .clear
+    }
+    
     let workspaceEmptyView = UIView().then {
         $0.backgroundColor = .clear
     }
@@ -60,7 +65,7 @@ final class WorkspaceView: BaseView {
 
     // MARK: Functions
     override func addSubviews() {
-        addSubviews([bgView, topTitleView, workspaceEmptyView, addWorkspaceButton, questionButton])
+        addSubviews([bgView, topTitleView, tableView, workspaceEmptyView, addWorkspaceButton, questionButton])
         topTitleView.addSubview(topTitleLabel)
         workspaceEmptyView.addSubview(emptyViewElementsStackView)
         emptyViewElementsStackView.addArrangedSubviews([cannotFindTitleLabel, guideLabel, createWorkspaceButton])
@@ -83,6 +88,12 @@ final class WorkspaceView: BaseView {
             $0.top.equalTo(topTitleView.snp.top).offset(51)
             $0.leading.equalTo(topTitleView.snp.leading).offset(16)
             $0.height.equalTo(30)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(topTitleView.snp.bottom)
+            $0.horizontalEdges.equalTo(bgView)
+            $0.bottom.equalTo(addWorkspaceButton.snp.top)
         }
         
         workspaceEmptyView.snp.makeConstraints {
