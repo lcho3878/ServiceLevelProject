@@ -25,7 +25,7 @@ final class AuthorizationViewController: BaseViewController {
     }
 }
 
-extension AuthorizationViewController {
+extension AuthorizationViewController: NavigationRepresentable {
     private func bind() {
         authorizationView.appleButton.rx.tap
             .bind(with: self) { owner, _ in
@@ -41,13 +41,16 @@ extension AuthorizationViewController {
         
         authorizationView.emailButton.rx.tap
             .bind(with: self) { owner, _ in
-                print("Email Button Tap")
+                let vc = LoginViewController()
+                owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
         
         authorizationView.signupButton.rx.tap
             .bind(with: self) { owner, _ in
                 print("Signup Button Tap")
+                let vc = SignupViewController()
+                owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
     }
