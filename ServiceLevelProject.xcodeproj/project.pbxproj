@@ -37,6 +37,9 @@
 		6876055E2CCF851E008167B0 /* WorkspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876055D2CCF851E008167B0 /* WorkspaceViewController.swift */; };
 		687605632CCF8D68008167B0 /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605622CCF8D68008167B0 /* WorkspaceView.swift */; };
 		687605652CCF99CC008167B0 /* BrandSimpeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605642CCF99CC008167B0 /* BrandSimpeButton.swift */; };
+		687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605662CD0EE4D008167B0 /* WorkspaceViewModel.swift */; };
+		687605692CD0F21C008167B0 /* WorkspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605682CD0F21C008167B0 /* WorkspaceCell.swift */; };
+		6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876056A2CD0F27E008167B0 /* Reusable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +69,9 @@
 		6876055D2CCF851E008167B0 /* WorkspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewController.swift; sourceTree = "<group>"; };
 		687605622CCF8D68008167B0 /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
 		687605642CCF99CC008167B0 /* BrandSimpeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandSimpeButton.swift; sourceTree = "<group>"; };
+		687605662CD0EE4D008167B0 /* WorkspaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewModel.swift; sourceTree = "<group>"; };
+		687605682CD0F21C008167B0 /* WorkspaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCell.swift; sourceTree = "<group>"; };
+		6876056A2CD0F27E008167B0 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,7 @@
 			children = (
 				54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */,
 				54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */,
+				6876056A2CD0F27E008167B0 /* Reusable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -189,6 +196,8 @@
 			children = (
 				6876055D2CCF851E008167B0 /* WorkspaceViewController.swift */,
 				687605622CCF8D68008167B0 /* WorkspaceView.swift */,
+				687605662CD0EE4D008167B0 /* WorkspaceViewModel.swift */,
+				687605682CD0F21C008167B0 /* WorkspaceCell.swift */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -299,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				687605692CD0F21C008167B0 /* WorkspaceCell.swift in Sources */,
 				54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */,
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
 				687605532CCE5D67008167B0 /* HomeViewController.swift in Sources */,
@@ -310,9 +320,11 @@
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
+				6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */,
 				5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */,
 				6876055C2CCF81AE008167B0 /* HomeViewModel.swift in Sources */,
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
+				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
