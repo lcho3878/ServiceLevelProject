@@ -48,12 +48,15 @@ extension WorkspaceViewController {
             .disposed(by: disposeBag)
         
         workspaceView.tableView.rx.itemSelected
-            .bind(with: self) { owner, index in
-                if let selectedIndexPath = owner.workspaceView.tableView.indexPathForSelectedRow {
-                    owner.workspaceView.tableView.deselectRow(at: selectedIndexPath, animated: true)
-                }
+            .flatMapLatest { [weak self] indexPath -> Observable<IndexPath> in
+                guard let self = self else { return .empty() }
+                self.workspaceView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                 
-                owner.workspaceView.tableView.selectRow(at: index, animated: true, scrollPosition: .none)
+                return Observable.just(indexPath)
+                    .delay(.milliseconds(300), scheduler: MainScheduler.instance)
+            }
+            .bind(with: self) { owner, indexPath in
+                owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
             }
             .disposed(by: disposeBag)
     }
