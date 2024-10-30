@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class WorkspaceViewController: UIViewController {
+final class WorkspaceViewController: BaseViewController {
     // MARK: Properties
     private let workspaceView = WorkspaceView()
     private let viewModel = WorkspaceViewModel()
@@ -24,16 +24,15 @@ final class WorkspaceViewController: UIViewController {
         super.viewDidLoad()
         
         workspaceView.workspaceEmptyView.isHidden = true // 임시
-        configureTableView()
         bind()
+    }
+    
+    override func configureNavigation() {
+        workspaceView.tableView.register(WorkspaceCell.self, forCellReuseIdentifier: WorkspaceCell.id)
     }
 }
 
 extension WorkspaceViewController {
-    func configureTableView() {
-        workspaceView.tableView.register(WorkspaceCell.self, forCellReuseIdentifier: WorkspaceCell.id)
-    }
-    
     func bind() {
         let input = WorkspaceViewModel.Input()
         let output = viewModel.transform(input: input)
