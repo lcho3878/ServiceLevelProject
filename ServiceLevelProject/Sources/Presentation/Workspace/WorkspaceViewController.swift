@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class WorkspaceViewController: UIViewController {
+final class WorkspaceViewController: BaseViewController {
     // MARK: Properties
     private let workspaceView = WorkspaceView()
     private let viewModel = WorkspaceViewModel()
@@ -24,16 +24,15 @@ final class WorkspaceViewController: UIViewController {
         super.viewDidLoad()
         
         workspaceView.workspaceEmptyView.isHidden = true // 임시
-        configureTableView()
         bind()
+    }
+    
+    override func configureNavigation() {
+        workspaceView.tableView.register(WorkspaceCell.self, forCellReuseIdentifier: WorkspaceCell.id)
     }
 }
 
 extension WorkspaceViewController {
-    func configureTableView() {
-        workspaceView.tableView.register(WorkspaceCell.self, forCellReuseIdentifier: WorkspaceCell.id)
-    }
-    
     func bind() {
         let input = WorkspaceViewModel.Input()
         let output = viewModel.transform(input: input)
@@ -48,12 +47,15 @@ extension WorkspaceViewController {
             .disposed(by: disposeBag)
         
         workspaceView.tableView.rx.itemSelected
-            .bind(with: self) { owner, index in
-                if let selectedIndexPath = owner.workspaceView.tableView.indexPathForSelectedRow {
-                    owner.workspaceView.tableView.deselectRow(at: selectedIndexPath, animated: true)
-                }
+            .flatMapLatest { [weak self] indexPath -> Observable<IndexPath> in
+                guard let self = self else { return .empty() }
+                self.workspaceView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                 
-                owner.workspaceView.tableView.selectRow(at: index, animated: true, scrollPosition: .none)
+                return Observable.just(indexPath)
+                    .delay(.milliseconds(300), scheduler: MainScheduler.instance)
+            }
+            .bind(with: self) { owner, indexPath in
+                owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
             }
             .disposed(by: disposeBag)
     }
