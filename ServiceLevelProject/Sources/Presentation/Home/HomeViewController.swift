@@ -27,6 +27,7 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         
         bind()
+        rightSwipeAction()
     }
     
     override func configureNavigation() {
@@ -52,7 +53,7 @@ extension HomeViewController {
         
         tapGesture.rx.event
             .bind(with: self) { owner, _ in
-                owner.present(owner.menu, animated: true, completion: nil)
+                owner.present(owner.menu, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -72,5 +73,17 @@ extension HomeViewController {
         
         navigationItem.leftBarButtonItem = homeView.leftNaviBarItem
         navigationItem.rightBarButtonItem = homeView.rightNaviBarItem
+    }
+    
+    func rightSwipeAction() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: nil)
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+        
+        swipeRight.rx.event
+            .bind(with: self) { owner, _ in
+                owner.present(owner.menu, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
