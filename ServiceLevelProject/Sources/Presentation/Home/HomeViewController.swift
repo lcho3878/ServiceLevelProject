@@ -17,7 +17,7 @@ final class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     
     // MARK: UI
-    let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
+    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
     
     override func loadView() {
         view = homeView
@@ -34,7 +34,7 @@ final class HomeViewController: BaseViewController {
         menu.leftSide = true
         menu.presentationStyle = .menuSlideIn
         menu.menuWidth = 317
-        
+        menu.presentationStyle.presentingEndAlpha = 0.7
         configureNavigaionItem()
     }
 }
@@ -45,7 +45,7 @@ extension HomeViewController {
         let output = viewModel.transform(input: input)
     }
     
-    func configureNavigaionItem() {
+    private func configureNavigaionItem() {
         // title
         let tapGesture = UITapGestureRecognizer()
         homeView.naviTitleLabel.addGestureRecognizer(tapGesture)
@@ -75,7 +75,7 @@ extension HomeViewController {
         navigationItem.rightBarButtonItem = homeView.rightNaviBarItem
     }
     
-    func rightSwipeAction() {
+    private func rightSwipeAction() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: nil)
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
