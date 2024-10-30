@@ -10,14 +10,14 @@ import SideMenu
 import RxSwift
 import RxCocoa
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     // MARK: Properties
     private let homeView = HomeView()
     private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: UI
-    let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
+    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
     
     override func loadView() {
         view = homeView
@@ -26,8 +26,16 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureNavigation()
         bind()
+        rightSwipeAction()
+    }
+    
+    override func configureNavigation() {
+        menu.leftSide = true
+        menu.presentationStyle = .menuSlideIn
+        menu.menuWidth = 317
+        menu.presentationStyle.presentingEndAlpha = 0.7
+        configureNavigaionItem()
     }
 }
 
@@ -37,24 +45,45 @@ extension HomeViewController {
         let output = viewModel.transform(input: input)
     }
     
-    private func configureNavigation() {
-        navigationItem.leftBarButtonItem = leftBarButtonItem()
-        menu.leftSide = true
-        menu.presentationStyle = .menuSlideIn
-        menu.menuWidth = 317
-    }
-    
-    private func leftBarButtonItem() -> UIBarButtonItem {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
-        button.tintColor = .black
+    private func configureNavigaionItem() {
+        // title
+        let tapGesture = UITapGestureRecognizer()
+        homeView.naviTitleLabel.addGestureRecognizer(tapGesture)
+        navigationItem.titleView = homeView.naviTitleLabel
         
-        button.rx.tap
+        tapGesture.rx.event
             .bind(with: self) { owner, _ in
-                owner.present(owner.menu, animated: true, completion: nil)
+                owner.present(owner.menu, animated: true)
             }
             .disposed(by: disposeBag)
         
-        return UIBarButtonItem(customView: button)
+        // leftBarButtonItem
+        homeView.coverButton.rx.tap
+            .bind(with: self) { owner, _ in
+                print("coverImageClicekd")
+            }
+            .disposed(by: disposeBag)
+        
+        // rightBarButtonItem
+        homeView.profileButton.rx.tap
+            .bind(with: self) { owner, _ in
+                print("profileImageClicked")
+            }
+            .disposed(by: disposeBag)
+        
+        navigationItem.leftBarButtonItem = homeView.leftNaviBarItem
+        navigationItem.rightBarButtonItem = homeView.rightNaviBarItem
+    }
+    
+    private func rightSwipeAction() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: nil)
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+        
+        swipeRight.rx.event
+            .bind(with: self) { owner, _ in
+                owner.present(owner.menu, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
