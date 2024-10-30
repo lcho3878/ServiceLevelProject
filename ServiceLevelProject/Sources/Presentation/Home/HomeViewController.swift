@@ -10,7 +10,7 @@ import SideMenu
 import RxSwift
 import RxCocoa
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     // MARK: Properties
     private let homeView = HomeView()
     private let viewModel = HomeViewModel()
@@ -26,8 +26,15 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureNavigation()
         bind()
+    }
+    
+    override func configureNavigation() {
+        menu.leftSide = true
+        menu.presentationStyle = .menuSlideIn
+        menu.menuWidth = 317
+        
+        configureNavigaionItem()
     }
 }
 
@@ -37,24 +44,33 @@ extension HomeViewController {
         let output = viewModel.transform(input: input)
     }
     
-    private func configureNavigation() {
-        navigationItem.leftBarButtonItem = leftBarButtonItem()
-        menu.leftSide = true
-        menu.presentationStyle = .menuSlideIn
-        menu.menuWidth = 317
-    }
-    
-    private func leftBarButtonItem() -> UIBarButtonItem {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
-        button.tintColor = .black
+    func configureNavigaionItem() {
+        // title
+        let tapGesture = UITapGestureRecognizer()
+        homeView.naviTitleLabel.addGestureRecognizer(tapGesture)
+        navigationItem.titleView = homeView.naviTitleLabel
         
-        button.rx.tap
+        tapGesture.rx.event
             .bind(with: self) { owner, _ in
                 owner.present(owner.menu, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
         
-        return UIBarButtonItem(customView: button)
+        // leftBarButtonItem
+        homeView.coverButton.rx.tap
+            .bind(with: self) { owner, _ in
+                print("coverImageClicekd")
+            }
+            .disposed(by: disposeBag)
+        
+        // rightBarButtonItem
+        homeView.profileButton.rx.tap
+            .bind(with: self) { owner, _ in
+                print("profileImageClicked")
+            }
+            .disposed(by: disposeBag)
+        
+        navigationItem.leftBarButtonItem = homeView.leftNaviBarItem
+        navigationItem.rightBarButtonItem = homeView.rightNaviBarItem
     }
 }
