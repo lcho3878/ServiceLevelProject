@@ -20,6 +20,6 @@ extension UIButton {
         setImage(UIImage(systemName: imageName), for: .normal)
         layer.cornerRadius = 8
         clipsToBounds = true
-        backgroundColor = .brandWhite
+        backgroundColor = .brandGray
     }
 }
