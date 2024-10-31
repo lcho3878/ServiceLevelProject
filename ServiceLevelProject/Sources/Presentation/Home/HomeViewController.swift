@@ -46,10 +46,13 @@ extension HomeViewController {
     }
     
     private func configureNavigaionItem() {
-        // title
+        // titleView
+        let homeNavigationView = HomeNavigationView()
+        
+        navigationItem.titleView = homeNavigationView.titleView
+        
         let tapGesture = UITapGestureRecognizer()
-        homeView.naviTitleLabel.addGestureRecognizer(tapGesture)
-        navigationItem.titleView = homeView.naviTitleLabel
+        homeNavigationView.naviTitleLabel.addGestureRecognizer(tapGesture)
         
         tapGesture.rx.event
             .bind(with: self) { owner, _ in
@@ -58,21 +61,21 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         // leftBarButtonItem
-        homeView.coverButton.rx.tap
+        homeNavigationView.coverButton.rx.tap
             .bind(with: self) { owner, _ in
                 print("coverImageClicekd")
             }
             .disposed(by: disposeBag)
         
         // rightBarButtonItem
-        homeView.profileButton.rx.tap
+        homeNavigationView.profileButton.rx.tap
             .bind(with: self) { owner, _ in
                 print("profileImageClicked")
             }
             .disposed(by: disposeBag)
         
-        navigationItem.leftBarButtonItem = homeView.leftNaviBarItem
-        navigationItem.rightBarButtonItem = homeView.rightNaviBarItem
+        navigationItem.leftBarButtonItem = homeNavigationView.leftNaviBarItem
+        navigationItem.rightBarButtonItem = homeNavigationView.rightNaviBarItem
     }
     
     private func rightSwipeAction() {
