@@ -24,9 +24,9 @@ import UIKit
      self.present(alertVC, animated: true)
  }
  */
-class CustomAlertTransition: NSObject, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
+final class CustomAlertTransition: NSObject, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
     
-    var isPresenting = true
+    private var isPresenting = true
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.3
