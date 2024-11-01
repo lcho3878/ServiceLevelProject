@@ -91,8 +91,7 @@ final class SingleButtonAlertViewController: UIViewController {
         }
         
         // configureUI
-        view.backgroundColor = .gray
-        view.layer.opacity = 0.7
+        view.backgroundColor = .brandBlack.withAlphaComponent(0.6)
     }
     
     func configureDelegate() {
