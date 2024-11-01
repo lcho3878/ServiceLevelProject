@@ -49,6 +49,9 @@
 		6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876056A2CD0F27E008167B0 /* Reusable.swift */; };
 		6876056D2CD2721C008167B0 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876056C2CD2721C008167B0 /* UIButton+.swift */; };
 		6876056F2CD340CB008167B0 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876056E2CD340CB008167B0 /* HomeNavigationView.swift */; };
+		687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605712CD4C084008167B0 /* SingleButtonAlertViewController.swift */; };
+		687605742CD4CAE4008167B0 /* CustomAlertTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605732CD4CAE4008167B0 /* CustomAlertTransition.swift */; };
+		687605762CD531FA008167B0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605752CD531FA008167B0 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +93,9 @@
 		6876056A2CD0F27E008167B0 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		6876056C2CD2721C008167B0 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		6876056E2CD340CB008167B0 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
+		687605712CD4C084008167B0 /* SingleButtonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonAlertViewController.swift; sourceTree = "<group>"; };
+		687605732CD4CAE4008167B0 /* CustomAlertTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertTransition.swift; sourceTree = "<group>"; };
+		687605752CD531FA008167B0 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +122,9 @@
 				54565ACF2CCF977800B5A354 /* BaseViewController.swift */,
 				54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */,
 				687605642CCF99CC008167B0 /* BrandSimpeButton.swift */,
+				687605712CD4C084008167B0 /* SingleButtonAlertViewController.swift */,
+				687605732CD4CAE4008167B0 /* CustomAlertTransition.swift */,
+				687605752CD531FA008167B0 /* TestViewController.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -376,13 +385,16 @@
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
+				687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
 				54565AE52CD1004000B5A354 /* NavigationRepresentable.swift in Sources */,
 				54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
+				687605742CD4CAE4008167B0 /* CustomAlertTransition.swift in Sources */,
 				54565AE72CD1053700B5A354 /* DismissButtonPresentable.swift in Sources */,
 				687605652CCF99CC008167B0 /* BrandSimpeButton.swift in Sources */,
 				54565AC02CCF63DF00B5A354 /* AuthorizationView.swift in Sources */,
+				687605762CD531FA008167B0 /* TestViewController.swift in Sources */,
 				54565ADB2CD0EEBA00B5A354 /* SignupView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
