@@ -108,10 +108,10 @@ final class SingleButtonAlertViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func setConfigure(title: String, subtitle: String, buttontTitle: String, action: (() -> Void)?) {
-        self.mainTitle = title
-        self.subTitle = subtitle
-        self.okButtonTitle = buttontTitle
+    func setConfigure(mainTitle: String, subTitle: String, buttonTitle: String, action: (() -> Void)?) {
+        self.mainTitle = mainTitle
+        self.subTitle = subTitle
+        self.okButtonTitle = buttonTitle
         self.buttonAction = action
     }
 }
