@@ -13,7 +13,7 @@ import Then
 
 final class DoubleButtonAlertViewController: UIViewController {
     // MARK: UI
-    private let alertbgView = UIView().then {
+    private let alertBgView = UIView().then {
         $0.backgroundColor = .brandWhite
         $0.layer.cornerRadius = 16
     }
@@ -73,13 +73,13 @@ final class DoubleButtonAlertViewController: UIViewController {
     // MARK: Functions
     private func configureAlertUI() {
         // addSubview
-        view.addSubview(alertbgView)
-        alertbgView.addSubviews([TitleLabel, subTitleLabel, buttonStackView])
+        view.addSubview(alertBgView)
+        alertBgView.addSubviews([TitleLabel, subTitleLabel, buttonStackView])
         buttonStackView.addArrangedSubviews([cancelButton, okButton])
         
         // setConstraints
         let safeArea = view.safeAreaLayoutGuide
-        alertbgView.snp.makeConstraints {
+        alertBgView.snp.makeConstraints {
             $0.horizontalEdges.equalTo(safeArea).inset(24)
             $0.centerY.equalTo(safeArea)
             $0.top.equalTo(TitleLabel.snp.top).offset(16)
@@ -87,20 +87,20 @@ final class DoubleButtonAlertViewController: UIViewController {
         }
         
         TitleLabel.snp.makeConstraints {
-            $0.top.equalTo(alertbgView.snp.top).offset(16)
-            $0.horizontalEdges.equalTo(alertbgView.snp.horizontalEdges).inset(16.5)
+            $0.top.equalTo(alertBgView.snp.top).offset(16)
+            $0.horizontalEdges.equalTo(alertBgView.snp.horizontalEdges).inset(16.5)
             $0.height.equalTo(20)
         }
         
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(TitleLabel.snp.bottom).offset(8)
-            $0.horizontalEdges.equalTo(alertbgView.snp.horizontalEdges).inset(16.5)
+            $0.horizontalEdges.equalTo(alertBgView.snp.horizontalEdges).inset(16.5)
         }
         
         buttonStackView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel.snp.bottom).offset(16)
-            $0.bottom.equalTo(alertbgView.snp.bottom).offset(-16)
-            $0.horizontalEdges.equalTo(alertbgView.snp.horizontalEdges).inset(16)
+            $0.bottom.equalTo(alertBgView.snp.bottom).offset(-16)
+            $0.horizontalEdges.equalTo(alertBgView.snp.horizontalEdges).inset(16)
             $0.height.equalTo(44)
         }
         
@@ -129,11 +129,10 @@ final class DoubleButtonAlertViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func setConfiure(title: String, subtitle: String, buttontTitle: String, action: (() -> Void)?) {
+    func setConfigure(title: String, subtitle: String, buttontTitle: String, action: (() -> Void)?) {
         self.mainTitle = title
         self.subTitle = subtitle
         self.okButtonTitle = buttontTitle
         self.buttonAction = action
     }
 }
-
