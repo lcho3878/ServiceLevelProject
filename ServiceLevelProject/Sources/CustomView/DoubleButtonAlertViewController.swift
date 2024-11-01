@@ -25,12 +25,28 @@ final class DoubleButtonAlertViewController: UIViewController {
         $0.textAlignment = .center
     }
     
+    private let subTitleStackView = UIStackView().then {
+        $0.axis = .vertical
+    }
+    
     private lazy var subTitleLabel = UILabel().then {
         $0.text = subTitle
         $0.font = .body
         $0.textColor = .textSecondary
         $0.numberOfLines = 0
         $0.textAlignment = .center
+    }
+    
+    private let subTitleBgView = UIView().then {
+        $0.backgroundColor = .clear
+    }
+    
+    private lazy var subTitle2Label = UILabel().then {
+        $0.text = subTitle2
+        $0.font = .body
+        $0.textColor = .textSecondary
+        $0.numberOfLines = 0
+        $0.textAlignment = .left
     }
     
     private let buttonStackView = UIStackView().then {
@@ -56,6 +72,7 @@ final class DoubleButtonAlertViewController: UIViewController {
     // MARK: Properties
     private var mainTitle: String?
     private var subTitle: String?
+    private var subTitle2: String?
     private var okButtonTitle: String?
     private var buttonAction: (() -> Void)?
     private let disposeBag = DisposeBag()
@@ -74,7 +91,9 @@ final class DoubleButtonAlertViewController: UIViewController {
     private func configureAlertUI() {
         // addSubview
         view.addSubview(alertBgView)
-        alertBgView.addSubviews([TitleLabel, subTitleLabel, buttonStackView])
+        alertBgView.addSubviews([TitleLabel, subTitleStackView, buttonStackView])
+        subTitleStackView.addArrangedSubviews([subTitleLabel, subTitleBgView])
+        subTitleBgView.addSubview(subTitle2Label)
         buttonStackView.addArrangedSubviews([cancelButton, okButton])
         
         // setConstraints
@@ -92,16 +111,21 @@ final class DoubleButtonAlertViewController: UIViewController {
             $0.height.equalTo(20)
         }
         
-        subTitleLabel.snp.makeConstraints {
+        subTitleStackView.snp.makeConstraints {
             $0.top.equalTo(TitleLabel.snp.bottom).offset(8)
             $0.horizontalEdges.equalTo(alertBgView.snp.horizontalEdges).inset(16.5)
         }
         
         buttonStackView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(subTitleStackView.snp.bottom).offset(16)
             $0.bottom.equalTo(alertBgView.snp.bottom).offset(-16)
             $0.horizontalEdges.equalTo(alertBgView.snp.horizontalEdges).inset(16)
             $0.height.equalTo(44)
+        }
+        
+        subTitle2Label.snp.makeConstraints {
+            $0.top.horizontalEdges.equalTo(subTitleBgView).inset(8)
+            $0.bottom.equalTo(subTitleBgView)
         }
         
         // configureUI
@@ -129,10 +153,11 @@ final class DoubleButtonAlertViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func setConfigure(title: String, subtitle: String, buttontTitle: String, action: (() -> Void)?) {
+    func setConfigure(title: String, subTitle: String, subTitle2: String? = "", buttonTitle: String, action: (() -> Void)?) {
         self.mainTitle = title
-        self.subTitle = subtitle
-        self.okButtonTitle = buttontTitle
+        self.subTitle = subTitle
+        self.subTitle2 = subTitle2
+        self.okButtonTitle = buttonTitle
         self.buttonAction = action
     }
 }
