@@ -29,6 +29,9 @@
 		546589932CCE4FC600736BA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 546589922CCE4FC600736BA9 /* Assets.xcassets */; };
 		546589962CCE4FC600736BA9 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 546589952CCE4FC600736BA9 /* Base */; };
 		5465899E2CCE50D100736BA9 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 5465899D2CCE50D100736BA9 /* .gitignore */; };
+		5476C9572CD4C7CA00E95AD4 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */; };
+		5476C9592CD4C7FF00E95AD4 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */; };
+		5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -76,6 +79,9 @@
 		546589952CCE4FC600736BA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		546589972CCE4FC600736BA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5465899D2CCE50D100736BA9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableViewCell.swift; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -205,6 +211,7 @@
 				54565AB42CCE62E000B5A354 /* Protocol */,
 				54565AB12CCE60FB00B5A354 /* CustomView */,
 				546589A92CCE56B900736BA9 /* Presentation */,
+				548940932CD4C02F001E6E40 /* Profile */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -229,6 +236,24 @@
 				54565ABF2CCF63DF00B5A354 /* AuthorizationView.swift */,
 			);
 			path = Authorization;
+			sourceTree = "<group>";
+		};
+		548940932CD4C02F001E6E40 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				548940942CD4C0B6001E6E40 /* ProfileEdit */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		548940942CD4C0B6001E6E40 /* ProfileEdit */ = {
+			isa = PBXGroup;
+			children = (
+				5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */,
+				5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */,
+				5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */,
+			);
+			path = ProfileEdit;
 			sourceTree = "<group>";
 		};
 		687605512CCE5CC1008167B0 /* Workspace */ = {
@@ -353,6 +378,7 @@
 			files = (
 				687605692CD0F21C008167B0 /* WorkspaceCell.swift in Sources */,
 				54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */,
+				5476C9592CD4C7FF00E95AD4 /* ProfileEditView.swift in Sources */,
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
 				54565AD92CD0EEB600B5A354 /* SignupViewController.swift in Sources */,
 				687605532CCE5D67008167B0 /* HomeViewController.swift in Sources */,
@@ -365,6 +391,7 @@
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
+				5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */,
 				6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */,
 				54565ADF2CD0FA4200B5A354 /* LoginViewController.swift in Sources */,
 				6876056D2CD2721C008167B0 /* UIButton+.swift in Sources */,
@@ -379,6 +406,7 @@
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
 				54565AE52CD1004000B5A354 /* NavigationRepresentable.swift in Sources */,
 				54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */,
+				5476C9572CD4C7CA00E95AD4 /* ProfileEditViewController.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
 				54565AE72CD1053700B5A354 /* DismissButtonPresentable.swift in Sources */,
 				687605652CCF99CC008167B0 /* BrandSimpeButton.swift in Sources */,
