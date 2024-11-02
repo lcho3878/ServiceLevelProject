@@ -32,6 +32,9 @@
 		5476C9572CD4C7CA00E95AD4 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */; };
 		5476C9592CD4C7FF00E95AD4 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */; };
 		5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */; };
+		54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */; };
+		54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC82CD602EC00313E17 /* NicknameEditView.swift */; };
+		54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FCA2CD609B800313E17 /* UITextField+.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -82,6 +85,9 @@
 		5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableViewCell.swift; sourceTree = "<group>"; };
+		54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewController.swift; sourceTree = "<group>"; };
+		54A53FC82CD602EC00313E17 /* NicknameEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditView.swift; sourceTree = "<group>"; };
+		54A53FCA2CD609B800313E17 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -241,6 +247,7 @@
 		548940932CD4C02F001E6E40 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				54A53FC52CD602D900313E17 /* NicknameEdit */,
 				548940942CD4C0B6001E6E40 /* ProfileEdit */,
 			);
 			path = Profile;
@@ -254,6 +261,15 @@
 				5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */,
 			);
 			path = ProfileEdit;
+			sourceTree = "<group>";
+		};
+		54A53FC52CD602D900313E17 /* NicknameEdit */ = {
+			isa = PBXGroup;
+			children = (
+				54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */,
+				54A53FC82CD602EC00313E17 /* NicknameEditView.swift */,
+			);
+			path = NicknameEdit;
 			sourceTree = "<group>";
 		};
 		687605512CCE5CC1008167B0 /* Workspace */ = {
@@ -275,6 +291,7 @@
 				54565AC42CCF721C00B5A354 /* UIFont+.swift */,
 				54565AE82CD1056600B5A354 /* UIViewController+.swift */,
 				6876056C2CD2721C008167B0 /* UIButton+.swift */,
+				54A53FCA2CD609B800313E17 /* UITextField+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -378,6 +395,8 @@
 			files = (
 				687605692CD0F21C008167B0 /* WorkspaceCell.swift in Sources */,
 				54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */,
+				54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */,
+				54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */,
 				5476C9592CD4C7FF00E95AD4 /* ProfileEditView.swift in Sources */,
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
 				54565AD92CD0EEB600B5A354 /* SignupViewController.swift in Sources */,
@@ -401,6 +420,7 @@
 				6876055C2CCF81AE008167B0 /* HomeViewModel.swift in Sources */,
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
+				54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
