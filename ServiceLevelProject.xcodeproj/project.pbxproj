@@ -35,6 +35,7 @@
 		54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */; };
 		54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC82CD602EC00313E17 /* NicknameEditView.swift */; };
 		54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FCA2CD609B800313E17 /* UITextField+.swift */; };
+		54A53FD02CD613C100313E17 /* KeyboardRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FCF2CD613C100313E17 /* KeyboardRepresentable.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -88,6 +89,7 @@
 		54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewController.swift; sourceTree = "<group>"; };
 		54A53FC82CD602EC00313E17 /* NicknameEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditView.swift; sourceTree = "<group>"; };
 		54A53FCA2CD609B800313E17 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		54A53FCF2CD613C100313E17 /* KeyboardRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardRepresentable.swift; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				6876056A2CD0F27E008167B0 /* Reusable.swift */,
 				54565AE42CD1004000B5A354 /* NavigationRepresentable.swift */,
 				54565AE62CD1053700B5A354 /* DismissButtonPresentable.swift */,
+				54A53FCF2CD613C100313E17 /* KeyboardRepresentable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
 				5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */,
 				6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */,
+				54A53FD02CD613C100313E17 /* KeyboardRepresentable.swift in Sources */,
 				54565ADF2CD0FA4200B5A354 /* LoginViewController.swift in Sources */,
 				6876056D2CD2721C008167B0 /* UIButton+.swift in Sources */,
 				54565AE12CD0FA4600B5A354 /* LoginView.swift in Sources */,

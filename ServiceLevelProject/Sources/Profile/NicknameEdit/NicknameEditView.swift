@@ -20,7 +20,7 @@ final class NicknameEditView: BaseView {
     }
     
     private let confirmButton = BrandColorButton(title: "완료")
-    
+
     override func addSubviews() {
         addSubviews([nicknameTextField, confirmButton])
     }
@@ -36,7 +36,7 @@ final class NicknameEditView: BaseView {
         confirmButton.snp.makeConstraints {
             $0.height.equalTo(44)
             $0.horizontalEdges.equalTo(safe).inset(24)
-            $0.bottom.equalTo(safe).inset(24)
+            adjustableConstraint = $0.bottom.equalTo(safe).inset(24).constraint.layoutConstraints.first
         }
     }
     
