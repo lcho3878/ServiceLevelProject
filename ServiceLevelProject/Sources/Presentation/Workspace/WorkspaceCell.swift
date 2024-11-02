@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 import SnapKit
 import Then
 
@@ -41,6 +42,9 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     let editButton = UIButton().then {
         $0.setImage(UIImage(resource: .edit), for: .normal)
     }
+    
+    // MARK: Properties
+    let disposeBag = DisposeBag()
 
     // MARK: View Life Cycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -101,5 +105,12 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     
     func configureUI() {
         backgroundColor = .clear
+    }
+    
+    func configureCell(element: WorkspaceTestData) {
+        coverImageView.image = UIImage(systemName: element.coverImage)
+        nameLabel.text = element.title
+        createdAtLabel.text = element.createdAt
+        selectionStyle = .none
     }
 }
