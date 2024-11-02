@@ -11,6 +11,7 @@ final class CreateWorkspaceViewController: BaseViewController, DismissButtonPres
     let createWorkspaceView = WorkspaceSettingView()
     
     override func loadView() {
+        createWorkspaceView.configureButtonTitle(title: "완료")
         view = createWorkspaceView
     }
     

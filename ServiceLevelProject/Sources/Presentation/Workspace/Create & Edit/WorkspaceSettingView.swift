@@ -50,7 +50,7 @@ final class WorkspaceSettingView: BaseView {
         $0.horizonPadding(12)
     }
     
-    let createWorkspaceButton = BrandColorButton(title: "완료")
+    let createWorkspaceButton = BrandColorButton(title: "")
     
     override func addSubviews() {
         addSubviews([profileImageView, cameraImageView, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
@@ -105,5 +105,9 @@ final class WorkspaceSettingView: BaseView {
     
     override func configureUI() {
         backgroundColor = .backgroundPrimary
+    }
+    
+    func configureButtonTitle(title: String) {
+        createWorkspaceButton.setTitle(title, for: .normal)
     }
 }
