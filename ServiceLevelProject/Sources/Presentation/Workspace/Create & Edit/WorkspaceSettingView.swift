@@ -10,6 +10,7 @@ import SnapKit
 import Then
 
 final class WorkspaceSettingView: BaseView {
+    // MARK: UI
     private let profileImageView = UIImageView().then {
         $0.image = UIImage(resource: .defaultProfile)
         $0.contentMode = .scaleAspectFit
@@ -52,6 +53,7 @@ final class WorkspaceSettingView: BaseView {
     
     let createWorkspaceButton = BrandColorButton(title: "")
     
+    // MARK: Functions
     override func addSubviews() {
         addSubviews([profileImageView, cameraImageView, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
     }
