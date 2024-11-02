@@ -1,17 +1,15 @@
 //
-//  NicknameEditView.swift
+//  PhoneNumberEditView.swift
 //  ServiceLevelProject
 //
 //  Created by 이찬호 on 11/2/24.
 //
 
 import UIKit
-import SnapKit
-import Then
 
-final class NicknameEditView: BaseView {
-    private let nicknameTextField = UITextField().then {
-        $0.placeholder = "닉네임을 입력하세요"
+final class PhoneNumberEditView: BaseView {
+    private let phoneNumberTextField = UITextField().then {
+        $0.placeholder = "전화번호를 입력하세요"
         $0.backgroundColor = .brandWhite
         $0.font = UIFont.body
         $0.layer.cornerRadius = 8
@@ -21,12 +19,12 @@ final class NicknameEditView: BaseView {
     private let confirmButton = BrandColorButton(title: "완료")
 
     override func addSubviews() {
-        addSubviews([nicknameTextField, confirmButton])
+        addSubviews([phoneNumberTextField, confirmButton])
     }
     
     override func setConstraints() {
         let safe = safeAreaLayoutGuide
-        nicknameTextField.snp.makeConstraints {
+        phoneNumberTextField.snp.makeConstraints {
             $0.top.equalTo(safe).offset(24)
             $0.horizontalEdges.equalTo(safe).inset(24)
             $0.height.equalTo(44)
