@@ -10,6 +10,58 @@ import RxSwift
 import RxCocoa
 
 final class WorkspaceViewController: BaseViewController {
+    // MARK: Enum
+    enum WorkspaceManagerActionSheet {
+        case edit
+        case exit
+        case change
+        case delete
+        case cancel
+        
+        func managerActionSheet(handler: @escaping (WorkspaceManagerActionSheet) -> Void) -> UIAlertAction {
+            switch self {
+            case .edit:
+                return UIAlertAction(title: "워크스페이스 편집", style: .default) { _ in
+                    handler(.edit)
+                }
+            case .exit:
+                return UIAlertAction(title: "워크스페이스 나가기", style: .default) { _ in
+                    handler(.exit)
+                }
+            case .change:
+                return UIAlertAction(title: "워크스페이스 관리자 변경", style: .default) { _ in
+                    handler(.change)
+                }
+            case .delete:
+                return UIAlertAction(title: "워크스페이스 삭제", style: .destructive) { _ in
+                    handler(.delete)
+                }
+            case .cancel:
+                return UIAlertAction(title: "취소", style: .cancel) { _ in
+                    handler(.cancel)
+                }
+            }
+        }
+    }
+    
+    enum WorkSpaceMemberActionSheet {
+        case exit
+        case cancel
+        
+        func memberActionSheet(handler: @escaping (WorkSpaceMemberActionSheet) -> Void) -> UIAlertAction {
+            switch self {
+            case .exit:
+                return UIAlertAction(title: "워크스페이스 나가기", style: .default) { _ in
+                    handler(.exit)
+                }
+            case .cancel:
+                return UIAlertAction(title: "취소", style: .cancel) { _ in
+                    handler(.cancel)
+                }
+            }
+        }
+    }
+    
     // MARK: Properties
     private let workspaceView = WorkspaceView()
     private let viewModel = WorkspaceViewModel()
@@ -70,26 +122,24 @@ extension WorkspaceViewController {
     
     func configureManagerActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let editWorkspace = UIAlertAction(title: "워크스페이스 편집", style: .default) { _ in
-            print("워크스페이스 편집")
+        
+        let actions: [WorkspaceManagerActionSheet] = [.edit, .exit, .change, .delete, .cancel]
+        actions.forEach { action in
+            actionSheet.addAction(action.managerActionSheet { action in
+                switch action {
+                case .edit:
+                    print("워크스페이스 편집")
+                case .exit:
+                    print("워크스페이스 나가기")
+                case .change:
+                    print("워크스페이스 관리자 변경")
+                case .delete:
+                    print("워크스페이스 삭제")
+                case .cancel:
+                    print("취소")
+                }
+            })
         }
-        
-        let exitWorkspace = UIAlertAction(title: "워크스페이스 나가기", style: .default) { _ in
-            print("워크스페이스 나가기")
-        }
-        
-        let changeMananger = UIAlertAction(title: "워크스페이스 관리자 변경", style: .default) { _ in
-            print("워크스페이스 관리자 변경")
-        }
-        
-        let deleteWorkspace = UIAlertAction(title: "워크스페이스 삭제", style: .destructive) { _ in
-            print("워크스페이스 삭제")
-        }
-        
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        let actions: [UIAlertAction] = [editWorkspace, exitWorkspace, changeMananger, deleteWorkspace, cancel]
-        actions.forEach { actionSheet.addAction($0) }
         
         present(actionSheet, animated: true)
     }
@@ -97,14 +147,17 @@ extension WorkspaceViewController {
     func configureMemberActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let exitWorkspace = UIAlertAction(title: "워크스페이스 나가기", style: .default) { _ in
-            print("워크스페이스 나가기")
+        let actions: [WorkSpaceMemberActionSheet] = [.exit, .cancel]
+        actions.forEach { action in
+            actionSheet.addAction(action.memberActionSheet { action in
+                switch action {
+                case .exit:
+                    print("워크스페이스 나가기")
+                case .cancel:
+                    print("취소")
+                }
+            })
         }
-        
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        let actions: [UIAlertAction] = [exitWorkspace, cancel]
-        actions.forEach { actionSheet.addAction($0) }
         
         present(actionSheet, animated: true)
     }
