@@ -1,5 +1,5 @@
 //
-//  NicknameEditViewController.swift
+//  PhoneNumberEditViewController.swift
 //  ServiceLevelProject
 //
 //  Created by 이찬호 on 11/2/24.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class NicknameEditViewController: BaseViewController {
-    private let nicknameEditView = NicknameEditView()
+final class PhoneNumberEditViewController: BaseViewController {
+    private let phoneNumberEditView = PhoneNumberEditView()
     
     override func loadView() {
-        view = nicknameEditView
+        view = phoneNumberEditView
     }
     
     override func viewDidLoad() {
@@ -19,6 +19,6 @@ final class NicknameEditViewController: BaseViewController {
     }
     
     override func configureNavigation() {
-        title = "닉네임"
+        title = "연락처"
     }
 }
