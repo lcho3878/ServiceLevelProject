@@ -17,15 +17,7 @@ final class ProfileEditView: BaseView {
         $0.clipsToBounds = true
     }
     
-    private let cameraImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "camera.circle")/*?.withTintColor(.brandWhite, renderingMode: .alwaysOriginal)*/
-        $0.tintColor = .brandWhite
-        $0.backgroundColor = .brand
-        $0.layer.cornerRadius = 12
-        $0.layer.borderColor = UIColor.brandWhite.cgColor
-        $0.layer.borderWidth = 2.12
-        $0.clipsToBounds = true
-    }
+    private let cameraImageView = CameraImageView()
     
     let profileMenuTableView = UITableView().then {
         $0.backgroundColor = .brandWhite
