@@ -134,7 +134,8 @@ extension WorkspaceViewController: NavigationRepresentable {
                 case .exit:
                     print("워크스페이스 나가기")
                 case .change:
-                    print("워크스페이스 관리자 변경")
+                    let vc = ChangeAdminViewController()
+                    self.presentNavigationController(rootViewController: vc)
                 case .delete:
                     print("워크스페이스 삭제")
                 case .cancel:
