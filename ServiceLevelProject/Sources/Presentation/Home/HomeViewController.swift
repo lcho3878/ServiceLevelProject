@@ -39,10 +39,17 @@ final class HomeViewController: BaseViewController {
     }
 }
 
-extension HomeViewController {
+extension HomeViewController: NavigationRepresentable {
     private func bind() {
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
+        
+        homeView.createWorkspaceButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = CreateWorkspaceViewController()
+                owner.presentNavigationController(rootViewController: vc)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func configureNavigaionItem() {

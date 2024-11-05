@@ -85,7 +85,7 @@ final class WorkspaceViewController: BaseViewController {
     }
 }
 
-extension WorkspaceViewController {
+extension WorkspaceViewController: NavigationRepresentable {
     func bind() {
         let input = WorkspaceViewModel.Input()
         let output = viewModel.transform(input: input)
@@ -129,6 +129,8 @@ extension WorkspaceViewController {
                 switch action {
                 case .edit:
                     print("워크스페이스 편집")
+                    let vc = EditWorkspaceViewController()
+                    self.presentNavigationController(rootViewController: vc)
                 case .exit:
                     print("워크스페이스 나가기")
                 case .change:

@@ -12,6 +12,7 @@ protocol NavigationRepresentable: AnyObject where Self: BaseViewController { }
 extension NavigationRepresentable {
     func presentNavigationController(rootViewController: UIViewController) {
         let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
 }
