@@ -26,8 +26,10 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureTableView()
         bind()
         rightSwipeAction()
+        homeView.emptyBgView.isHidden = true // 임시
     }
     
     override func configureNavigation() {
@@ -40,6 +42,10 @@ final class HomeViewController: BaseViewController {
 }
 
 extension HomeViewController: NavigationRepresentable {
+    private func configureTableView() {
+        homeView.channelTableView.register(ChannelCell.self, forCellReuseIdentifier: ChannelCell.id)
+    }
+    
     private func bind() {
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
@@ -50,6 +56,27 @@ extension HomeViewController: NavigationRepresentable {
                 owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
+        
+        homeView.showChannelsButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.homeView.showChannelsButton.isSelected.toggle()
+                switch owner.homeView.showChannelsButton.isSelected {
+                case true:
+                    owner.homeView.channelDropdownButton.setImage(UIImage(resource: .chevronDown), for: .normal)
+                case false:
+                    owner.homeView.channelDropdownButton.setImage(UIImage(resource: .chevronRight), for: .normal)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.channelList
+            .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
+                print(">>> \(element.channelName)")
+                cell.channelNameLabel.text = element.channelName
+            }
+            .disposed(by: disposeBag)
+        
+        homeView.updateTableViewLayout()
     }
     
     private func configureNavigaionItem() {
