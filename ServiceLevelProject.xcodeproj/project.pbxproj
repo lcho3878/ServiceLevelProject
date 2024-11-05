@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA7832CDA22A90066F0AD /* TabbarViewController.swift */; };
 		54565AB32CCE610400B5A354 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB22CCE610400B5A354 /* BaseView.swift */; };
 		54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */; };
 		54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		544CA7832CDA22A90066F0AD /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		54565AB22CCE610400B5A354 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
 		54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindable.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				54565AB22CCE610400B5A354 /* BaseView.swift */,
+				544CA7832CDA22A90066F0AD /* TabbarViewController.swift */,
 				54565ACF2CCF977800B5A354 /* BaseViewController.swift */,
 				54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */,
 				687605642CCF99CC008167B0 /* BrandSimpeButton.swift */,
@@ -521,6 +524,7 @@
 				54A53FD32CD6346D00313E17 /* PhoneNumberEditViewController.swift in Sources */,
 				5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */,
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
+				544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */,
 				54565ABE2CCF631100B5A354 /* OnboardingView.swift in Sources */,
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
