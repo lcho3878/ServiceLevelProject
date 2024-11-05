@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA7832CDA22A90066F0AD /* TabbarViewController.swift */; };
+		544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */; };
+		544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */; };
 		54565AB32CCE610400B5A354 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB22CCE610400B5A354 /* BaseView.swift */; };
 		54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */; };
 		54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */; };
@@ -76,6 +78,8 @@
 
 /* Begin PBXFileReference section */
 		544CA7832CDA22A90066F0AD /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		54565AB22CCE610400B5A354 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		54565AB52CCE62FA00B5A354 /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
 		54565AB72CCE666B00B5A354 /* ViewModelBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindable.swift; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 			children = (
 				54565AB22CCE610400B5A354 /* BaseView.swift */,
 				544CA7832CDA22A90066F0AD /* TabbarViewController.swift */,
+				544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */,
+				544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */,
 				54565ACF2CCF977800B5A354 /* BaseViewController.swift */,
 				54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */,
 				687605642CCF99CC008167B0 /* BrandSimpeButton.swift */,
@@ -529,6 +535,7 @@
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
+				544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */,
 				5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */,
 				54A53FDA2CD636D500313E17 /* ProfileView.swift in Sources */,
 				6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */,
@@ -551,6 +558,7 @@
 				54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				687605812CD66A74008167B0 /* CreateWorkspaceViewController.swift in Sources */,
+				544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
