@@ -7,6 +7,11 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
+
+struct ChannelTestData {
+    let channelName: String
+}
 
 final class HomeViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
@@ -16,7 +21,10 @@ final class HomeViewModel: ViewModelBindable {
     }
     
     struct Output {
-        
+        let channelList = BehaviorSubject(value: [
+            ChannelTestData(channelName: "일반"),
+            ChannelTestData(channelName: "스유 뽀개기")
+        ])
     }
     
     func transform(input: Input) -> Output {
