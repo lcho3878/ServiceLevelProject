@@ -40,5 +40,12 @@ final class ChannelCell: BaseTableViewCell {
             $0.verticalEdges.equalTo(safeArea).inset(6.5)
             $0.trailing.equalTo(safeArea).offset(-45)
         }
+        
+        // 숫자 넣기
+    }
+    
+    func configureCell(element: ChannelTestData) {
+        channelNameLabel.text = element.channelName
+        selectionStyle = .none
     }
 }

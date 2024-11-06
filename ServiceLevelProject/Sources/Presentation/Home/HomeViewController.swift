@@ -44,6 +44,7 @@ final class HomeViewController: BaseViewController {
 extension HomeViewController: NavigationRepresentable {
     private func configureTableView() {
         homeView.channelTableView.register(ChannelCell.self, forCellReuseIdentifier: ChannelCell.id)
+        homeView.directMessageTableView.register(DirectMessageCell.self, forCellReuseIdentifier: DirectMessageCell.id)
     }
     
     private func bind() {
@@ -60,19 +61,26 @@ extension HomeViewController: NavigationRepresentable {
         homeView.showChannelsButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.homeView.showChannelsButton.isSelected.toggle()
-                switch owner.homeView.showChannelsButton.isSelected {
-                case true:
-                    owner.homeView.channelDropdownButton.setImage(UIImage(resource: .chevronDown), for: .normal)
-                case false:
-                    owner.homeView.channelDropdownButton.setImage(UIImage(resource: .chevronRight), for: .normal)
-                }
+                owner.homeView.hideChannelTableView()
+            }
+            .disposed(by: disposeBag)
+        
+        homeView.showDirectMessageButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.homeView.showDirectMessageButton.isSelected.toggle()                
+                owner.homeView.hideDirectMessageTableView()
             }
             .disposed(by: disposeBag)
         
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
-                print(">>> \(element.channelName)")
-                cell.channelNameLabel.text = element.channelName
+                cell.configureCell(element: element)
+            }
+            .disposed(by: disposeBag)
+        
+        output.chatList
+            .bind(to: homeView.directMessageTableView.rx.items(cellIdentifier: DirectMessageCell.id, cellType: DirectMessageCell.self)) { (row, element, cell) in
+                cell.configureCell(element: element)
             }
             .disposed(by: disposeBag)
         

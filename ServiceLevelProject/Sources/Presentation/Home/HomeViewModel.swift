@@ -13,6 +13,11 @@ struct ChannelTestData {
     let channelName: String
 }
 
+struct DirectMessageTestData {
+    let chatProfileImage: String
+    let chatFriendName: String
+}
+
 final class HomeViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     
@@ -24,6 +29,13 @@ final class HomeViewModel: ViewModelBindable {
         let channelList = BehaviorSubject(value: [
             ChannelTestData(channelName: "일반"),
             ChannelTestData(channelName: "스유 뽀개기")
+        ])
+        
+        let chatList = BehaviorSubject(value: [
+            DirectMessageTestData(chatProfileImage: "star.fill", chatFriendName: "Hue"),
+            DirectMessageTestData(chatProfileImage: "heart.fill", chatFriendName: "Jack"),
+            DirectMessageTestData(chatProfileImage: "leaf.fill", chatFriendName: "Bran"),
+            DirectMessageTestData(chatProfileImage: "person.fill", chatFriendName: "Den")
         ])
     }
     
