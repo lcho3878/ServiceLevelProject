@@ -55,24 +55,25 @@ final class HomeView: BaseView {
     }
     /// 이미지 표시용 버튼 - Click Action X
     let channelDropdownButton = UIButton().then {
-        $0.setImage(UIImage(resource: .chevronRight), for: .normal)
+        $0.setImage(UIImage(resource: .chevronDown), for: .normal)
         $0.tintColor = .brandBlack
     }
     /// 채널바 전체적인 클릭을 위한 버튼 - Click Action O
     let showChannelsButton = UIButton()
     
     // --- 채널 활성화 뷰 ---
-    private let channelBgView = UIView()
+    let channelBgView = UIView()
     
     let channelTableView = UITableView().then {
         $0.rowHeight = 41
         $0.showsVerticalScrollIndicator = false
+        $0.isScrollEnabled = false
         $0.separatorStyle = .none
     }
     
     private let addChannelView = UIView()
     
-    private let plusImageView = UIImageView().then {
+    private let channelPlusImageView = UIImageView().then {
         $0.image = UIImage(resource: .plus)
         $0.tintColor = .textSecondary
     }
@@ -85,18 +86,90 @@ final class HomeView: BaseView {
     
     let addChannelButton = UIButton()
     
+    private let channelDividerView = UIView().then {
+        $0.backgroundColor = .viewSeperator
+    }
+    
+    // --- 다이렉트 메세지 상단바 ---
+    private let showDirectMessageBgView = UIView()
+    private let directMessageLabel = UILabel().then {
+        $0.text = "다이렉트 메시지"
+        $0.textColor = .brandBlack
+        $0.font = .title2
+    }
+    
+    /// 이미지 표시용 버튼 - Click Action X
+    let directMessageDropdowmButton = UIButton().then {
+        $0.setImage(UIImage(resource: .chevronDown), for: .normal)
+        $0.tintColor = .brandBlack
+    }
+    
+    /// 다이렉트 메시지바 전체적인 클릭을 위한 버튼 - Click Action O
+    let showDirectMessageButton = UIButton()
+    
+    // --- 다이렉트 메시지 활성화 뷰 ---
+    let directMessageBgView = UIView()
+    
+    let directMessageTableView = UITableView().then {
+        $0.rowHeight = 44
+        $0.showsVerticalScrollIndicator = false
+        $0.isScrollEnabled = false
+        $0.separatorStyle = .none
+    }
+    
+    private let startNewMessageView = UIView()
+    
+    private let startNewMessagePlusImageView = UIImageView().then {
+        $0.image = UIImage(resource: .plus)
+        $0.tintColor = .textSecondary
+    }
+    
+    private let startNewMessageLabel = UILabel().then {
+        $0.text = "새 메시지 시작"
+        $0.textColor = .textSecondary
+        $0.font = .body
+    }
+    
+    let startNewMessageButton = UIButton()
+    
+    private let directMessgeDividerView = UIView().then {
+        $0.backgroundColor = .viewSeperator
+    }
+    
+    // --- 팀원 추가 버튼 뷰 ---
+    private let addMemberView = UIView()
+    
+    private let memberPlusImageView = UIImageView().then {
+        $0.image = UIImage(resource: .plus)
+        $0.tintColor = .textSecondary
+    }
+    
+    private let addMemberLabel = UILabel().then {
+        $0.text = "팀원 추가"
+        $0.textColor = .textSecondary
+        $0.font = .body
+    }
+    
+    let addMemberButton = UIButton()
+    
     // MARK: Functions
     override func addSubviews() {
         // emptyView
         addSubviews([topDividerView, emptyBgView])
         emptyBgView.addSubviews([cannotFindTitleLabel, guideLabel, workspaceEmptyImageView, createWorkspaceButton])
+        
         // initialView
         addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews([showChannelsBgView, channelBgView])
+        contentView.addSubviews([showChannelsBgView, channelBgView, channelDividerView, showDirectMessageBgView, directMessageBgView, directMessgeDividerView, addMemberView])
         showChannelsBgView.addSubviews([channelLabel, channelDropdownButton, showChannelsButton])
         channelBgView.addSubviews([channelTableView, addChannelView])
-        addChannelView.addSubviews([plusImageView, addChannelLabel, addChannelButton])
+        addChannelView.addSubviews([channelPlusImageView, addChannelLabel, addChannelButton])
+        showDirectMessageBgView.addSubviews([directMessageLabel, directMessageDropdowmButton, showDirectMessageButton])
+        
+        directMessageBgView.addSubviews([directMessageTableView, startNewMessageView])
+        startNewMessageView.addSubviews([startNewMessagePlusImageView, startNewMessageLabel, startNewMessageButton])
+        addMemberView.addSubviews([memberPlusImageView, addMemberLabel, addMemberButton])
     }
     
     override func setConstraints() {
@@ -178,11 +251,11 @@ final class HomeView: BaseView {
             $0.edges.equalTo(showChannelsBgView)
         }
         
-        // --- 채널 뷰 ---
+        // --- 채널 활성화 뷰 ---
         channelBgView.snp.makeConstraints {
             $0.top.equalTo(showChannelsBgView.snp.bottom)
             $0.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
-            $0.bottom.equalTo(contentView.snp.bottom)
+            $0.bottom.equalTo(channelDividerView.snp.top).offset(-5)
         }
         
         channelTableView.snp.makeConstraints {
@@ -199,19 +272,113 @@ final class HomeView: BaseView {
             $0.bottom.equalTo(channelBgView.snp.bottom)
         }
         
-        plusImageView.snp.makeConstraints {
+        channelPlusImageView.snp.makeConstraints {
             $0.leading.equalTo(addChannelView.snp.leading).offset(18.25)
             $0.centerY.equalTo(addChannelView.snp.centerY)
             $0.height.width.equalTo(13.5)
         }
         
         addChannelLabel.snp.makeConstraints {
-            $0.leading.equalTo(plusImageView.snp.trailing).offset(18.25)
-            $0.verticalEdges.equalTo(addChannelView.snp.verticalEdges).inset(6.5)
+            $0.leading.equalTo(channelPlusImageView.snp.trailing).offset(18.25)
+            $0.verticalEdges.equalTo(addChannelView.snp.verticalEdges)
         }
         
         addChannelButton.snp.makeConstraints {
             $0.edges.equalTo(addChannelView)
+        }
+        
+        channelDividerView.snp.makeConstraints {
+            $0.top.equalTo(addChannelView.snp.bottom).offset(5)
+            $0.horizontalEdges.equalTo(channelBgView)
+            $0.height.equalTo(1)
+        }
+        
+        // --- 다이렉트 메시지 바 ---
+        showDirectMessageBgView.snp.makeConstraints {
+            $0.top.equalTo(channelDividerView.snp.bottom).offset(5)
+            $0.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
+            $0.height.equalTo(56)
+        }
+        
+        directMessageLabel.snp.makeConstraints {
+            $0.leading.equalTo(showDirectMessageBgView.snp.leading).offset(8)
+            $0.verticalEdges.equalTo(showDirectMessageBgView).inset(14)
+        }
+        
+        directMessageDropdowmButton.snp.makeConstraints {
+            $0.trailing.equalTo(showDirectMessageBgView.snp.trailing).offset(-16)
+            $0.verticalEdges.equalTo(showDirectMessageBgView).inset(16)
+            $0.height.equalTo(24)
+            $0.width.equalTo(26.79)
+        }
+        
+        showDirectMessageButton.snp.makeConstraints {
+            $0.edges.equalTo(showDirectMessageBgView)
+        }
+        
+        // --- 메시지 활성화 뷰 ----
+        directMessageBgView.snp.makeConstraints {
+            $0.top.equalTo(showDirectMessageBgView.snp.bottom)
+            $0.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
+            $0.bottom.equalTo(directMessgeDividerView.snp.top)
+                .offset(-5)
+        }
+        
+        directMessageTableView.snp.makeConstraints {
+            $0.top.equalTo(directMessageBgView.snp.top)
+            $0.horizontalEdges.equalTo(directMessageBgView)
+            $0.height.equalTo(0)
+            $0.bottom.equalTo(startNewMessageView.snp.top)
+        }
+        
+        startNewMessageView.snp.makeConstraints {
+            $0.top.equalTo(directMessageTableView.snp.bottom)
+            $0.horizontalEdges.equalTo(directMessageBgView.snp.horizontalEdges)
+            $0.height.equalTo(41)
+        }
+        
+        startNewMessagePlusImageView.snp.makeConstraints {
+            $0.leading.equalTo(startNewMessageView.snp.leading).offset(18.25)
+            $0.centerY.equalTo(startNewMessageView.snp.centerY)
+            $0.width.height.equalTo(13.5)
+        }
+        
+        startNewMessageLabel.snp.makeConstraints {
+            $0.leading.equalTo(startNewMessagePlusImageView.snp.trailing).offset(18.25)
+            $0.verticalEdges.equalTo(startNewMessageView.snp.verticalEdges)
+        }
+        
+        startNewMessageButton.snp.makeConstraints {
+            $0.edges.equalTo(startNewMessageView)
+        }
+        
+        directMessgeDividerView.snp.makeConstraints {
+            $0.top.equalTo(startNewMessageView.snp.bottom).offset(5)
+            $0.horizontalEdges.equalTo(directMessageBgView)
+            $0.height.equalTo(1)
+        }
+        
+        // --- 팀원 추가 버튼 ---
+        addMemberView.snp.makeConstraints {
+            $0.top.equalTo(directMessgeDividerView.snp.bottom).offset(5)
+            $0.horizontalEdges.equalTo(contentView.snp.horizontalEdges)
+            $0.height.equalTo(41)
+            $0.bottom.equalTo(contentView.snp.bottom)
+        }
+        
+        memberPlusImageView.snp.makeConstraints {
+            $0.leading.equalTo(addMemberView.snp.leading).offset(18.25)
+            $0.centerY.equalTo(addMemberView.snp.centerY)
+            $0.height.width.equalTo(13.5)
+        }
+        
+        addMemberLabel.snp.makeConstraints {
+            $0.leading.equalTo(memberPlusImageView.snp.trailing).offset(18.25)
+            $0.verticalEdges.equalTo(addMemberView.snp.verticalEdges)
+        }
+        
+        addMemberButton.snp.makeConstraints {
+            $0.edges.equalTo(addMemberView)
         }
     }
     
@@ -222,6 +389,64 @@ final class HomeView: BaseView {
     func updateTableViewLayout() {
         channelTableView.snp.updateConstraints {
             $0.height.equalTo(channelTableView.contentSize.height)
+        }
+        
+        directMessageTableView.snp.updateConstraints {
+            $0.height.equalTo(directMessageTableView.contentSize.height)
+        }
+    }
+    
+    func hideChannelTableView() {
+        switch showChannelsButton.isSelected {
+        case true:
+            channelDropdownButton.setImage(UIImage(resource: .chevronRight), for: .normal)
+            channelBgView.isHidden = true
+            
+            channelTableView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
+            
+            addChannelView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
+        case false:
+            channelDropdownButton.setImage(UIImage(resource: .chevronDown), for: .normal)
+            channelBgView.isHidden = false
+            
+            channelTableView.snp.updateConstraints {
+                $0.height.equalTo(channelTableView.contentSize.height)
+            }
+            
+            addChannelView.snp.updateConstraints {
+                $0.height.equalTo(41)
+            }
+        }
+    }
+    
+    func hideDirectMessageTableView() {
+        switch showDirectMessageButton.isSelected {
+        case true:
+            directMessageDropdowmButton.setImage(UIImage(resource: .chevronRight), for: .normal)
+            directMessageBgView.isHidden = true
+            
+            directMessageTableView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
+            
+            startNewMessageView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
+        case false:
+            directMessageDropdowmButton.setImage(UIImage(resource: .chevronDown), for: .normal)
+            directMessageBgView.isHidden = false
+            
+            directMessageTableView.snp.updateConstraints {
+                $0.height.equalTo(directMessageTableView.contentSize.height)
+            }
+            
+            startNewMessageView.snp.updateConstraints {
+                $0.height.equalTo(41)
+            }
         }
     }
 }
