@@ -296,7 +296,6 @@
 				54565AB42CCE62E000B5A354 /* Protocol */,
 				54565AB12CCE60FB00B5A354 /* CustomView */,
 				546589A92CCE56B900736BA9 /* Presentation */,
-				548940932CD4C02F001E6E40 /* Profile */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -310,6 +309,7 @@
 				54565AD72CD0EEA200B5A354 /* Signup */,
 				54565ADD2CD0FA3900B5A354 /* Login */,
 				687605612CCF8D58008167B0 /* Home */,
+				548940932CD4C02F001E6E40 /* Profile */,
 				687605512CCE5CC1008167B0 /* Workspace */,
 			);
 			path = Presentation;
