@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		541DC7122CDDDEAB0051E898 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7112CDDDEAB0051E898 /* PaddingLabel.swift */; };
 		544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA7832CDA22A90066F0AD /* TabbarViewController.swift */; };
 		544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */; };
 		544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */; };
@@ -35,6 +36,9 @@
 		5476C9572CD4C7CA00E95AD4 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */; };
 		5476C9592CD4C7FF00E95AD4 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */; };
 		5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */; };
+		5477F1C32CDA393B007D1A92 /* ChattingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477F1C22CDA393B007D1A92 /* ChattingTableViewCell.swift */; };
+		5477F1C52CDA3955007D1A92 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477F1C42CDA3955007D1A92 /* ChattingViewController.swift */; };
+		5477F1C72CDA3959007D1A92 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477F1C62CDA3959007D1A92 /* ChattingView.swift */; };
 		54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */; };
 		54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC82CD602EC00313E17 /* NicknameEditView.swift */; };
 		54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FCA2CD609B800313E17 /* UITextField+.swift */; };
@@ -77,6 +81,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		541DC7112CDDDEAB0051E898 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		544CA7832CDA22A90066F0AD /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -107,6 +112,9 @@
 		5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditTableViewCell.swift; sourceTree = "<group>"; };
+		5477F1C22CDA393B007D1A92 /* ChattingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingTableViewCell.swift; sourceTree = "<group>"; };
+		5477F1C42CDA3955007D1A92 /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		5477F1C62CDA3959007D1A92 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 		54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewController.swift; sourceTree = "<group>"; };
 		54A53FC82CD602EC00313E17 /* NicknameEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditView.swift; sourceTree = "<group>"; };
 		54A53FCA2CD609B800313E17 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
@@ -163,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				54565AB22CCE610400B5A354 /* BaseView.swift */,
+				541DC7112CDDDEAB0051E898 /* PaddingLabel.swift */,
 				544CA7832CDA22A90066F0AD /* TabbarViewController.swift */,
 				544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */,
 				544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */,
@@ -271,6 +280,7 @@
 		546589A92CCE56B900736BA9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5477F1C12CDA3920007D1A92 /* Chatting */,
 				54565ABC2CCF630400B5A354 /* Onboarding */,
 				546589AA2CCE56D000736BA9 /* Authorization */,
 				54565AD72CD0EEA200B5A354 /* Signup */,
@@ -288,6 +298,16 @@
 				54565ABF2CCF63DF00B5A354 /* AuthorizationView.swift */,
 			);
 			path = Authorization;
+			sourceTree = "<group>";
+		};
+		5477F1C12CDA3920007D1A92 /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				5477F1C42CDA3955007D1A92 /* ChattingViewController.swift */,
+				5477F1C62CDA3959007D1A92 /* ChattingView.swift */,
+				5477F1C22CDA393B007D1A92 /* ChattingTableViewCell.swift */,
+			);
+			path = Chatting;
 			sourceTree = "<group>";
 		};
 		548940932CD4C02F001E6E40 /* Profile */ = {
@@ -530,12 +550,14 @@
 				54A53FD32CD6346D00313E17 /* PhoneNumberEditViewController.swift in Sources */,
 				5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */,
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
+				541DC7122CDDDEAB0051E898 /* PaddingLabel.swift in Sources */,
 				544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */,
 				54565ABE2CCF631100B5A354 /* OnboardingView.swift in Sources */,
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
 				544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */,
+				5477F1C32CDA393B007D1A92 /* ChattingTableViewCell.swift in Sources */,
 				5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */,
 				54A53FDA2CD636D500313E17 /* ProfileView.swift in Sources */,
 				6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */,
@@ -549,6 +571,7 @@
 				54565AE92CD1056600B5A354 /* UIViewController+.swift in Sources */,
 				54A53FE52CD6426D00313E17 /* CoinTableViewCell.swift in Sources */,
 				54A53FE72CD65E0600313E17 /* CameraImageView.swift in Sources */,
+				5477F1C52CDA3955007D1A92 /* ChattingViewController.swift in Sources */,
 				687605842CD66AAF008167B0 /* EditWorkspaceViewController.swift in Sources */,
 				5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */,
 				6876055C2CCF81AE008167B0 /* HomeViewModel.swift in Sources */,
@@ -563,6 +586,7 @@
 				687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
 				54565AE52CD1004000B5A354 /* NavigationRepresentable.swift in Sources */,
+				5477F1C72CDA3959007D1A92 /* ChattingView.swift in Sources */,
 				54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */,
 				5476C9572CD4C7CA00E95AD4 /* ProfileEditViewController.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
