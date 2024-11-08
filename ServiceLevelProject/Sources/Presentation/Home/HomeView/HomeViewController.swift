@@ -26,7 +26,6 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureTableView()
         bind()
         rightSwipeAction()
         homeView.emptyBgView.isHidden = true // 임시
@@ -95,12 +94,7 @@ extension HomeViewController {
 }
 
 // MARK: Functions
-extension HomeViewController: NavigationRepresentable {
-    private func configureTableView() {
-        homeView.channelTableView.register(ChannelCell.self, forCellReuseIdentifier: ChannelCell.id)
-        homeView.directMessageTableView.register(DirectMessageCell.self, forCellReuseIdentifier: DirectMessageCell.id)
-    }
-    
+extension HomeViewController: NavigationRepresentable {    
     private func configureNavigaionItem() {
         // titleView
         let homeNavigationView = HomeNavigationView()
@@ -144,7 +138,8 @@ extension HomeViewController: NavigationRepresentable {
                 case .create:
                     print("채널 생성")
                 case .search:
-                    print("채널 탐색")
+                    let vc = SearchChannelViewController()
+                    self.presentNavigationController(rootViewController: vc)
                 case .cancel:
                     print("취소")
                 }

@@ -12,6 +12,7 @@ import Then
 final class ChangeAdminView: BaseView {
     // MARK: UI
     let tableView = UITableView().then {
+        $0.register(ChangeAdminCell.self, forCellReuseIdentifier: ChangeAdminCell.id)
         $0.rowHeight = 60
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none

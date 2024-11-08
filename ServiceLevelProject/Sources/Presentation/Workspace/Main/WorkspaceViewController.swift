@@ -27,10 +27,6 @@ final class WorkspaceViewController: BaseViewController {
         workspaceView.workspaceEmptyView.isHidden = true // 임시
         bind()
     }
-    
-    override func configureNavigation() {
-        workspaceView.tableView.register(WorkspaceCell.self, forCellReuseIdentifier: WorkspaceCell.id)
-    }
 }
 
 // MARK: bind
