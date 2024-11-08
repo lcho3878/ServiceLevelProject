@@ -77,6 +77,14 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
+        // 팀원 추가 버튼
+        homeView.addMemberButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = InviteMemberViewController()
+                self.presentNavigationController(rootViewController: vc)
+            }
+            .disposed(by: disposeBag)
+        
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
