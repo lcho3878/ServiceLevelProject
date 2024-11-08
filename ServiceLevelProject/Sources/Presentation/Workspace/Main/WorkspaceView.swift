@@ -29,6 +29,7 @@ final class WorkspaceView: BaseView {
     }
     
     let tableView = UITableView().then {
+        $0.register(WorkspaceCell.self, forCellReuseIdentifier: WorkspaceCell.id)
         $0.rowHeight = 72
         $0.separatorColor = .clear
     }

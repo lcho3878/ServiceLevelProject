@@ -65,6 +65,7 @@ final class HomeView: BaseView {
     let channelBgView = UIView()
     
     let channelTableView = UITableView().then {
+        $0.register(ChannelCell.self, forCellReuseIdentifier: ChannelCell.id)
         $0.rowHeight = 41
         $0.showsVerticalScrollIndicator = false
         $0.isScrollEnabled = false
@@ -111,6 +112,7 @@ final class HomeView: BaseView {
     let directMessageBgView = UIView()
     
     let directMessageTableView = UITableView().then {
+        $0.register(DirectMessageCell.self, forCellReuseIdentifier: DirectMessageCell.id)
         $0.rowHeight = 44
         $0.showsVerticalScrollIndicator = false
         $0.isScrollEnabled = false

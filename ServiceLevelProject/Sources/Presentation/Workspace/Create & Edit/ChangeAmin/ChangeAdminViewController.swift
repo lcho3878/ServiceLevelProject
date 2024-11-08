@@ -25,7 +25,6 @@ final class ChangeAdminViewController: BaseViewController, DismissButtonPresenta
         super.viewDidLoad()
         
         setDismissButton()
-        configureTableView()
         bind()
     }
     
@@ -35,10 +34,6 @@ final class ChangeAdminViewController: BaseViewController, DismissButtonPresenta
 }
 
 extension ChangeAdminViewController {
-    private func configureTableView() {
-        changeAdminView.tableView.register(ChangeAdminCell.self, forCellReuseIdentifier: ChangeAdminCell.id)
-    }
-    
     private func bind() {
         let input = ChangeAdminViewModel.Input()
         let output = viewModel.transform(input: input)
