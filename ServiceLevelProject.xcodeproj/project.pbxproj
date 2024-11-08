@@ -422,10 +422,10 @@
 		687605612CCF8D58008167B0 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
-				687605A52CDE40B6008167B0 /* InviteMember */,
 				687605942CDDF3ED008167B0 /* Home */,
 				687605952CDDF42A008167B0 /* AddChannel */,
 				687605962CDDF43A008167B0 /* SearchChannel */,
+				687605A52CDE40B6008167B0 /* InviteMember */,
 				5477F1C12CDA3920007D1A92 /* Chatting */,
 			);
 			path = Channel;
