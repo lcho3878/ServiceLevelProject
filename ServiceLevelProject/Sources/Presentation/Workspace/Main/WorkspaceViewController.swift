@@ -34,7 +34,7 @@ final class WorkspaceViewController: BaseViewController {
 }
 
 // MARK: bind
-extension WorkspaceViewController: NavigationRepresentable {
+extension WorkspaceViewController {
     func bind() {
         let input = WorkspaceViewModel.Input()
         let output = viewModel.transform(input: input)
@@ -71,7 +71,7 @@ extension WorkspaceViewController: NavigationRepresentable {
 }
 
 // MARK: Functions
-extension WorkspaceViewController {
+extension WorkspaceViewController: NavigationRepresentable {
     func configureManagerActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
