@@ -154,6 +154,14 @@ final class HomeView: BaseView {
     
     let addMemberButton = UIButton()
     
+    // --- 하단 원형 버튼뷰 ---
+    let floatingButton = UIButton().then {
+        $0.backgroundColor = .brand
+        $0.tintColor = .brandWhite
+        $0.setImage(UIImage(resource: .floating), for: .normal)
+        $0.layer.cornerRadius = 25
+    }
+    
     // MARK: Functions
     override func addSubviews() {
         // emptyView
@@ -161,7 +169,7 @@ final class HomeView: BaseView {
         emptyBgView.addSubviews([cannotFindTitleLabel, guideLabel, workspaceEmptyImageView, createWorkspaceButton])
         
         // initialView
-        addSubview(scrollView)
+        addSubviews([scrollView, floatingButton])
         scrollView.addSubview(contentView)
         contentView.addSubviews([showChannelsBgView, channelBgView, channelDividerView, showDirectMessageBgView, directMessageBgView, directMessgeDividerView, addMemberView])
         showChannelsBgView.addSubviews([channelLabel, channelDropdownButton, showChannelsButton])
@@ -380,6 +388,12 @@ final class HomeView: BaseView {
         
         addMemberButton.snp.makeConstraints {
             $0.edges.equalTo(addMemberView)
+        }
+        
+        floatingButton.snp.makeConstraints {
+            $0.trailing.equalTo(safeArea).offset(-18)
+            $0.bottom.equalTo(safeArea).offset(-18)
+            $0.width.height.equalTo(50)
         }
     }
     

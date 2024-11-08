@@ -77,6 +77,28 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
+        // 팀원 추가 버튼
+        homeView.addMemberButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = InviteMemberViewController()
+                self.presentNavigationController(rootViewController: vc)
+            }
+            .disposed(by: disposeBag)
+        
+        // 새 메시지 시작 버튼
+        homeView.startNewMessageButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.tabBarController?.selectedIndex = 1
+            }
+            .disposed(by: disposeBag)
+        
+        // 플로팅 버튼
+        homeView.floatingButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.tabBarController?.selectedIndex = 1
+            }
+            .disposed(by: disposeBag)
+        
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
