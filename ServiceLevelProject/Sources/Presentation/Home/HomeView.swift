@@ -166,7 +166,6 @@ final class HomeView: BaseView {
         channelBgView.addSubviews([channelTableView, addChannelView])
         addChannelView.addSubviews([channelPlusImageView, addChannelLabel, addChannelButton])
         showDirectMessageBgView.addSubviews([directMessageLabel, directMessageDropdowmButton, showDirectMessageButton])
-        
         directMessageBgView.addSubviews([directMessageTableView, startNewMessageView])
         startNewMessageView.addSubviews([startNewMessagePlusImageView, startNewMessageLabel, startNewMessageButton])
         addMemberView.addSubviews([memberPlusImageView, addMemberLabel, addMemberButton])
@@ -397,56 +396,66 @@ final class HomeView: BaseView {
     }
     
     func hideChannelTableView() {
-        switch showChannelsButton.isSelected {
-        case true:
-            channelDropdownButton.setImage(UIImage(resource: .chevronRight), for: .normal)
-            channelBgView.isHidden = true
-            
-            channelTableView.snp.updateConstraints {
-                $0.height.equalTo(0)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self else { return }
+            switch showChannelsButton.isSelected {
+            case true:
+                channelDropdownButton.setImage(UIImage(resource: .chevronRight), for: .normal)
+                channelBgView.isHidden = true
+                
+                channelTableView.snp.updateConstraints {
+                    $0.height.equalTo(0)
+                }
+                
+                addChannelView.snp.updateConstraints {
+                    $0.height.equalTo(0)
+                }
+            case false:
+                channelDropdownButton.setImage(UIImage(resource: .chevronDown), for: .normal)
+                channelBgView.isHidden = false
+                
+                channelTableView.snp.updateConstraints {
+                    $0.height.equalTo(self.channelTableView.contentSize.height)
+                }
+                
+                addChannelView.snp.updateConstraints {
+                    $0.height.equalTo(41)
+                }
             }
             
-            addChannelView.snp.updateConstraints {
-                $0.height.equalTo(0)
-            }
-        case false:
-            channelDropdownButton.setImage(UIImage(resource: .chevronDown), for: .normal)
-            channelBgView.isHidden = false
-            
-            channelTableView.snp.updateConstraints {
-                $0.height.equalTo(channelTableView.contentSize.height)
-            }
-            
-            addChannelView.snp.updateConstraints {
-                $0.height.equalTo(41)
-            }
+            layoutIfNeeded()
         }
     }
     
     func hideDirectMessageTableView() {
-        switch showDirectMessageButton.isSelected {
-        case true:
-            directMessageDropdowmButton.setImage(UIImage(resource: .chevronRight), for: .normal)
-            directMessageBgView.isHidden = true
-            
-            directMessageTableView.snp.updateConstraints {
-                $0.height.equalTo(0)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self else { return }
+            switch showDirectMessageButton.isSelected {
+            case true:
+                directMessageDropdowmButton.setImage(UIImage(resource: .chevronRight), for: .normal)
+                directMessageBgView.isHidden = true
+                
+                directMessageTableView.snp.updateConstraints {
+                    $0.height.equalTo(0)
+                }
+                
+                startNewMessageView.snp.updateConstraints {
+                    $0.height.equalTo(0)
+                }
+            case false:
+                directMessageDropdowmButton.setImage(UIImage(resource: .chevronDown), for: .normal)
+                directMessageBgView.isHidden = false
+                
+                directMessageTableView.snp.updateConstraints {
+                    $0.height.equalTo(self.directMessageTableView.contentSize.height)
+                }
+                
+                startNewMessageView.snp.updateConstraints {
+                    $0.height.equalTo(41)
+                }
             }
             
-            startNewMessageView.snp.updateConstraints {
-                $0.height.equalTo(0)
-            }
-        case false:
-            directMessageDropdowmButton.setImage(UIImage(resource: .chevronDown), for: .normal)
-            directMessageBgView.isHidden = false
-            
-            directMessageTableView.snp.updateConstraints {
-                $0.height.equalTo(directMessageTableView.contentSize.height)
-            }
-            
-            startNewMessageView.snp.updateConstraints {
-                $0.height.equalTo(41)
-            }
+            layoutIfNeeded()
         }
     }
 }

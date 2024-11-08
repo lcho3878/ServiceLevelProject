@@ -41,16 +41,13 @@ final class HomeViewController: BaseViewController {
     }
 }
 
-extension HomeViewController: NavigationRepresentable {
-    private func configureTableView() {
-        homeView.channelTableView.register(ChannelCell.self, forCellReuseIdentifier: ChannelCell.id)
-        homeView.directMessageTableView.register(DirectMessageCell.self, forCellReuseIdentifier: DirectMessageCell.id)
-    }
-    
+// MARK: bind
+extension HomeViewController {
     private func bind() {
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        // EmptyView - 워크스페이스 생성 버튼
         homeView.createWorkspaceButton.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = CreateWorkspaceViewController()
@@ -58,6 +55,7 @@ extension HomeViewController: NavigationRepresentable {
             }
             .disposed(by: disposeBag)
         
+        // 채널 바
         homeView.showChannelsButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.homeView.showChannelsButton.isSelected.toggle()
@@ -65,10 +63,18 @@ extension HomeViewController: NavigationRepresentable {
             }
             .disposed(by: disposeBag)
         
+        // 다이렉트 메시지 바
         homeView.showDirectMessageButton.rx.tap
             .bind(with: self) { owner, _ in
-                owner.homeView.showDirectMessageButton.isSelected.toggle()                
+                owner.homeView.showDirectMessageButton.isSelected.toggle()
                 owner.homeView.hideDirectMessageTableView()
+            }
+            .disposed(by: disposeBag)
+        
+        // 채널 추가 버튼
+        homeView.addChannelButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.configureChannelActionSheet()
             }
             .disposed(by: disposeBag)
         
@@ -85,6 +91,14 @@ extension HomeViewController: NavigationRepresentable {
             .disposed(by: disposeBag)
         
         homeView.updateTableViewLayout()
+    }
+}
+
+// MARK: Functions
+extension HomeViewController: NavigationRepresentable {
+    private func configureTableView() {
+        homeView.channelTableView.register(ChannelCell.self, forCellReuseIdentifier: ChannelCell.id)
+        homeView.directMessageTableView.register(DirectMessageCell.self, forCellReuseIdentifier: DirectMessageCell.id)
     }
     
     private func configureNavigaionItem() {
@@ -120,6 +134,26 @@ extension HomeViewController: NavigationRepresentable {
         navigationItem.rightBarButtonItem = homeNavigationView.rightNaviBarItem
     }
     
+    private func configureChannelActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let actions: [AddChannelActionSheet] = [.create, .search, .cancel]
+        actions.forEach { action in
+            actionSheet.addAction(action.channelActionSheet { action in
+                switch action {
+                case .create:
+                    print("채널 생성")
+                case .search:
+                    print("채널 탐색")
+                case .cancel:
+                    print("취소")
+                }
+            })
+        }
+        
+        present(actionSheet, animated: true)
+    }
+    
     private func rightSwipeAction() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: nil)
         swipeRight.direction = .right
@@ -130,5 +164,31 @@ extension HomeViewController: NavigationRepresentable {
                 owner.present(owner.menu, animated: true)
             }
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: Enum
+extension HomeViewController {
+    enum AddChannelActionSheet {
+        case create
+        case search
+        case cancel
+        
+        func channelActionSheet(handler: @escaping (AddChannelActionSheet) -> Void) -> UIAlertAction {
+            switch self {
+            case .create:
+                return UIAlertAction(title: "채널 생성", style: .default) { _ in
+                    handler(.create)
+                }
+            case .search:
+                return UIAlertAction(title: "채널 탐색", style: .default) { _ in
+                    handler(.search)
+                }
+            case .cancel:
+                return UIAlertAction(title: "취소", style: .cancel) { _ in
+                    handler(.cancel)
+                }
+            }
+        }
     }
 }
