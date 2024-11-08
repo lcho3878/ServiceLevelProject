@@ -15,7 +15,7 @@ final class ChattingTableViewCell: BaseTableViewCell {
         $0.clipsToBounds = true
     }
     
-    private let tempStackView = UIStackView().then {
+    private let centerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .leading
         $0.spacing = 5
@@ -41,19 +41,40 @@ final class ChattingTableViewCell: BaseTableViewCell {
         $0.textColor = .textSecondary
     }
     
-    private let tempImageStackView = UIView().then {
-        $0.backgroundColor = .systemPink
+    private let imageStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+        $0.spacing = 2
+        $0.layer.cornerRadius = 12
+        $0.clipsToBounds = true
+    }
+    
+    private let firstImageStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.spacing = 2
+    }
+    
+    private let secondImageStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.spacing = 2
     }
     
     override func addSubviews() {
-        tempStackView.addArrangedSubviews([
+        imageStackView.addArrangedSubviews([
+            firstImageStackView,
+            secondImageStackView
+        ])
+        
+        centerStackView.addArrangedSubviews([
             messageLabel,
-            tempImageStackView
+            imageStackView
         ])
         addSubviews([
             profileImageView,
             nicknameLabel,
-            tempStackView,
+            centerStackView,
             dateLabel,
         ])
     }
@@ -72,21 +93,23 @@ final class ChattingTableViewCell: BaseTableViewCell {
             $0.leading.equalTo(profileImageView.snp.trailing).offset(8)
         }
         
-        tempStackView.snp.makeConstraints {
+        centerStackView.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(5)
             $0.leading.equalTo(nicknameLabel)
             $0.bottom.equalTo(safe).inset(6)
         }
         
-        tempImageStackView.snp.makeConstraints {
-            $0.width.equalTo(240)
-            $0.height.equalTo(160).priority(.low)
+        imageStackView.snp.makeConstraints {
+            $0.width.equalTo(244)
         }
         
+        firstImageStackView.snp.makeConstraints { $0.height.equalTo(80) }
+        secondImageStackView.snp.makeConstraints { $0.height.equalTo(80) }
+        
         dateLabel.snp.makeConstraints {
-            $0.leading.equalTo(tempStackView.snp.trailing).offset(8)
-            $0.trailing.lessThanOrEqualTo(safe).inset(30)
-            $0.bottom.equalTo(tempStackView)
+            $0.leading.equalTo(centerStackView.snp.trailing).offset(8)
+            $0.trailing.lessThanOrEqualTo(safe).inset(20)
+            $0.bottom.equalTo(centerStackView)
         }
     }
 }
@@ -97,6 +120,62 @@ extension ChattingTableViewCell {
         profileImageView.image = data.profileImage
         messageLabel.text = data.message
         messageLabel.isHidden = data.message == nil
-        tempImageStackView.isHidden = data.images.isEmpty
+        configureImages(images: data.images)
+    }
+    
+    private func configureImages(images: [UIImage]) {
+        imageStackView.isHidden = images.isEmpty
+        firstImageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        secondImageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        let imageViews = images.map { image -> UIImageView in
+            let imageView = UIImageView(image: image)
+            imageView.backgroundColor = .lightGray
+            imageView.layer.cornerRadius = 8
+            imageView.contentMode = .scaleToFill
+            imageView.clipsToBounds = true
+            return imageView
+        }
+        
+        let count = images.count
+        switch count {
+        case 1:
+            if let imageView = imageViews.first {
+                firstImageStackView.addArrangedSubview(imageView)
+            }
+            firstImageStackView.snp.remakeConstraints { $0.height.equalTo(160) }
+            secondImageStackView.isHidden = true
+            
+        case 2:
+            for imageView in imageViews {
+                firstImageStackView.addArrangedSubview(imageView)
+            }
+            secondImageStackView.isHidden = true
+            
+        case 3:
+            for imageView in imageViews {
+                firstImageStackView.addArrangedSubview(imageView)
+            }
+            secondImageStackView.isHidden = true
+            
+        case 4:
+            for (index, imageView) in imageViews.enumerated() {
+                if index < 2 {
+                    firstImageStackView.addArrangedSubview(imageView)
+                } else {
+                    secondImageStackView.addArrangedSubview(imageView)
+                }
+            }
+        case 5:
+            for (index, imageView) in imageViews.enumerated() {
+                if index < 3 {
+                    firstImageStackView.addArrangedSubview(imageView)
+                } else {
+                    secondImageStackView.addArrangedSubview(imageView)
+                }
+            }
+        default:
+            break
+        }
     }
 }
