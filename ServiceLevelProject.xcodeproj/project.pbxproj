@@ -387,12 +387,9 @@
 		687605612CCF8D58008167B0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				687605522CCE5D67008167B0 /* HomeViewController.swift */,
-				687605592CCF7F86008167B0 /* HomeView.swift */,
-				6876056E2CD340CB008167B0 /* HomeNavigationView.swift */,
-				6876055B2CCF81AE008167B0 /* HomeViewModel.swift */,
-				687605902CDA5ED7008167B0 /* ChannelCell.swift */,
-				687605922CDB2D04008167B0 /* DirectMessageCell.swift */,
+				687605942CDDF3ED008167B0 /* HomeView */,
+				687605952CDDF42A008167B0 /* AddChannel */,
+				687605962CDDF43A008167B0 /* SearchChannel */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -452,6 +449,33 @@
 				6876058E2CDA396F008167B0 /* ChangeAdminCell.swift */,
 			);
 			path = ChangeAmin;
+			sourceTree = "<group>";
+		};
+		687605942CDDF3ED008167B0 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				687605522CCE5D67008167B0 /* HomeViewController.swift */,
+				687605592CCF7F86008167B0 /* HomeView.swift */,
+				6876056E2CD340CB008167B0 /* HomeNavigationView.swift */,
+				6876055B2CCF81AE008167B0 /* HomeViewModel.swift */,
+				687605902CDA5ED7008167B0 /* ChannelCell.swift */,
+				687605922CDB2D04008167B0 /* DirectMessageCell.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		687605952CDDF42A008167B0 /* AddChannel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddChannel;
+			sourceTree = "<group>";
+		};
+		687605962CDDF43A008167B0 /* SearchChannel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SearchChannel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
