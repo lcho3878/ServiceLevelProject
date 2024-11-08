@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		541DC7122CDDDEAB0051E898 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7112CDDDEAB0051E898 /* PaddingLabel.swift */; };
+		541DC7162CDE38960051E898 /* SettingChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7152CDE38960051E898 /* SettingChannelViewController.swift */; };
+		541DC7182CDE389D0051E898 /* SettingChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7172CDE389D0051E898 /* SettingChannelView.swift */; };
+		541DC71A2CDE38A60051E898 /* SettingChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7192CDE38A60051E898 /* SettingChannelCell.swift */; };
+		541DC71C2CDE51F30051E898 /* SettingChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC71B2CDE51F30051E898 /* SettingChannelViewModel.swift */; };
 		544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA7832CDA22A90066F0AD /* TabbarViewController.swift */; };
 		544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */; };
 		544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */; };
@@ -94,6 +98,10 @@
 
 /* Begin PBXFileReference section */
 		541DC7112CDDDEAB0051E898 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		541DC7152CDE38960051E898 /* SettingChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChannelViewController.swift; sourceTree = "<group>"; };
+		541DC7172CDE389D0051E898 /* SettingChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChannelView.swift; sourceTree = "<group>"; };
+		541DC7192CDE38A60051E898 /* SettingChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChannelCell.swift; sourceTree = "<group>"; };
+		541DC71B2CDE51F30051E898 /* SettingChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChannelViewModel.swift; sourceTree = "<group>"; };
 		544CA7832CDA22A90066F0AD /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -191,6 +199,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		541DC7142CDE38450051E898 /* SettingChannel */ = {
+			isa = PBXGroup;
+			children = (
+				541DC7152CDE38960051E898 /* SettingChannelViewController.swift */,
+				541DC71B2CDE51F30051E898 /* SettingChannelViewModel.swift */,
+				541DC7172CDE389D0051E898 /* SettingChannelView.swift */,
+				541DC7192CDE38A60051E898 /* SettingChannelCell.swift */,
+			);
+			path = SettingChannel;
+			sourceTree = "<group>";
+		};
 		54565AB12CCE60FB00B5A354 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +440,7 @@
 				687605942CDDF3ED008167B0 /* Home */,
 				687605952CDDF42A008167B0 /* AddChannel */,
 				687605962CDDF43A008167B0 /* SearchChannel */,
+				541DC7142CDE38450051E898 /* SettingChannel */,
 				5477F1C12CDA3920007D1A92 /* Chatting */,
 			);
 			path = Channel;
@@ -607,6 +627,7 @@
 				54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */,
 				54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */,
 				54A53FDC2CD63A6C00313E17 /* ProfileTableViewCell.swift in Sources */,
+				541DC71A2CDE38A60051E898 /* SettingChannelCell.swift in Sources */,
 				54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */,
 				5476C9592CD4C7FF00E95AD4 /* ProfileEditView.swift in Sources */,
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
@@ -651,12 +672,15 @@
 				687605782CD542E1008167B0 /* DoubleButtonAlertViewController.swift in Sources */,
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
+				541DC7182CDE389D0051E898 /* SettingChannelView.swift in Sources */,
 				54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				687605A42CDE119D008167B0 /* AddChannelView.swift in Sources */,
 				687605912CDA5ED7008167B0 /* ChannelCell.swift in Sources */,
+				541DC71C2CDE51F30051E898 /* SettingChannelViewModel.swift in Sources */,
 				687605812CD66A74008167B0 /* CreateWorkspaceViewController.swift in Sources */,
 				544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */,
+				541DC7162CDE38960051E898 /* SettingChannelViewController.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				6876058F2CDA396F008167B0 /* ChangeAdminCell.swift in Sources */,
 				687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */,
