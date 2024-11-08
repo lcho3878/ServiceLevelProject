@@ -136,7 +136,8 @@ extension HomeViewController: NavigationRepresentable {
             actionSheet.addAction(action.channelActionSheet { action in
                 switch action {
                 case .create:
-                    print("채널 생성")
+                    let vc = AddChannelViewController()
+                    self.presentNavigationController(rootViewController: vc)
                 case .search:
                     let vc = SearchChannelViewController()
                     self.presentNavigationController(rootViewController: vc)

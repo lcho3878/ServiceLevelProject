@@ -84,6 +84,8 @@
 		6876059A2CDDFD37008167B0 /* SearchChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605992CDDFD37008167B0 /* SearchChannelView.swift */; };
 		6876059C2CDE0758008167B0 /* SearchChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876059B2CDE0758008167B0 /* SearchChannelCell.swift */; };
 		687605A02CDE07DC008167B0 /* SearchChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876059F2CDE07DC008167B0 /* SearchChannelViewModel.swift */; };
+		687605A22CDE1171008167B0 /* AddChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605A12CDE1171008167B0 /* AddChannelViewController.swift */; };
+		687605A42CDE119D008167B0 /* AddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605A32CDE119D008167B0 /* AddChannelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +162,8 @@
 		687605992CDDFD37008167B0 /* SearchChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChannelView.swift; sourceTree = "<group>"; };
 		6876059B2CDE0758008167B0 /* SearchChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChannelCell.swift; sourceTree = "<group>"; };
 		6876059F2CDE07DC008167B0 /* SearchChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChannelViewModel.swift; sourceTree = "<group>"; };
+		687605A12CDE1171008167B0 /* AddChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelViewController.swift; sourceTree = "<group>"; };
+		687605A32CDE119D008167B0 /* AddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,6 +479,8 @@
 		687605952CDDF42A008167B0 /* AddChannel */ = {
 			isa = PBXGroup;
 			children = (
+				687605A12CDE1171008167B0 /* AddChannelViewController.swift */,
+				687605A32CDE119D008167B0 /* AddChannelView.swift */,
 			);
 			path = AddChannel;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
 				54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
+				687605A42CDE119D008167B0 /* AddChannelView.swift in Sources */,
 				687605912CDA5ED7008167B0 /* ChannelCell.swift in Sources */,
 				687605812CD66A74008167B0 /* CreateWorkspaceViewController.swift in Sources */,
 				544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */,
@@ -631,6 +638,7 @@
 				6876058F2CDA396F008167B0 /* ChangeAdminCell.swift in Sources */,
 				687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
+				687605A22CDE1171008167B0 /* AddChannelViewController.swift in Sources */,
 				687605982CDDF810008167B0 /* SearchChannelViewController.swift in Sources */,
 				54565AE52CD1004000B5A354 /* NavigationRepresentable.swift in Sources */,
 				54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */,
