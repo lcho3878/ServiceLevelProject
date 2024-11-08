@@ -21,9 +21,21 @@ final class DirectMessageCell: BaseTableViewCell {
         $0.textAlignment = .left
     }
     
+    let unreadBadgeView = UIView().then {
+        $0.backgroundColor = .brand
+        $0.layer.cornerRadius = 8
+    }
+    
+    let unreadCountLabel = UILabel().then {
+        $0.font = .caption
+        $0.textColor = .brandWhite
+        $0.textAlignment = .center
+    }
+    
     // MARK: Functions
     override func addSubviews() {
-        contentView.addSubviews([profileImageView, userNameLabel])
+        contentView.addSubviews([profileImageView, userNameLabel, unreadBadgeView])
+        unreadBadgeView.addSubview(unreadCountLabel)
     }
     
     override func setConstraints() {
@@ -38,15 +50,32 @@ final class DirectMessageCell: BaseTableViewCell {
         userNameLabel.snp.makeConstraints {
             $0.leading.equalTo(profileImageView.snp.trailing).offset(11)
             $0.verticalEdges.equalTo(safeArea).inset(13)
-            $0.trailing.equalTo(safeArea).offset(-43)
+            $0.trailing.equalTo(unreadBadgeView.snp.leading).offset(-10)
         }
         
-        // 숫자 넣기
+        unreadBadgeView.snp.makeConstraints {
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(-16)
+            $0.centerY.equalTo(safeArea.snp.centerY)
+            $0.verticalEdges.equalTo(unreadCountLabel.snp.verticalEdges).inset(-2)
+            $0.horizontalEdges.equalTo(unreadCountLabel.snp.horizontalEdges).inset(-4)
+        }
+        
+        unreadCountLabel.snp.makeConstraints {
+            $0.verticalEdges.equalTo(unreadBadgeView.snp.verticalEdges).inset(2)
+            $0.horizontalEdges.equalTo(unreadBadgeView.snp.horizontalEdges).inset(4)
+            $0.width.greaterThanOrEqualTo(11).priority(1)
+            $0.height.equalTo(14)
+        }
     }
     
     func configureCell(element: DirectMessageTestData) {
         profileImageView.image = UIImage(systemName: element.chatProfileImage)
         userNameLabel.text = element.chatFriendName
+        if element.unreadCount > 0 {
+            unreadCountLabel.text = "\(element.unreadCount)"
+        } else {
+            unreadBadgeView.isHidden = true
+        }
         selectionStyle = .none
     }
 }
