@@ -59,7 +59,7 @@ final class ChattingView: BaseView {
         buttonView.snp.makeConstraints {
             $0.height.equalTo(38)
             $0.horizontalEdges.equalTo(safe).inset(16)
-            $0.bottom.equalTo(safe).inset(12)
+            adjustableConstraint = $0.bottom.equalTo(safe).inset(12).constraint.layoutConstraints.first
         }
         
         plusButton.snp.makeConstraints {
