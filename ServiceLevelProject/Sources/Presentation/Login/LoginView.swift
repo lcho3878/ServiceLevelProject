@@ -59,13 +59,4 @@ extension LoginView {
             $0.font = UIFont.title2
         }
     }
-    
-    private func loginTextField(placeholder: String) -> UITextField {
-        return  UITextField().then {
-            $0.placeholder = placeholder
-            $0.font = UIFont.title2
-            $0.backgroundColor = .brandWhite
-            $0.layer.cornerRadius = 8
-        }
-    }
 }
