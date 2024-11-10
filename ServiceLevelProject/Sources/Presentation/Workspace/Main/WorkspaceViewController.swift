@@ -25,6 +25,7 @@ final class WorkspaceViewController: BaseViewController {
         super.viewDidLoad()
         
         workspaceView.workspaceEmptyView.isHidden = true // 임시
+        // workspaceView.tableView.isHidden = true
         bind()
     }
 }

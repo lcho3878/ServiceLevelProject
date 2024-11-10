@@ -24,6 +24,8 @@ final class DMViewController: BaseViewController {
         super.viewDidLoad()
         
         bind()
+        dmView.emptyView.isHidden = true // 임시
+        // dmView.nonEmptyView.isHidden = true // 임시
     }
     
     override func configureNavigation() {

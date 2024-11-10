@@ -42,7 +42,7 @@ final class DMViewModel: ViewModelBindable {
         ])
         
         let dmList = BehaviorSubject(value: [
-            DMListTestData(profileImage: "paperplane.fill", userName: "JackJackJackJackJackJackJackJackJackJackJackJackJackJack", lastChat: "오늘 정말 고생 많으셨습니다~!!", lastChatDate: "PM 11:23", unreadCount: 8),
+            DMListTestData(profileImage: "paperplane.fill", userName: "Jack", lastChat: "오늘 정말 고생 많으셨습니다~!!", lastChatDate: "PM 11:23", unreadCount: 8),
             DMListTestData(profileImage: "star.fill", userName: "Hue", lastChat: "Cause I Know what you like boy You're my chemical hype boy 내 지난날들은 눈 뜨면 잊는 꿈 Hype boy 너만원만줘 Hype boy 너만원만줘 Hype boy 너만원만줘", lastChatDate: "PM 06:33", unreadCount: 1),
             DMListTestData(profileImage: "figure.walk", userName: "Dan", lastChat: "수료식 잊지 않으셨죠?", lastChatDate: "AM 05:08", unreadCount: 0),
             DMListTestData(profileImage: "star.fill", userName: "캠퍼스 좋아", lastChat: "이력서와 포트폴리오 파일입니다!", lastChatDate: "2024년 10월 20일", unreadCount: 0),
