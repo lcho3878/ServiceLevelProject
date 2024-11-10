@@ -11,9 +11,9 @@ import Then
 
 final class LoginView: BaseView {
     private lazy var emailLabel = loginLabel(title: "이메일")
-    private lazy var emailTextField = loginTextField(placeholder: "이메일을 입력하세요")
+    private lazy var emailTextField = BaseTextField(placeholder: "이메일을 입력하세요")
     private lazy var passwordLabel = loginLabel(title: "비밀번호")
-    private lazy var passwordTextField = loginTextField(placeholder: "비밀번호를 입력하세요")
+    private lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요")
     
     override func addSubviews() {
         addSubviews([
