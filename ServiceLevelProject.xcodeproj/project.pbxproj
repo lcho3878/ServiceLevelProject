@@ -12,6 +12,9 @@
 		541DC7182CDE389D0051E898 /* SettingChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7172CDE389D0051E898 /* SettingChannelView.swift */; };
 		541DC71A2CDE38A60051E898 /* SettingChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7192CDE38A60051E898 /* SettingChannelCell.swift */; };
 		541DC71C2CDE51F30051E898 /* SettingChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC71B2CDE51F30051E898 /* SettingChannelViewModel.swift */; };
+		541DC71F2CE0F56D0051E898 /* EditChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC71E2CE0F56D0051E898 /* EditChannelViewController.swift */; };
+		541DC7232CE0F57D0051E898 /* EditChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7222CE0F57D0051E898 /* EditChannelView.swift */; };
+		541DC7252CE0F71B0051E898 /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541DC7242CE0F71B0051E898 /* BaseTextField.swift */; };
 		544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA7832CDA22A90066F0AD /* TabbarViewController.swift */; };
 		544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */; };
 		544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */; };
@@ -110,6 +113,9 @@
 		541DC7172CDE389D0051E898 /* SettingChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChannelView.swift; sourceTree = "<group>"; };
 		541DC7192CDE38A60051E898 /* SettingChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChannelCell.swift; sourceTree = "<group>"; };
 		541DC71B2CDE51F30051E898 /* SettingChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChannelViewModel.swift; sourceTree = "<group>"; };
+		541DC71E2CE0F56D0051E898 /* EditChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelViewController.swift; sourceTree = "<group>"; };
+		541DC7222CE0F57D0051E898 /* EditChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelView.swift; sourceTree = "<group>"; };
+		541DC7242CE0F71B0051E898 /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
 		544CA7832CDA22A90066F0AD /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -218,12 +224,22 @@
 		541DC7142CDE38450051E898 /* SettingChannel */ = {
 			isa = PBXGroup;
 			children = (
+				541DC71D2CE0F5610051E898 /* EditChannel */,
 				541DC7152CDE38960051E898 /* SettingChannelViewController.swift */,
 				541DC71B2CDE51F30051E898 /* SettingChannelViewModel.swift */,
 				541DC7172CDE389D0051E898 /* SettingChannelView.swift */,
 				541DC7192CDE38A60051E898 /* SettingChannelCell.swift */,
 			);
 			path = SettingChannel;
+			sourceTree = "<group>";
+		};
+		541DC71D2CE0F5610051E898 /* EditChannel */ = {
+			isa = PBXGroup;
+			children = (
+				541DC71E2CE0F56D0051E898 /* EditChannelViewController.swift */,
+				541DC7222CE0F57D0051E898 /* EditChannelView.swift */,
+			);
+			path = EditChannel;
 			sourceTree = "<group>";
 		};
 		54565AB12CCE60FB00B5A354 /* CustomView */ = {
@@ -240,6 +256,7 @@
 				687605712CD4C084008167B0 /* SingleButtonAlertViewController.swift */,
 				687605772CD542E1008167B0 /* DoubleButtonAlertViewController.swift */,
 				54A53FE62CD65E0600313E17 /* CameraImageView.swift */,
+				541DC7242CE0F71B0051E898 /* BaseTextField.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -712,6 +729,7 @@
 				5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */,
 				6876055C2CCF81AE008167B0 /* HomeViewModel.swift in Sources */,
 				687605782CD542E1008167B0 /* DoubleButtonAlertViewController.swift in Sources */,
+				541DC7232CE0F57D0051E898 /* EditChannelView.swift in Sources */,
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
 				541DC7182CDE389D0051E898 /* SettingChannelView.swift in Sources */,
@@ -723,6 +741,7 @@
 				541DC71C2CDE51F30051E898 /* SettingChannelViewModel.swift in Sources */,
 				687605812CD66A74008167B0 /* CreateWorkspaceViewController.swift in Sources */,
 				544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */,
+				541DC71F2CE0F56D0051E898 /* EditChannelViewController.swift in Sources */,
 				541DC7162CDE38960051E898 /* SettingChannelViewController.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				6876058F2CDA396F008167B0 /* ChangeAdminCell.swift in Sources */,
@@ -744,6 +763,7 @@
 				54A53FD82CD636D200313E17 /* ProfileViewController.swift in Sources */,
 				687605B62CDE5940008167B0 /* DMListCell.swift in Sources */,
 				54565AC02CCF63DF00B5A354 /* AuthorizationView.swift in Sources */,
+				541DC7252CE0F71B0051E898 /* BaseTextField.swift in Sources */,
 				687605A02CDE07DC008167B0 /* SearchChannelViewModel.swift in Sources */,
 				54565ADB2CD0EEBA00B5A354 /* SignupView.swift in Sources */,
 				687605A92CDE410B008167B0 /* InviteMemberView.swift in Sources */,
