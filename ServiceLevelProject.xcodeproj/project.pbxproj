@@ -105,6 +105,8 @@
 		687605B22CDE4F73008167B0 /* DMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605B12CDE4F73008167B0 /* DMViewModel.swift */; };
 		687605B42CDE51ED008167B0 /* DMMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605B32CDE51ED008167B0 /* DMMemberCell.swift */; };
 		687605B62CDE5940008167B0 /* DMListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605B52CDE5940008167B0 /* DMListCell.swift */; };
+		687605BF2CE1D881008167B0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 687605BE2CE1D881008167B0 /* Alamofire */; };
+		687605C22CE1D8B7008167B0 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605C12CE1D8B7008167B0 /* TargetType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -203,6 +205,7 @@
 		687605B12CDE4F73008167B0 /* DMViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMViewModel.swift; sourceTree = "<group>"; };
 		687605B32CDE51ED008167B0 /* DMMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMMemberCell.swift; sourceTree = "<group>"; };
 		687605B52CDE5940008167B0 /* DMListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListCell.swift; sourceTree = "<group>"; };
+		687605C12CE1D8B7008167B0 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				687605452CCE5948008167B0 /* RxCocoa in Frameworks */,
+				687605BF2CE1D881008167B0 /* Alamofire in Frameworks */,
 				6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */,
 				687605472CCE5948008167B0 /* RxSwift in Frameworks */,
 				687605422CCE5901008167B0 /* Then in Frameworks */,
@@ -345,6 +349,7 @@
 		546589A82CCE56A500736BA9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				687605C02CE1D8AE008167B0 /* Network */,
 				687605792CD54332008167B0 /* Animations */,
 				687605542CCE691D008167B0 /* Extension */,
 				54565AB42CCE62E000B5A354 /* Protocol */,
@@ -595,6 +600,14 @@
 			path = DM;
 			sourceTree = "<group>";
 		};
+		687605C02CE1D8AE008167B0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				687605C12CE1D8B7008167B0 /* TargetType.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -618,6 +631,7 @@
 				687605462CCE5948008167B0 /* RxSwift */,
 				687605492CCE5960008167B0 /* Kingfisher */,
 				6876054F2CCE5CA3008167B0 /* SideMenu */,
+				687605BE2CE1D881008167B0 /* Alamofire */,
 			);
 			productName = ServiceLevelProject;
 			productReference = 546589862CCE4FC500736BA9 /* ServiceLevelProject.app */;
@@ -653,6 +667,7 @@
 				687605432CCE5948008167B0 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				687605482CCE5960008167B0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6876054E2CCE5CA3008167B0 /* XCRemoteSwiftPackageReference "SideMenu" */,
+				687605BD2CE1D881008167B0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 546589872CCE4FC500736BA9 /* Products */;
 			projectDirPath = "";
@@ -711,6 +726,7 @@
 				544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */,
 				5477F1C32CDA393B007D1A92 /* ChattingTableViewCell.swift in Sources */,
 				5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */,
+				687605C22CE1D8B7008167B0 /* TargetType.swift in Sources */,
 				54A53FDA2CD636D500313E17 /* ProfileView.swift in Sources */,
 				6876056B2CD0F27E008167B0 /* Reusable.swift in Sources */,
 				54A53FD02CD613C100313E17 /* KeyboardRepresentable.swift in Sources */,
@@ -914,7 +930,7 @@
 				CODE_SIGN_ENTITLEMENTS = ServiceLevelProject/ServiceLevelProject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 82M3Y9RKT2;
+				DEVELOPMENT_TEAM = 3G6N8FDHBM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ServiceLevelProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -947,7 +963,7 @@
 				CODE_SIGN_ENTITLEMENTS = ServiceLevelProject/ServiceLevelProject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 82M3Y9RKT2;
+				DEVELOPMENT_TEAM = 3G6N8FDHBM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ServiceLevelProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1036,6 +1052,14 @@
 				minimumVersion = 6.5.0;
 			};
 		};
+		687605BD2CE1D881008167B0 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1068,6 +1092,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6876054E2CCE5CA3008167B0 /* XCRemoteSwiftPackageReference "SideMenu" */;
 			productName = SideMenu;
+		};
+		687605BE2CE1D881008167B0 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 687605BD2CE1D881008167B0 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
