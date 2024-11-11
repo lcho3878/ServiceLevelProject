@@ -11,4 +11,8 @@ extension UIViewController {
     @objc func handDismiss() {
         dismiss(animated: true)
     }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
