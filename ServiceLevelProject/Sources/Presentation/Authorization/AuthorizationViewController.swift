@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import AuthenticationServices
 
 final class AuthorizationViewController: BaseViewController {
 
@@ -29,7 +30,15 @@ extension AuthorizationViewController: NavigationRepresentable {
     private func bind() {
         authorizationView.appleButton.rx.tap
             .bind(with: self) { owner, _ in
-                print("Apple Button Tap")
+                let provider = ASAuthorizationAppleIDProvider()
+
+                let request = provider.createRequest()
+                request.requestedScopes = [.fullName, .email]
+                
+                let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+                authorizationController.delegate = owner
+                authorizationController.presentationContextProvider = owner
+                authorizationController.performRequests()
             }
             .disposed(by: disposeBag)
         
@@ -53,6 +62,38 @@ extension AuthorizationViewController: NavigationRepresentable {
                 owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
+    }
+}
+
+extension AuthorizationViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            
+            print("User ID: \(userIdentifier)")
+            print("Full Name: \(fullName ?? PersonNameComponents())")
+            print("Email: \(email ?? "No email")")
+            
+            if  let authorizationCode = appleIDCredential.authorizationCode,
+                    let identityToken = appleIDCredential.identityToken,
+                    let authCodeString = String(data: authorizationCode, encoding: .utf8),
+                    let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+                    print("authorizationCode: \(authorizationCode)")
+                    print("identityToken: \(identityToken)")
+                    print("authCodeString: \(authCodeString)")
+                    print("identifyTokenString: \(identifyTokenString)")
+                }
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("Apple 로그인 오류: \(error.localizedDescription)")
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
     }
 }
 
