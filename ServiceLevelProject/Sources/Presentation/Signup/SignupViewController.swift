@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SignupViewController: BaseViewController, DismissButtonPresentable {
+final class SignupViewController: BaseViewController, DismissButtonPresentable, KeyboardDismissable {
     private let signupView = SignupView()
     
     override func loadView() {
@@ -16,6 +16,8 @@ final class SignupViewController: BaseViewController, DismissButtonPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dismissKeyboardOnTap()
     }
     
     override func configureNavigation() {
