@@ -114,7 +114,7 @@
 		687605C22CE1D8B7008167B0 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687605C12CE1D8B7008167B0 /* TargetType.swift */; };
 		68B96EF82CE1DF9000473D8B /* KeyboardDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96EF72CE1DF9000473D8B /* KeyboardDismissable.swift */; };
 		68B96EFA2CE1E5BC00473D8B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68B96EF92CE1E5BC00473D8B /* GoogleService-Info.plist */; };
-		68B96EFC2CE2031100473D8B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96EFB2CE2031100473D8B /* Router.swift */; };
+		68B96EFC2CE2031100473D8B /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96EFB2CE2031100473D8B /* UserRouter.swift */; };
 		68B96EFE2CE2031700473D8B /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96EFD2CE2031700473D8B /* Header.swift */; };
 		68B96F002CE2153B00473D8B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96EFF2CE2153B00473D8B /* APIManager.swift */; };
 		68B96F022CE2177C00473D8B /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F012CE2177C00473D8B /* ErrorCode.swift */; };
@@ -225,7 +225,7 @@
 		687605C12CE1D8B7008167B0 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		68B96EF72CE1DF9000473D8B /* KeyboardDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDismissable.swift; sourceTree = "<group>"; };
 		68B96EF92CE1E5BC00473D8B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		68B96EFB2CE2031100473D8B /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		68B96EFB2CE2031100473D8B /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		68B96EFD2CE2031700473D8B /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		68B96EFF2CE2153B00473D8B /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		68B96F012CE2177C00473D8B /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
@@ -645,7 +645,7 @@
 			isa = PBXGroup;
 			children = (
 				687605C12CE1D8B7008167B0 /* TargetType.swift */,
-				68B96EFB2CE2031100473D8B /* Router.swift */,
+				68B96EFB2CE2031100473D8B /* UserRouter.swift */,
 				5490919D2CE476DC002EE538 /* WorkSpaceRouter.swift */,
 				68B96EFD2CE2031700473D8B /* Header.swift */,
 				68B96EFF2CE2153B00473D8B /* APIManager.swift */,
@@ -785,7 +785,7 @@
 				6876056F2CD340CB008167B0 /* HomeNavigationView.swift in Sources */,
 				68B96F0A2CE231E500473D8B /* SignUpModel.swift in Sources */,
 				687605632CCF8D68008167B0 /* WorkspaceView.swift in Sources */,
-				68B96EFC2CE2031100473D8B /* Router.swift in Sources */,
+				68B96EFC2CE2031100473D8B /* UserRouter.swift in Sources */,
 				54A53FD32CD6346D00313E17 /* PhoneNumberEditViewController.swift in Sources */,
 				6876058B2CDA33D8008167B0 /* ChangeAdminView.swift in Sources */,
 				5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */,
