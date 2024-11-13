@@ -1,5 +1,5 @@
 //
-//  UserRouter.swift
+//  Router.swift
 //  ServiceLevelProject
 //
 //  Created by YJ on 11/11/24.
@@ -8,12 +8,12 @@
 import Foundation
 import Alamofire
 
-enum UserRouter {
+enum Router {
     case validationEmail(query: ValidationEmail)
     case signUp(query: SignUp)
 }
 
-extension UserRouter : TargetType {
+extension Router : TargetType {
     var baseURL: String {
         return Key.baseURL + "v1"
     }
@@ -73,6 +73,16 @@ extension UserRouter : TargetType {
             return try? encoder.encode(query)
         case .signUp(let query):
             return try? encoder.encode(query)
+        }
+    }
+    
+    var multipartFormData: MultipartFormData? {
+        /*
+         multipartFormData를 사용하는 Router에서 구현해주시면 됩니다.
+         사용하지 않는 경우 기본적으로 nil return 해주세요.
+         */
+        switch self {
+        default: return nil
         }
     }
 }
