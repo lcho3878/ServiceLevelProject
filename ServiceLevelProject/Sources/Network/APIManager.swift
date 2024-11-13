@@ -17,7 +17,7 @@ final class APIManager {
     func validationEmail(email: String, completion: @escaping (Result<Void, ErrorModel>) -> Void) {
         do {
             let query = ValidationEmail(email: email)
-            let request = try Router.validationEmail(query: query).asURLRequest()
+            let request = try UserRouter.validationEmail(query: query).asURLRequest()
             
             AF.request(request)
                 .responseString { response in
@@ -38,7 +38,7 @@ final class APIManager {
         }
     }
     
-    func callRequest<T: Decodable>(api: Router, type: T.Type) -> Single<Result<T, ErrorCode>> {
+    func callRequest<T: Decodable>(api: TargetType, type: T.Type) -> Single<Result<T, ErrorCode>> {
         return Single.create { observer -> Disposable in
             do {
                 let request = try api.asURLRequest()

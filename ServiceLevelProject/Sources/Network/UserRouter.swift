@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  UserRouter.swift
 //  ServiceLevelProject
 //
 //  Created by YJ on 11/11/24.
@@ -8,12 +8,12 @@
 import Foundation
 import Alamofire
 
-enum Router {
+enum UserRouter {
     case validationEmail(query: ValidationEmail)
     case signUp(query: SignUp)
 }
 
-extension Router : TargetType {
+extension UserRouter : TargetType {
     var baseURL: String {
         return Key.baseURL + "v1"
     }
@@ -51,7 +51,6 @@ extension Router : TargetType {
             return nil
         }
     }
-    
     
     var queryItems: [URLQueryItem]? {
         return nil
