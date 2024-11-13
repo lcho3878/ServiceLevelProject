@@ -52,7 +52,6 @@ extension Router : TargetType {
         }
     }
     
-    
     var queryItems: [URLQueryItem]? {
         return nil
         /*

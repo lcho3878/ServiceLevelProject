@@ -121,6 +121,7 @@
 		68B96F052CE2195800473D8B /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F042CE2195800473D8B /* ErrorModel.swift */; };
 		68B96F082CE22FDD00473D8B /* APIQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F072CE22FDD00473D8B /* APIQuery.swift */; };
 		68B96F0A2CE231E500473D8B /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F092CE231E500473D8B /* SignUpModel.swift */; };
+		68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F0B2CE477F600473D8B /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -231,6 +232,7 @@
 		68B96F042CE2195800473D8B /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		68B96F072CE22FDD00473D8B /* APIQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIQuery.swift; sourceTree = "<group>"; };
 		68B96F092CE231E500473D8B /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		68B96F0B2CE477F600473D8B /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +324,7 @@
 			children = (
 				54565AD82CD0EEB600B5A354 /* SignupViewController.swift */,
 				54565ADA2CD0EEBA00B5A354 /* SignupView.swift */,
+				68B96F0B2CE477F600473D8B /* SignupViewModel.swift */,
 			);
 			path = Signup;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				687605932CDB2D04008167B0 /* DirectMessageCell.swift in Sources */,
 				54565ABE2CCF631100B5A354 /* OnboardingView.swift in Sources */,
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
+				68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				68B96F052CE2195800473D8B /* ErrorModel.swift in Sources */,
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,

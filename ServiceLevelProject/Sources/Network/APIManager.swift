@@ -17,7 +17,7 @@ final class APIManager {
     func validationEmail(email: String, completion: @escaping (Result<Void, ErrorModel>) -> Void) {
         do {
             let query = ValidationEmail(email: email)
-            let request = try Router.validationEmail(query: query).asURLRequest()
+            let request = try UserRouter.validationEmail(query: query).asURLRequest()
             
             AF.request(request)
                 .responseString { response in
