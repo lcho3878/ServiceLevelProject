@@ -11,17 +11,17 @@ import Then
 
 final class SignupView: BaseView {
     private lazy var emailLabel = signupLabel(title: "이메일")
-    private lazy var emailTextField = BaseTextField(placeholder: "이메일을 입력하세요")
-    private let emailValidationButton = BrandColorButton(title: "중복 확인")
+    lazy var emailTextField = BaseTextField(placeholder: "이메일을 입력하세요")
+    let emailValidationButton = BrandColorButton(title: "중복 확인")
     private lazy var nicknameLabel = signupLabel(title: "닉네임")
-    private lazy var nicknameTextField = BaseTextField(placeholder: "닉네임을 입력하세요")
+    lazy var nicknameTextField = BaseTextField(placeholder: "닉네임을 입력하세요")
     private lazy var contactLabel = signupLabel(title: "연락처")
-    private lazy var contactTextField = BaseTextField(placeholder: "전화번호를 입력하세요")
+    lazy var contactTextField = BaseTextField(placeholder: "전화번호를 입력하세요")
     private lazy var passwordLabel = signupLabel(title: "비밀번호")
-    private lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요")
+    lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요")
     private lazy var passwordCheckLabel = signupLabel(title: "비밀번호 확인")
-    private lazy var passwordCheckTextField = BaseTextField(placeholder: "비밀번호를 한 번 더 입력하세요")
-    private let signupButton = BrandColorButton(title: "가입하기")
+    lazy var passwordCheckTextField = BaseTextField(placeholder: "비밀번호를 한 번 더 입력하세요")
+    let signupButton = BrandColorButton(title: "가입하기")
     
     
     override func addSubviews() {
@@ -48,7 +48,6 @@ final class SignupView: BaseView {
             $0.width.equalTo(100)
             $0.height.equalTo(44)
         }
-        
         
         emailTextField.snp.makeConstraints {
             $0.top.equalTo(emailValidationButton)
@@ -85,7 +84,7 @@ final class SignupView: BaseView {
         }
         
         passwordTextField.snp.makeConstraints {
-            $0.top.equalTo(contactLabel.snp.bottom).offset(8)
+            $0.top.equalTo(passwordLabel.snp.bottom).offset(8)
             $0.horizontalEdges.equalTo(emailLabel)
             $0.height.equalTo(emailTextField)
         }
@@ -109,7 +108,10 @@ final class SignupView: BaseView {
     
     override func configureUI() {
         super.configureUI()
+        
         backgroundColor = .backgroundPrimary
+        signupButton.configuration?.baseBackgroundColor = .brandInactive
+        emailValidationButton.configuration?.baseBackgroundColor = .brandInactive
     }
 }
 
