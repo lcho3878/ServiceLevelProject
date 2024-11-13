@@ -16,6 +16,7 @@ protocol TargetType: URLRequestConvertible {
     var parameters: [String : String]? { get }
     var queryItems: [URLQueryItem]? { get }
     var body: Data? { get }
+    var multipartFormData: MultipartFormData? { get }
 }
 
 extension TargetType {
