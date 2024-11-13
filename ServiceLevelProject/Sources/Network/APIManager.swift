@@ -38,12 +38,18 @@ final class APIManager {
         }
     }
     
-    func callRequest<T: Decodable>(api: Router, type: T.Type) -> Single<Result<T, ErrorCode>> {
+    func callRequest<T: Decodable>(api: TargetType, type: T.Type) -> Single<Result<T, ErrorCode>> {
         return Single.create { observer -> Disposable in
             do {
                 let request = try api.asURLRequest()
-                
-                AF.request(request)
+                let method: DataRequest
+                if let multipartFormData = api.multipartFormData {
+                    method = AF.upload(multipartFormData: multipartFormData, with: request)
+                }
+                else {
+                    method = AF.request(request)
+                }
+                method
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: T.self) { response in
                         switch response.result {
@@ -60,6 +66,7 @@ final class APIManager {
                             case 500:
                                 observer(.success(.failure(.success)))
                             default:
+                                print("dc")
                                 break
                             }
                         }
