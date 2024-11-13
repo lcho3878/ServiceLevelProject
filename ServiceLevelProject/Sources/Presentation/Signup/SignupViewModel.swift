@@ -17,38 +17,89 @@ final class SignupViewModel: ViewModelBindable {
         let nicknameText: ControlProperty<String>
         let contactText: ControlProperty<String>
         let passwordText: ControlProperty<String>
+        let passwordCheckText: ControlProperty<String>
+        let isSigningUp = PublishSubject<Void>()
     }
     
     struct Output {
+        let isEmailFieldEmpty: Observable<Bool>
         let emailValidation: Observable<Bool>
         let nicknameValidation: Observable<Bool>
         let contactValidation: Observable<Bool>
         let passwordValidation: Observable<Bool>
+        let areAllFieldsFilled: Observable<Bool>
+        let isSignUpCompleted: PublishSubject<Void>
     }
     
     func transform(input: Input) -> Output {
+        let isEmailFieldEmpty = input.emailText
+            .map { self.isEmptyTextField($0) }
+        
+        let isNicknameFieldEmpty = input.nicknameText
+            .map { self.isEmptyTextField($0) }
+        
+        let isContactFieldEmpty = input.contactText
+            .map { self.isEmptyTextField($0) }
+        
+        let isPasswordFieldEmpty = input.passwordText
+            .map { self.isEmptyTextField($0) }
+        
+        let isPasswordCheckFieldEmpty = input.passwordCheckText
+            .map { self.isEmptyTextField($0) }
+        
         let emailValidation = input.emailText
-            .map { self.validateEmail($0)}
+            .map { self.validateEmail($0) }
         
         let nicknameValidation = input.nicknameText
-            .map { self.validateNickname($0)}
+            .map { self.validateNickname($0) }
         
         let contactValidation = input.contactText
-            .map { self.validateContact($0)}
+            .map { self.validateContact($0) }
         
         let passwordValidation = input.passwordText
-            .map { self.validatePassword($0)}
+            .map { self.validatePassword($0) }
+        
+        let areAllFieldsFilled = Observable
+            .combineLatest(isEmailFieldEmpty, isNicknameFieldEmpty, isContactFieldEmpty, isPasswordFieldEmpty, isPasswordCheckFieldEmpty)
+            .map { !$0 && !$1 && !$2 && !$3 && !$4 }
+            .distinctUntilChanged()
+        
+        let isSignUpCompleted = PublishSubject<Void>()
+        
+        input.isSigningUp
+            .withLatestFrom(Observable.combineLatest(input.emailText, input.nicknameText, input.contactText, input.passwordText))
+            .flatMap { email, nickname, contact, password in
+                let signUpQuery = SignUp(email: email, password: password, nickname: nickname, phone: contact, deviceToken: UserDefaultManager.fcmToken ?? "")
+                return APIManager.shared.callRequest(api: UserRouter.signUp(query: signUpQuery), type: SignUpModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    print("")
+                    isSignUpCompleted.onNext(())
+                case .failure(let failure):
+                    print(">>> fail!!: \(failure)") // 실패 로직 필요
+                }
+            }
+            .disposed(by: disposeBag)
         
         return Output(
+            isEmailFieldEmpty: isEmailFieldEmpty,
             emailValidation: emailValidation,
             nicknameValidation: nicknameValidation,
             contactValidation: contactValidation,
-            passwordValidation: passwordValidation
+            passwordValidation: passwordValidation,
+            areAllFieldsFilled: areAllFieldsFilled,
+            isSignUpCompleted: isSignUpCompleted
         )
     }
 }
 
 extension SignupViewModel {
+    func isEmptyTextField(_ text: String) -> Bool {
+        return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
     func validateEmail(_ email: String) -> Bool {
         let emailRegex = "^[A-Za-z0-9]+@[A-Za-z0-9]+\\.com$"
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
