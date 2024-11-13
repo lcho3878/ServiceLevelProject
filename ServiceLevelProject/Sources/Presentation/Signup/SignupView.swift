@@ -10,16 +10,16 @@ import SnapKit
 import Then
 
 final class SignupView: BaseView {
-    private lazy var emailLabel = signupLabel(title: "이메일")
+    lazy var emailLabel = signupLabel(title: "이메일")
     lazy var emailTextField = BaseTextField(placeholder: "이메일을 입력하세요")
     let emailValidationButton = BrandColorButton(title: "중복 확인")
-    private lazy var nicknameLabel = signupLabel(title: "닉네임")
+    lazy var nicknameLabel = signupLabel(title: "닉네임")
     lazy var nicknameTextField = BaseTextField(placeholder: "닉네임을 입력하세요")
-    private lazy var contactLabel = signupLabel(title: "연락처")
+    lazy var contactLabel = signupLabel(title: "연락처")
     lazy var contactTextField = BaseTextField(placeholder: "전화번호를 입력하세요")
-    private lazy var passwordLabel = signupLabel(title: "비밀번호")
+    lazy var passwordLabel = signupLabel(title: "비밀번호")
     lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요")
-    private lazy var passwordCheckLabel = signupLabel(title: "비밀번호 확인")
+    lazy var passwordCheckLabel = signupLabel(title: "비밀번호 확인")
     lazy var passwordCheckTextField = BaseTextField(placeholder: "비밀번호를 한 번 더 입력하세요")
     let signupButton = BrandColorButton(title: "가입하기")
     
@@ -111,7 +111,9 @@ final class SignupView: BaseView {
         
         backgroundColor = .backgroundPrimary
         signupButton.configuration?.baseBackgroundColor = .brandInactive
+        signupButton.isEnabled = false
         emailValidationButton.configuration?.baseBackgroundColor = .brandInactive
+        emailValidationButton.isEnabled = false
     }
 }
 
