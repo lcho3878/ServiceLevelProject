@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct SignUpModel: Decodable {
+// SignUp & Login
+struct UserModel: Decodable {
     let userID: String
     let email: String
     let nickname: String

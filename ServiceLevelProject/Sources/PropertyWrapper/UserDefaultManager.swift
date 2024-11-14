@@ -13,4 +13,10 @@ struct UserDefaultManager {
     
     @UserDefault(key: "checkedEmail", defaultValue: nil)
     static var checkedEmail: String?
+
+    @UserDefault(key: "accessToken", defaultValue: nil)
+    static var accessToken: String?
+    
+    @UserDefault(key: "refreshToken", defaultValue: nil)
+    static var refreshToken: String?
 }
