@@ -142,7 +142,9 @@ extension SignupView: UITextFieldDelegate {
                 textField.text = formattedNumber(digits)
             }
         } else {
-            textField.text = formattedNumber(digits)
+            if digits.count <= 11 {
+                textField.text = formattedNumber(digits)
+            }
         }
         
         return false
