@@ -22,7 +22,7 @@ struct SignUp: Encodable {
 }
 
 struct WorkspaceCreateQuery: Encodable {
-    let name: String
+    let name: String?
     let description: String?
     let image: Data?
 }
