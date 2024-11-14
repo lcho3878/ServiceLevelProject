@@ -8,7 +8,7 @@
 import UIKit
 
 final class BaseTextField: UITextField {
-    init(placeholder: String?, keyboardType: UIKeyboardType = .default, isSecureTextEntry: Bool = false, contentType: UITextContentType = .oneTimeCode) {
+    init(placeholder: String?, keyboardType: UIKeyboardType = .default, isSecureTextEntry: Bool = false) {
         super.init(frame: CGRect.zero)
         
         self.placeholder = placeholder
@@ -17,7 +17,7 @@ final class BaseTextField: UITextField {
         layer.cornerRadius = 8
         self.keyboardType = keyboardType
         self.isSecureTextEntry = isSecureTextEntry
-        textContentType = contentType
+        textContentType = .none
         horizonPadding(12)
     }
     
