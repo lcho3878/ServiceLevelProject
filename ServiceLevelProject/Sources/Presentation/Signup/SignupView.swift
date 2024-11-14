@@ -38,9 +38,11 @@ final class SignupView: BaseView {
     }
     
     override func setConstraints() {
+        let safeArea = safeAreaLayoutGuide
+        
         emailLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(24)
-            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(24)
+            $0.top.equalTo(safeArea).offset(24)
+            $0.horizontalEdges.equalTo(safeArea).inset(24)
             $0.height.equalTo(24)
         }
         
@@ -103,8 +105,9 @@ final class SignupView: BaseView {
         }
         
         signupButton.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(safeArea).inset(24)
+            $0.bottom.equalTo(safeArea).offset(-24)
             $0.height.equalTo(44)
-            $0.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide).inset(24)
         }
     }
     

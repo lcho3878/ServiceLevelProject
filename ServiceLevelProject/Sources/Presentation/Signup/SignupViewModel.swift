@@ -77,12 +77,11 @@ final class SignupViewModel: ViewModelBindable {
             )
             .flatMap { email, nickname, contact, password in
                 let signUpQuery = SignUp(email: email, password: password, nickname: nickname, phone: contact, deviceToken: UserDefaultManager.fcmToken ?? "")
-                return APIManager.shared.callRequest(api: UserRouter.signUp(query: signUpQuery), type: SignUpModel.self)
+                return APIManager.shared.callRequest(api: UserRouter.signUp(query: signUpQuery), type: UserModel.self)
             }
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(let success):
-                    print("")
+                case .success(_):
                     isSignUpCompleted.onNext(())
                 case .failure(let failure):
                     print(">>> fail!!: \(failure)") // 실패 로직 필요

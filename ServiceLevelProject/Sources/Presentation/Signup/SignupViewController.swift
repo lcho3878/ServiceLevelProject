@@ -78,7 +78,7 @@ extension SignupViewController {
             }
             .disposed(by: disposeBag)
         
-        // 가입하기 버튼
+        // ToastMessage
         output.validErrorOutput
             .bind(with: self) { owner, validErrors in
                 if validErrors.isEmpty {
