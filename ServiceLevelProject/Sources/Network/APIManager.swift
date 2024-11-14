@@ -38,6 +38,40 @@ final class APIManager {
         }
     }
     
+    func callRequest(api: TargetType) -> Single<Result<Void, ErrorCode>> {
+        return Single.create { observer -> Disposable in
+            do {
+                let request = try api.asURLRequest()
+                AF.request(request)
+                    .validate(statusCode: 200..<300)
+                    .response { response in
+                        switch response.result {
+                        case .success(_):
+                            observer(.success(.success(())))
+                        case .failure(_):
+                            let statusCode = response.response?.statusCode
+                            switch statusCode {
+                            case 400:
+                                if let data = response.data, let errorModel = try? JSONDecoder().decode(ErrorModel.self, from: data) {
+                                    print(">>> errorCode: \(errorModel.errorCode)")
+                                }
+                                observer(.success(.failure(.clientError)))
+                            case 500:
+                                observer(.success(.failure(.success)))
+                            default:
+                                print("알수없는 오류 발생")
+                                break
+                            }
+                        }
+                    }
+            } catch {
+                print("Error 발생! : \(error)")
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     func callRequest<T: Decodable>(api: TargetType, type: T.Type) -> Single<Result<T, ErrorCode>> {
         return Single.create { observer -> Disposable in
             do {
