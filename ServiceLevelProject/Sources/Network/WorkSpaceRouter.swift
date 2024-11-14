@@ -11,6 +11,7 @@ import Alamofire
 enum WorkSpaceRouter {
     case list
     case create(query: WorkspaceCreateQuery)
+    case edit(id: String, query: WorkspaceCreateQuery)
 }
 
 extension WorkSpaceRouter: TargetType {
@@ -24,6 +25,8 @@ extension WorkSpaceRouter: TargetType {
             return .get
         case .create:
             return .post
+        case .edit:
+            return .put
         }
     }
     
@@ -31,6 +34,8 @@ extension WorkSpaceRouter: TargetType {
         switch self {
         case .list, .create:
             return "/workspaces"
+        case .edit(let id, _):
+            return "/workspaces/\(id)"
         }
     }
     
@@ -42,7 +47,7 @@ extension WorkSpaceRouter: TargetType {
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: Key.accessToken
             ]
-        case .create:
+        case .create, .edit:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -54,20 +59,21 @@ extension WorkSpaceRouter: TargetType {
     
     var parameters: [String : String]? {
         switch self {
-        case .list, .create: // 파라미터 있는 경우 이 둘은 'default: return nil'로 빼주시면 됩니다 :)
-            return nil
+        default: return nil
         }
     }
     
     
     var queryItems: [URLQueryItem]? {
-        return nil
+        switch self {
+        default: return nil
+        }
     }
     
     var body: Data? {
         let encoder = JSONEncoder()
         switch self {
-        case .list, .create:
+        case .list, .create, .edit:
             return nil
         }
     }
@@ -76,15 +82,24 @@ extension WorkSpaceRouter: TargetType {
         let multipart = MultipartFormData()
         switch self {
         case .create(let query):
-            let name = query.name.data(using: .utf8) ?? Data()
-            multipart.append(name, withName: "name")
+            appendCommonFields(for: query)
+            return multipart
+        case .edit(_, let query):
+            appendCommonFields(for: query)
+            return multipart
+        default: return nil
+        }
+        
+        func appendCommonFields(for query: WorkspaceCreateQuery) {
+            if let name = query.name {
+                let nameData = name.data(using: .utf8) ?? Data()
+                multipart.append(nameData, withName: "name")
+            }
             let description = query.description?.data(using: .utf8) ?? Data()
             multipart.append(description, withName: "description")
             if let image = query.image {
                 multipart.append(image, withName: "image", fileName: "Image.png", mimeType: "image/png")
             }
-            return multipart
-        default: return nil
         }
     }
 }
