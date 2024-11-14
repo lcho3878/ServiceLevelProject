@@ -12,6 +12,7 @@ enum WorkSpaceRouter {
     case list
     case create(query: WorkspaceCreateQuery)
     case edit(id: String, query: WorkspaceCreateQuery)
+    case delete(id: String)
 }
 
 extension WorkSpaceRouter: TargetType {
@@ -27,6 +28,8 @@ extension WorkSpaceRouter: TargetType {
             return .post
         case .edit:
             return .put
+        case.delete:
+            return .delete
         }
     }
     
@@ -35,6 +38,8 @@ extension WorkSpaceRouter: TargetType {
         case .list, .create:
             return "/workspaces"
         case .edit(let id, _):
+            return "/workspaces/\(id)"
+        case .delete(let id):
             return "/workspaces/\(id)"
         }
     }
@@ -47,7 +52,7 @@ extension WorkSpaceRouter: TargetType {
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: Key.accessToken
             ]
-        case .create, .edit:
+        case .create, .edit, .delete:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -73,8 +78,7 @@ extension WorkSpaceRouter: TargetType {
     var body: Data? {
         let encoder = JSONEncoder()
         switch self {
-        case .list, .create, .edit:
-            return nil
+        default: return nil
         }
     }
     
