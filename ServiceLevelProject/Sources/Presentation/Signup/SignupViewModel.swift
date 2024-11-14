@@ -20,18 +20,15 @@ final class SignupViewModel: ViewModelBindable {
         let passwordCheckText: ControlProperty<String>
         let isSigningUp = PublishSubject<Void>()
         let isEmailChecked = PublishSubject<Bool>()
+        let signUpButtonTap: ControlEvent<Void>
     }
     
     struct Output {
-        let emailText: ControlProperty<String>
         let isEmailFieldEmpty: Observable<Bool>
         let emailValidation: Observable<Bool>
-        let nicknameValidation: Observable<Bool>
-        let contactValidation: Observable<Bool>
-        let passwordValidation: Observable<Bool>
-        let passwordCheckValidation: Observable<Bool>
         let areAllFieldsFilled: Observable<Bool>
         let isSignUpCompleted: PublishSubject<Void>
+        let validErrorOutput: PublishSubject<[ValidError]>
     }
     
     func transform(input: Input) -> Output {
@@ -72,7 +69,12 @@ final class SignupViewModel: ViewModelBindable {
         let isSignUpCompleted = PublishSubject<Void>()
         
         input.isSigningUp
-            .withLatestFrom(Observable.combineLatest(input.emailText, input.nicknameText, input.contactText, input.passwordText))
+            .withLatestFrom(Observable.combineLatest(
+                input.emailText,
+                input.nicknameText,
+                input.contactText,
+                input.passwordText)
+            )
             .flatMap { email, nickname, contact, password in
                 let signUpQuery = SignUp(email: email, password: password, nickname: nickname, phone: contact, deviceToken: UserDefaultManager.fcmToken ?? "")
                 return APIManager.shared.callRequest(api: UserRouter.signUp(query: signUpQuery), type: SignUpModel.self)
@@ -88,18 +90,50 @@ final class SignupViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
+        var validError: [ValidError] = []
+        let validErrorOutput = PublishSubject<[ValidError]>()
         
+        input.signUpButtonTap
+            .withLatestFrom(Observable.combineLatest(
+                input.emailText, // value.0
+                emailValidation, // value.1
+                nicknameValidation, // value.2
+                contactValidation, // value.3
+                passwordValidation, // value.4
+                passwordCheckValidation) // value.5
+            )
+            .bind(with: self) { owner, value in
+                validError = []
+                
+                if value.0 != UserDefaultManager.checkedEmail {
+                    validError.append(.emailValid)
+                }
+                if !value.1 {
+                    validError.append(.email)
+                }
+                if !value.2 {
+                    validError.append(.nickname)
+                }
+                if !value.3 {
+                    validError.append(.contact)
+                }
+                if !value.4 {
+                    validError.append(.password)
+                }
+                if !value.5 {
+                    validError.append(.passwordCheck)
+                }
+                
+                validErrorOutput.onNext(validError)
+            }
+            .disposed(by: disposeBag)
         
         return Output(
-            emailText: input.emailText,
             isEmailFieldEmpty: isEmailFieldEmpty,
             emailValidation: emailValidation,
-            nicknameValidation: nicknameValidation,
-            contactValidation: contactValidation,
-            passwordValidation: passwordValidation,
-            passwordCheckValidation: passwordCheckValidation,
             areAllFieldsFilled: areAllFieldsFilled,
-            isSignUpCompleted: isSignUpCompleted
+            isSignUpCompleted: isSignUpCompleted,
+            validErrorOutput: validErrorOutput
         )
     }
 }
@@ -127,7 +161,7 @@ extension SignupViewModel {
         let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
         return nicknamePredicate.evaluate(with: digits)
     }
-
+    
     func validatePassword(_ password: String) -> Bool {
         let passwordRegex = "^[A-Z](?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])[A-Za-z0-9\\W]{7,}$"
         let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
@@ -139,5 +173,33 @@ extension SignupViewModel {
             .map { password, passwordCheck in
                 return password == passwordCheck
             }
+    }
+}
+
+extension SignupViewModel {
+    enum ValidError {
+        case emailValid
+        case email
+        case nickname
+        case contact
+        case password
+        case passwordCheck
+        
+        var toastMessage: String {
+            switch self {
+            case .emailValid:
+                return "이메일 중복 확인을 진행해주세요."
+            case .email:
+                return "이메일 형식이 올바르지 않습니다."
+            case .nickname:
+                return "닉네임은 1글자 이상 30글자 이내로 부탁드려요."
+            case .contact:
+                return "잘못된 전화번호 형식입니다."
+            case .password:
+                return "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수문자를 설정해주세요."
+            case .passwordCheck:
+                return "작성하신 비밀번호가 일치하지 않습니다."
+            }
+        }
     }
 }

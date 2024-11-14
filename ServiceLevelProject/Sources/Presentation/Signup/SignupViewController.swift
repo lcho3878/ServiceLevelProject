@@ -38,7 +38,9 @@ extension SignupViewController {
             nicknameText: signupView.nicknameTextField.rx.text.orEmpty,
             contactText: signupView.contactTextField.rx.text.orEmpty,
             passwordText: signupView.passwordTextField.rx.text.orEmpty,
-            passwordCheckText: signupView.passwordCheckTextField.rx.text.orEmpty)
+            passwordCheckText: signupView.passwordCheckTextField.rx.text.orEmpty,
+            signUpButtonTap: signupView.signupButton.rx.tap
+        )
         let output = viewModel.transform(input: input)
         
         // 이메일 텍스트필드가 비어있지 Check
@@ -77,67 +79,37 @@ extension SignupViewController {
             .disposed(by: disposeBag)
         
         // 가입하기 버튼
-        signupView.signupButton.rx.tap
-            .withLatestFrom(Observable.combineLatest(output.emailText, output.emailValidation, output.nicknameValidation, output.contactValidation, output.passwordValidation, output.passwordCheckValidation))
-            .bind(with: self) { owner, value in
-                owner.dismissKeyboard()
-                
-                var toastMessage: [String] = []
-                var firstResponder: [UIResponder] = []
-                
-                if value.0 != UserDefaultManager.checkedEmail {
-                    toastMessage.append("이메일 중복 확인을 진행해주세요.")
-                    firstResponder.append(owner.signupView.emailTextField)
-                }
-                
-                if !value.1 {
-                    toastMessage.append("이메일 형식이 올바르지 않습니다.")
-                    firstResponder.append(owner.signupView.emailTextField)
-                    owner.signupView.emailLabel.textColor = .brandError
-                } else {
-                    owner.signupView.emailLabel.textColor = .brandBlack
-                }
-                
-                if !value.2 {
-                    toastMessage.append("닉네임은 1글자 이상 30글자 이내로 부탁드려요.")
-                    firstResponder.append(owner.signupView.nicknameTextField)
-                    owner.signupView.nicknameLabel.textColor = .brandError
-                } else {
-                    owner.signupView.nicknameLabel.textColor = .brandBlack
-                }
-                
-                if !value.3 {
-                    toastMessage.append("잘못된 전화번호 형식입니다.")
-                    firstResponder.append(owner.signupView.contactTextField)
-                    owner.signupView.contactLabel.textColor = .brandError
-                } else {
-                    owner.signupView.contactLabel.textColor = .brandBlack
-                }
-                
-                if !value.4 {
-                    toastMessage.append("비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수문자를 설정해주세요.")
-                    firstResponder.append(owner.signupView.passwordTextField)
-                    owner.signupView.passwordLabel.textColor = .brandError
-                } else {
-                    owner.signupView.passwordLabel.textColor = .brandBlack
-                }
-                
-                if !value.5 {
-                    toastMessage.append("작성하신 비밀번호가 일치하지 않습니다.")
-                    firstResponder.append(owner.signupView.passwordCheckTextField)
-                    owner.signupView.passwordCheckLabel.textColor = .brandError
-                } else {
-                    owner.signupView.passwordCheckLabel.textColor = .brandBlack
-                }
-                
-                if !toastMessage.isEmpty {
-                    if let message = toastMessage.first, let firstResponder = firstResponder.first {
-                        owner.signupView.showToast(message: message, bottomOffset: -120)
-                        firstResponder.becomeFirstResponder()
-                    }
-                } else {
+        output.validErrorOutput
+            .bind(with: self) { owner, validErrors in
+                if validErrors.isEmpty {
                     input.isSigningUp.onNext(())
+                    return
                 }
+                
+                for error in validErrors {
+                    owner.signupView.showToast(message: error.toastMessage, bottomOffset: -120)
+                    
+                    switch error {
+                    case .email:
+                        owner.signupView.emailTextField.becomeFirstResponder()
+                    case .nickname:
+                        owner.signupView.nicknameTextField.becomeFirstResponder()
+                    case .contact:
+                        owner.signupView.contactTextField.becomeFirstResponder()
+                    case .password:
+                        owner.signupView.passwordTextField.becomeFirstResponder()
+                    default:
+                        break
+                    }
+                    
+                    break
+                }
+                
+                owner.signupView.emailLabel.textColor = validErrors.contains(.email) ? .brandError : .brandBlack
+                owner.signupView.nicknameLabel.textColor = validErrors.contains(.nickname) ? .brandError : .brandBlack
+                owner.signupView.contactLabel.textColor = validErrors.contains(.contact) ? .brandError : .brandBlack
+                owner.signupView.passwordLabel.textColor = validErrors.contains(.password) ? .brandError : .brandBlack
+                owner.signupView.passwordCheckLabel.textColor = validErrors.contains(.passwordCheck) ? .brandError : .brandBlack
             }
             .disposed(by: disposeBag)
         
