@@ -83,6 +83,7 @@ extension BaseView {
             $0.font = .body
             $0.textAlignment = .center
             $0.text = message
+            $0.numberOfLines = 0
         }
         
         addSubview(toastView)
@@ -92,7 +93,7 @@ extension BaseView {
             $0.bottom.equalTo(safeArea).offset(bottomOffset)
             $0.centerX.equalTo(safeArea)
             $0.width.lessThanOrEqualTo(safeArea).offset(-40)
-            $0.height.equalTo(36)
+            $0.verticalEdges.equalTo(toastLabel.snp.verticalEdges).inset(-9)
         }
         
         toastLabel.snp.makeConstraints {
