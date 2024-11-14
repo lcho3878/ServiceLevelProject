@@ -10,4 +10,7 @@ import Foundation
 struct UserDefaultManager {
     @UserDefault(key: "fcmToken", defaultValue: nil)
     static var fcmToken: String?
+    
+    @UserDefault(key: "checkedEmail", defaultValue: nil)
+    static var checkedEmail: String?
 }

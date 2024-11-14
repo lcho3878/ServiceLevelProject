@@ -67,6 +67,8 @@
 		54A53FE12CD63DBA00313E17 /* CoinShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE02CD63DBA00313E17 /* CoinShopView.swift */; };
 		54A53FE52CD6426D00313E17 /* CoinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE42CD6426D00313E17 /* CoinTableViewCell.swift */; };
 		54A53FE72CD65E0600313E17 /* CameraImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE62CD65E0600313E17 /* CameraImageView.swift */; };
+		684E653A2CE60FDF006B2F02 /* WorkspaceInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */; };
+		684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -188,6 +190,8 @@
 		54A53FE02CD63DBA00313E17 /* CoinShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinShopView.swift; sourceTree = "<group>"; };
 		54A53FE42CD6426D00313E17 /* CoinTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTableViewCell.swift; sourceTree = "<group>"; };
 		54A53FE62CD65E0600313E17 /* CameraImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraImageView.swift; sourceTree = "<group>"; };
+		684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialViewController.swift; sourceTree = "<group>"; };
+		684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitailView.swift; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -288,12 +292,12 @@
 			children = (
 				54565AB22CCE610400B5A354 /* BaseView.swift */,
 				541DC7112CDDDEAB0051E898 /* PaddingLabel.swift */,
+				687605642CCF99CC008167B0 /* BrandSimpeButton.swift */,
 				544CA7832CDA22A90066F0AD /* TabbarViewController.swift */,
 				544CA78C2CDA306F0066F0AD /* BaseTableViewCell.swift */,
 				544CA78E2CDA30800066F0AD /* BaseCollectionViewCell.swift */,
 				54565ACF2CCF977800B5A354 /* BaseViewController.swift */,
 				54565AC62CCF7F6800B5A354 /* BrandColorButton.swift */,
-				687605642CCF99CC008167B0 /* BrandSimpeButton.swift */,
 				687605712CD4C084008167B0 /* SingleButtonAlertViewController.swift */,
 				687605772CD542E1008167B0 /* DoubleButtonAlertViewController.swift */,
 				54A53FE62CD65E0600313E17 /* CameraImageView.swift */,
@@ -511,6 +515,15 @@
 			path = CoinShop;
 			sourceTree = "<group>";
 		};
+		684E65382CE60FC9006B2F02 /* Initial */ = {
+			isa = PBXGroup;
+			children = (
+				684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */,
+				684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */,
+			);
+			path = Initial;
+			sourceTree = "<group>";
+		};
 		687605512CCE5CC1008167B0 /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				687605852CD66AD0008167B0 /* WorkspaceSettingView.swift */,
+				684E65382CE60FC9006B2F02 /* Initial */,
 				687605822CD66A9D008167B0 /* Create */,
 				6876057C2CD66837008167B0 /* Edit */,
 				687605872CDA3368008167B0 /* ChangeAmin */,
@@ -841,11 +855,13 @@
 				68B96EF82CE1DF9000473D8B /* KeyboardDismissable.swift in Sources */,
 				54A53FE72CD65E0600313E17 /* CameraImageView.swift in Sources */,
 				5477F1C52CDA3955007D1A92 /* ChattingViewController.swift in Sources */,
+				684E653A2CE60FDF006B2F02 /* WorkspaceInitialViewController.swift in Sources */,
 				687605842CD66AAF008167B0 /* EditWorkspaceViewController.swift in Sources */,
 				5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */,
 				6876055C2CCF81AE008167B0 /* HomeViewModel.swift in Sources */,
 				687605782CD542E1008167B0 /* DoubleButtonAlertViewController.swift in Sources */,
 				541DC7232CE0F57D0051E898 /* EditChannelView.swift in Sources */,
+				684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */,
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
 				541DC7182CDE389D0051E898 /* SettingChannelView.swift in Sources */,

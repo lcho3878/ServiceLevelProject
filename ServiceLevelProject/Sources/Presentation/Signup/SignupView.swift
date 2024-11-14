@@ -10,17 +10,19 @@ import SnapKit
 import Then
 
 final class SignupView: BaseView {
-    private lazy var emailLabel = signupLabel(title: "이메일")
+    lazy var emailLabel = signupLabel(title: "이메일")
     lazy var emailTextField = BaseTextField(placeholder: "이메일을 입력하세요")
     let emailValidationButton = BrandColorButton(title: "중복 확인")
-    private lazy var nicknameLabel = signupLabel(title: "닉네임")
+    lazy var nicknameLabel = signupLabel(title: "닉네임")
     lazy var nicknameTextField = BaseTextField(placeholder: "닉네임을 입력하세요")
-    private lazy var contactLabel = signupLabel(title: "연락처")
-    lazy var contactTextField = BaseTextField(placeholder: "전화번호를 입력하세요")
-    private lazy var passwordLabel = signupLabel(title: "비밀번호")
-    lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요")
-    private lazy var passwordCheckLabel = signupLabel(title: "비밀번호 확인")
-    lazy var passwordCheckTextField = BaseTextField(placeholder: "비밀번호를 한 번 더 입력하세요")
+    lazy var contactLabel = signupLabel(title: "연락처")
+    lazy var contactTextField = BaseTextField(placeholder: "전화번호를 입력하세요", keyboardType: .numberPad).then {
+        $0.delegate = self
+    }
+    lazy var passwordLabel = signupLabel(title: "비밀번호")
+    lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요", isSecureTextEntry: true)
+    lazy var passwordCheckLabel = signupLabel(title: "비밀번호 확인")
+    lazy var passwordCheckTextField = BaseTextField(placeholder: "비밀번호를 한 번 더 입력하세요", isSecureTextEntry: true)
     let signupButton = BrandColorButton(title: "가입하기")
     
     
@@ -111,7 +113,9 @@ final class SignupView: BaseView {
         
         backgroundColor = .backgroundPrimary
         signupButton.configuration?.baseBackgroundColor = .brandInactive
+        signupButton.isEnabled = false
         emailValidationButton.configuration?.baseBackgroundColor = .brandInactive
+        emailValidationButton.isEnabled = false
     }
 }
 
@@ -121,5 +125,54 @@ extension SignupView {
             $0.text = title
             $0.font = UIFont.title2
         }
+    }
+}
+
+extension SignupView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let currentText = textField.text as NSString? else { return true }
+        
+        let newText = currentText.replacingCharacters(in: range, with: string)
+        let digits = newText.filter { $0.isNumber }
+        
+        if string.isEmpty {
+            if digits.count == 7 || digits.count == 6 {
+                textField.text = digits
+            } else {
+                textField.text = formattedNumber(digits)
+            }
+        } else {
+            if digits.count <= 11 {
+                textField.text = formattedNumber(digits)
+            }
+        }
+        
+        return false
+    }
+    
+    private func formattedNumber(_ digits: String) -> String {
+        var formattedText = ""
+        
+         if digits.count <= 3 {
+             formattedText = digits
+         } else if digits.count <= 5 {
+             formattedText = "\(digits.prefix(3))-\(digits.suffix(from: digits.index(digits.startIndex, offsetBy: 3)))"
+         } else if digits.count <= 8 {
+             let prefix = digits.prefix(3)
+             let middle = digits[digits.index(digits.startIndex, offsetBy: 3)..<digits.index(digits.startIndex, offsetBy: min(7, digits.count))]
+             formattedText = "\(prefix)-\(middle)-\(digits.suffix(from: digits.index(digits.startIndex, offsetBy: min(7, digits.count))))"
+         } else if digits.count <= 10 {
+             let prefix = digits.prefix(3)
+             let middle = digits[digits.index(digits.startIndex, offsetBy: 3)..<digits.index(digits.startIndex, offsetBy: 6)]
+             let suffix = digits.suffix(from: digits.index(digits.startIndex, offsetBy: 6))
+             formattedText = "\(prefix)-\(middle)-\(suffix)"
+         } else {
+             let prefix = digits.prefix(3)
+             let middle = digits[digits.index(digits.startIndex, offsetBy: 3)..<digits.index(digits.startIndex, offsetBy: 7)]
+             let suffix = digits.suffix(from: digits.index(digits.startIndex, offsetBy: 7))
+             formattedText = "\(prefix)-\(middle)-\(suffix)"
+         }
+
+         return formattedText
     }
 }
