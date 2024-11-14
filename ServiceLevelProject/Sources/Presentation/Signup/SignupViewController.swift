@@ -129,10 +129,8 @@ extension SignupViewController {
         // 회원가입 성공
         output.isSignUpCompleted
             .bind(with: self) { owner, _ in
-                // 워크스페이스 "출시 준비 완료!" 화면으로 전환 -> 만들어야함
-                // let vc = TabbarViewController()
-                // owner.changeRootViewController(rootVC: vc)
-                print(">>> 화면전환!")
+                let vc = WorkspaceInitialViewController()
+                owner.changeRootViewController(rootVC: vc, isNavigation: true)
             }
             .disposed(by: disposeBag)
     }
