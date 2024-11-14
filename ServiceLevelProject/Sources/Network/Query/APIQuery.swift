@@ -7,12 +7,12 @@
 
 import UIKit
 
-//MARK: ValidationEmail
+// MARK: ValidationEmail
 struct ValidationEmail: Encodable {
     let email: String
 }
 
-//MARK: SignUp
+// MARK: SignUp
 struct SignUp: Encodable {
     let email: String
     let password: String
@@ -21,8 +21,16 @@ struct SignUp: Encodable {
     let deviceToken: String
 }
 
+// MARK: WorkspaceCreate
 struct WorkspaceCreateQuery: Encodable {
     let name: String?
     let description: String?
     let image: Data?
+}
+
+// MARK: Login
+struct Login: Encodable {
+    let email: String
+    let password: String
+    let deviceToken: String
 }

@@ -10,22 +10,26 @@ import SnapKit
 import Then
 
 final class LoginView: BaseView {
-    private lazy var emailLabel = loginLabel(title: "이메일")
-    private lazy var emailTextField = BaseTextField(placeholder: "이메일을 입력하세요")
-    private lazy var passwordLabel = loginLabel(title: "비밀번호")
-    private lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요")
+    lazy var emailLabel = loginLabel(title: "이메일")
+    lazy var emailTextField = BaseTextField(placeholder: "이메일을 입력하세요")
+    lazy var passwordLabel = loginLabel(title: "비밀번호")
+    lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요", isSecureTextEntry: true)
+    let loginButton = BrandColorButton(title: "로그인")
     
     override func addSubviews() {
         addSubviews([
             emailLabel, emailTextField,
-            passwordLabel, passwordTextField
+            passwordLabel, passwordTextField,
+            loginButton
         ])
     }
     
     override func setConstraints() {
+        let safeArea = safeAreaLayoutGuide
+        
         emailLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(24)
-            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(24)
+            $0.top.equalTo(safeArea).offset(24)
+            $0.horizontalEdges.equalTo(safeArea).inset(24)
             $0.height.equalTo(24)
         }
         
@@ -44,6 +48,13 @@ final class LoginView: BaseView {
             $0.top.equalTo(passwordLabel.snp.bottom).offset(8)
             $0.horizontalEdges.equalTo(passwordLabel)
             $0.height.equalTo(emailTextField)
+        }
+        
+        loginButton.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(safeArea).inset(24)
+            $0.bottom.equalTo(safeArea).offset(-24)
+            $0.height.equalTo(44)
+            adjustableConstraint = $0.bottom.equalTo(safeArea).inset(24).constraint.layoutConstraints.first
         }
     }
     
