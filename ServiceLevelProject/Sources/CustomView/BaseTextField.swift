@@ -8,13 +8,14 @@
 import UIKit
 
 final class BaseTextField: UITextField {
-    init(placeholder: String?) {
+    init(placeholder: String?, keyboardType: UIKeyboardType = .default) {
         super.init(frame: CGRect.zero)
         
         self.placeholder = placeholder
         font = UIFont.title2
         backgroundColor = .brandWhite
         layer.cornerRadius = 8
+        self.keyboardType = keyboardType
         horizonPadding(12)
     }
     

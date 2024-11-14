@@ -16,7 +16,7 @@ final class SignupView: BaseView {
     lazy var nicknameLabel = signupLabel(title: "닉네임")
     lazy var nicknameTextField = BaseTextField(placeholder: "닉네임을 입력하세요")
     lazy var contactLabel = signupLabel(title: "연락처")
-    lazy var contactTextField = BaseTextField(placeholder: "전화번호를 입력하세요")
+    lazy var contactTextField = BaseTextField(placeholder: "전화번호를 입력하세요", keyboardType: .numberPad)
     lazy var passwordLabel = signupLabel(title: "비밀번호")
     lazy var passwordTextField = BaseTextField(placeholder: "비밀번호를 입력하세요")
     lazy var passwordCheckLabel = signupLabel(title: "비밀번호 확인")

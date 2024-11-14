@@ -19,14 +19,17 @@ final class SignupViewModel: ViewModelBindable {
         let passwordText: ControlProperty<String>
         let passwordCheckText: ControlProperty<String>
         let isSigningUp = PublishSubject<Void>()
+        let isEmailChecked = PublishSubject<Bool>()
     }
     
     struct Output {
+        let emailText: ControlProperty<String>
         let isEmailFieldEmpty: Observable<Bool>
         let emailValidation: Observable<Bool>
         let nicknameValidation: Observable<Bool>
         let contactValidation: Observable<Bool>
         let passwordValidation: Observable<Bool>
+        let passwordCheckValidation: Observable<Bool>
         let areAllFieldsFilled: Observable<Bool>
         let isSignUpCompleted: PublishSubject<Void>
     }
@@ -59,6 +62,8 @@ final class SignupViewModel: ViewModelBindable {
         let passwordValidation = input.passwordText
             .map { self.validatePassword($0) }
         
+        let passwordCheckValidation = validatePasswordCheck(password: input.passwordText, passwordCheck: input.passwordCheckText)
+        
         let areAllFieldsFilled = Observable
             .combineLatest(isEmailFieldEmpty, isNicknameFieldEmpty, isContactFieldEmpty, isPasswordFieldEmpty, isPasswordCheckFieldEmpty)
             .map { !$0 && !$1 && !$2 && !$3 && !$4 }
@@ -83,12 +88,16 @@ final class SignupViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
+        
+        
         return Output(
+            emailText: input.emailText,
             isEmailFieldEmpty: isEmailFieldEmpty,
             emailValidation: emailValidation,
             nicknameValidation: nicknameValidation,
             contactValidation: contactValidation,
             passwordValidation: passwordValidation,
+            passwordCheckValidation: passwordCheckValidation,
             areAllFieldsFilled: areAllFieldsFilled,
             isSignUpCompleted: isSignUpCompleted
         )
@@ -123,5 +132,12 @@ extension SignupViewModel {
         let passwordRegex = "^[A-Z](?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])[A-Za-z0-9\\W]{7,}$"
         let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
         return passwordPredicate.evaluate(with: password)
+    }
+    
+    func validatePasswordCheck(password: ControlProperty<String>, passwordCheck: ControlProperty<String>) -> Observable<Bool> {
+        return Observable.combineLatest(password, passwordCheck)
+            .map { password, passwordCheck in
+                return password == passwordCheck
+            }
     }
 }
