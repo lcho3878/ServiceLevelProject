@@ -14,4 +14,5 @@ enum Header: String {
     case accept = "accept"
     case json = "application/json"
     case mutipart = "multipart/form-data"
+    case refreshToken = "RefreshToken"
 }
