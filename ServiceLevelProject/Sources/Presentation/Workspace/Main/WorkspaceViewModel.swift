@@ -51,6 +51,21 @@ final class WorkspaceViewModel: ViewModelBindable {
                 }
             }
             .disposed(by: disposeBag)
+        
+        input.workspaceDeleteInput
+            .flatMap {
+                APIManager.shared.callRequest(api: WorkSpaceRouter.delete(id: $0))
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    print("success")
+                    input.workspaceLoadTrigger.onNext(())
+                case .failure(let errorModel):
+                    print(">>> Error: \(errorModel.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
            
         return Output(workspaceList: workspaceList)
     }
