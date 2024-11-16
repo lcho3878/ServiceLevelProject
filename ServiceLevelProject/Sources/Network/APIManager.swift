@@ -44,7 +44,6 @@ final class APIManager {
                                                     observer(.success(.failure(errorModel)))
                                                 }
                                             }
-                                            loop()
                                         case "E06":
                                             print("refresh 만료! 로그인화면으로 이동")
                                         default:
@@ -106,7 +105,6 @@ final class APIManager {
                                                     observer(.success(.failure(errorModel)))
                                                 }
                                             }
-                                            loop()
                                         case "E06":
                                             print("refresh 만료! 로그인화면으로 이동")
                                         default:
@@ -157,7 +155,6 @@ final class APIManager {
                                                 completion(.failure(errorModel))
                                             }
                                         }
-                                        loop()
                                     case "E06":
                                         print("refresh 만료! 로그인화면으로 이동")
                                     default:
@@ -208,7 +205,6 @@ final class APIManager {
                                                 completion(.failure(errorModel))
                                             }
                                         }
-                                        loop()
                                     case "E06":
                                         print("refresh 만료! 로그인화면으로 이동")
                                     default:
