@@ -9,9 +9,10 @@ import Foundation
 import Alamofire
 
 enum UserRouter {
-    case validationEmail(query: ValidationEmail)
-    case signUp(query: SignUp)
-    case login(query: Login)
+    case validationEmail(query: ValidationEmailQuery)
+    case signUp(query: SignUpQuery)
+    case login(query: LoginQuery)
+    case refreshToken
 }
 
 extension UserRouter : TargetType {
@@ -23,6 +24,8 @@ extension UserRouter : TargetType {
         switch self {
         case .signUp, .validationEmail, .login:
             return .post
+        case .refreshToken:
+            return .get
         }
     }
     
@@ -34,6 +37,8 @@ extension UserRouter : TargetType {
             return "/users/validation/email"
         case .login:
             return "/users/login"
+        case .refreshToken:
+            return "/auth/refresh"
         }
     }
     
@@ -45,12 +50,20 @@ extension UserRouter : TargetType {
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.contentType.rawValue: Header.json.rawValue
             ]
+            
+        case.refreshToken:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.refreshToken.rawValue: UserDefaultManager.refreshToken ?? "",
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.sesacKey.rawValue: Key.sesacKey,
+            ]
         }
     }
     
     var parameters: [String : String]? {
         switch self {
-        case .signUp, .validationEmail, .login: // 파라미터 있는 경우 이 둘은 'default: return nil'로 빼주시면 됩니다 :)
+        case .signUp, .validationEmail, .login , .refreshToken: // 파라미터 있는 경우 이 둘은 'default: return nil'로 빼주시면 됩니다 :)
             return nil
         }
     }
@@ -78,6 +91,8 @@ extension UserRouter : TargetType {
             return try? encoder.encode(query)
         case .login(let query):
             return try? encoder.encode(query)
+        default:
+            return nil
         }
     }
     

@@ -8,12 +8,12 @@
 import UIKit
 
 // MARK: ValidationEmail
-struct ValidationEmail: Encodable {
+struct ValidationEmailQuery: Encodable {
     let email: String
 }
 
 // MARK: SignUp
-struct SignUp: Encodable {
+struct SignUpQuery: Encodable {
     let email: String
     let password: String
     let nickname: String
@@ -29,7 +29,7 @@ struct WorkspaceCreateQuery: Encodable {
 }
 
 // MARK: Login
-struct Login: Encodable {
+struct LoginQuery: Encodable {
     let email: String
     let password: String
     let deviceToken: String
