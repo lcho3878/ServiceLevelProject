@@ -15,6 +15,10 @@ final class WorkspaceViewController: BaseViewController {
     private let viewModel = WorkspaceViewModel()
     private let disposeBag = DisposeBag()
     var isManager = true
+
+    // MARK: ViewModel Input
+    let workspaceLoadTrigger = PublishSubject<Void>()
+    let workspaceDeleteInput = PublishSubject<String>()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -24,7 +28,7 @@ final class WorkspaceViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        workspaceView.workspaceEmptyView.isHidden = true // 임시
+//        workspaceView.workspaceEmptyView.isHidden = true // 임시
         // workspaceView.tableView.isHidden = true
         bind()
     }
@@ -33,10 +37,14 @@ final class WorkspaceViewController: BaseViewController {
 // MARK: bind
 extension WorkspaceViewController {
     func bind() {
-        let input = WorkspaceViewModel.Input()
+        
+        let input = WorkspaceViewModel.Input(
+            workspaceLoadTrigger: workspaceLoadTrigger,
+            workspaceDeleteInput: workspaceDeleteInput
+        )
         let output = viewModel.transform(input: input)
         
-        output.testData
+        output.workspaceList
             .bind(to: workspaceView.tableView.rx.items(cellIdentifier: WorkspaceCell.id, cellType: WorkspaceCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
                 cell.editButton.rx.tap
@@ -52,6 +60,12 @@ extension WorkspaceViewController {
             }
             .disposed(by: disposeBag)
         
+        output.workspaceList
+            .bind(with: self) { owner, result in
+                owner.workspaceView.rx.isEmpty.onNext(result.isEmpty)
+            }
+            .disposed(by: disposeBag)
+        
         workspaceView.tableView.rx.itemSelected
             .flatMapLatest { [weak self] indexPath -> Observable<IndexPath> in
                 guard let self = self else { return .empty() }
@@ -64,6 +78,8 @@ extension WorkspaceViewController {
                 owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        workspaceLoadTrigger.onNext(())
     }
 }
 

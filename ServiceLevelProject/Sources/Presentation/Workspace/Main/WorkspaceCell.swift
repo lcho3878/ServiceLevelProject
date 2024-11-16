@@ -113,4 +113,10 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
         createdAtLabel.text = element.createdAt
         selectionStyle = .none
     }
+    
+    func configureCell(element: WorkSpace) {
+        //이미지 관련 핸들링은 다녀와서 하겠습니다😂
+        nameLabel.text = element.name
+        createdAtLabel.text = element.createdAt
+    }
 }
