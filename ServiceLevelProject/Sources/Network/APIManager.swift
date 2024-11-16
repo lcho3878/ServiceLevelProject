@@ -14,6 +14,7 @@ final class APIManager {
     
     private init() {}
     
+    //사용되지 않는 메서드
     func validationEmail(email: String, completion: @escaping (Result<Void, ErrorModel>) -> Void) {
         do {
             let query = ValidationEmail(email: email)
@@ -38,6 +39,8 @@ final class APIManager {
         }
     }
     
+    /// MVVM ViewModel에서 사용될 callRequest 메서드입니다.
+    /// 응답값이 없는 경우에 사용합니다.
     func callRequest(api: TargetType) -> Single<Result<Void, ErrorCode>> {
         return Single.create { observer -> Disposable in
             do {
@@ -72,6 +75,9 @@ final class APIManager {
         }
     }
     
+    /// MVVM ViewModel에서 사용될 callRequest 메서드입니다.
+    /// 응답값이 있는 경우에 사용합니다.
+    /// type에 Decodable한 타입을 지정하여 사용합니다.
     func callRequest<T: Decodable>(api: TargetType, type: T.Type) -> Single<Result<T, ErrorCode>> {
         return Single.create { observer -> Disposable in
             do {
@@ -110,6 +116,64 @@ final class APIManager {
             }
             
             return Disposables.create()
+        }
+    }
+    
+    /// MVC ViewController에서 사용될 callRequest 메서드입니다.
+    /// 응답값이 없는 경우에 사용합니다.
+    func callRequest(api: TargetType, completion: @escaping (Result<Void, ErrorModel>) -> Void) {
+        do {
+            let request = try api.asURLRequest()
+            
+            AF.request(request)
+                .response { response in
+                    switch response.result {
+                    case .success(_):
+                        completion(.success(()))
+                    case .failure(_):
+                        let statusCode = response.response?.statusCode
+                        switch statusCode {
+                        case 400, 500:
+                            if let data = response.data, let errorModel = try? JSONDecoder().decode(ErrorModel.self, from: data) {
+                                completion(.failure(errorModel))
+                            }
+                        default:
+                            break
+                        }
+                    }
+                }
+        } catch {
+            print("Error 발생! : \(error)")
+        }
+    }
+    
+    /// MVC ViewController에서 사용될 callRequest 메서드입니다.
+    /// 응답값이 있는 경우에 사용합니다.
+    /// type에 Decodable한 타입을 지정하여 사용합니다.
+    func callRequest<T: Decodable>(api: TargetType, type: T.Type, completion: @escaping (Result<T, ErrorModel>) -> Void) {
+        do {
+            let request = try api.asURLRequest()
+            
+            AF.request(request)
+                .responseDecodable(of: T.self) { response in
+                    switch response.result {
+                    case .success(let value):
+                        completion(.success(value))
+                    case .failure(_):
+                        let statusCode = response.response?.statusCode
+                        switch statusCode {
+                        case 400, 500:
+                            if let data = response.data, let errorModel = try? JSONDecoder().decode(ErrorModel.self, from: data) {
+                                completion(.failure(errorModel))
+                            }
+                        default:
+                            print("Error: Decoding Failure")
+                        }
+                    }
+                    
+                }
+        } catch {
+            print("Error 발생! : \(error)")
         }
     }
 }
