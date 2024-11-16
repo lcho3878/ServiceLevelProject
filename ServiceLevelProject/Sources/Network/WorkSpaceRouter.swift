@@ -50,13 +50,13 @@ extension WorkSpaceRouter: TargetType {
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
-                Header.authorization.rawValue: Key.accessToken
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""
             ]
         case .create, .edit, .delete:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
-                Header.authorization.rawValue: Key.accessToken,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.contentType.rawValue: Header.mutipart.rawValue
             ]
         }
