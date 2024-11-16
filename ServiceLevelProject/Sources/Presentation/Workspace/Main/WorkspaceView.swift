@@ -10,6 +10,13 @@ import SnapKit
 import Then
 
 final class WorkspaceView: BaseView {
+    var isEmpty = true {
+        didSet {
+            workspaceEmptyView.isHidden = !isEmpty
+            tableView.isHidden = isEmpty
+        }
+    }
+    
     // MARK: UI
     private let bgView = UIView().then {
         $0.backgroundColor = .brandWhite
