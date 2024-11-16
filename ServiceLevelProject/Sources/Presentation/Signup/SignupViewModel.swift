@@ -76,7 +76,7 @@ final class SignupViewModel: ViewModelBindable {
                 input.passwordText)
             )
             .flatMap { email, nickname, contact, password in
-                let signUpQuery = SignUp(email: email, password: password, nickname: nickname, phone: contact, deviceToken: UserDefaultManager.fcmToken ?? "")
+                let signUpQuery = SignUpQuery(email: email, password: password, nickname: nickname, phone: contact, deviceToken: UserDefaultManager.fcmToken ?? "")
                 return APIManager.shared.callRequest(api: UserRouter.signUp(query: signUpQuery), type: UserModel.self)
             }
             .bind(with: self) { owner, result in

@@ -63,7 +63,8 @@ extension SignupViewController {
             .bind(with: self) { owner, value in
                 owner.dismissKeyboard()
                 if value.1 {
-                    APIManager.shared.validationEmail(email: value.0) { result in
+                    let query = ValidationEmailQuery(email: value.0)
+                    APIManager.shared.callRequest(api: UserRouter.validationEmail(query: query)) { result in
                         switch result {
                         case .success(_):
                             UserDefaultManager.checkedEmail = value.0

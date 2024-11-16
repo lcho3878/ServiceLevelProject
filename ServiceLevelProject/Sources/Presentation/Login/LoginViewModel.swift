@@ -57,8 +57,8 @@ final class LoginViewModel: ViewModelBindable {
         // 유효성 검증 통과 후, 로그인 네트워크 통신
         input.isLoggingIn
             .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText))
-            .flatMapLatest { email, password -> Single<Result<UserModel, ErrorCode>> in
-                let query = Login(email: email, password: password, deviceToken: UserDefaultManager.fcmToken ?? "")
+            .flatMapLatest { email, password -> Single<Result<UserModel, ErrorModel>> in
+                let query = LoginQuery(email: email, password: password, deviceToken: UserDefaultManager.fcmToken ?? "")
                 return APIManager.shared.callRequest(api: UserRouter.login(query: query), type: UserModel.self)
             }
             .bind(with: self) { owner, result in
