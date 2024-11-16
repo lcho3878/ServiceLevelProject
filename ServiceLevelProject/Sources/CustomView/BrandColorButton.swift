@@ -8,8 +8,23 @@
 import UIKit
 
 final class BrandColorButton: UIButton {
+    override var isEnabled: Bool {
+        didSet {
+            backgroundColor = isEnabled ? .brand : .brandInactive
+        }
+    }
     
-    init(title: String, image: UIImage? = nil) {
+    init(title: String) {
+        super.init(frame: .zero)
+        
+        setTitle(title, for: .normal)
+        titleLabel?.font = .title2
+        setTitleColor(.brandWhite, for: .normal)
+        backgroundColor = .brand
+        layer.cornerRadius = 8
+    }
+    
+    init(title: String, image: UIImage?) {
         super.init(frame: CGRect.zero)
         
         var configuration = UIButton.Configuration.bordered()
