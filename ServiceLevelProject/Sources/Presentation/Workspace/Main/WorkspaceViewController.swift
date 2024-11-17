@@ -15,6 +15,10 @@ final class WorkspaceViewController: BaseViewController {
     private let viewModel = WorkspaceViewModel()
     private let disposeBag = DisposeBag()
     var isManager = true
+
+    // MARK: ViewModel Input
+    let workspaceLoadTrigger = PublishSubject<Void>()
+    let workspaceDeleteInput = PublishSubject<String>()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -24,7 +28,7 @@ final class WorkspaceViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        workspaceView.workspaceEmptyView.isHidden = true // 임시
+//        workspaceView.workspaceEmptyView.isHidden = true // 임시
         // workspaceView.tableView.isHidden = true
         bind()
     }
@@ -33,22 +37,32 @@ final class WorkspaceViewController: BaseViewController {
 // MARK: bind
 extension WorkspaceViewController {
     func bind() {
-        let input = WorkspaceViewModel.Input()
+        
+        let input = WorkspaceViewModel.Input(
+            workspaceLoadTrigger: workspaceLoadTrigger,
+            workspaceDeleteInput: workspaceDeleteInput
+        )
         let output = viewModel.transform(input: input)
         
-        output.testData
+        output.workspaceList
             .bind(to: workspaceView.tableView.rx.items(cellIdentifier: WorkspaceCell.id, cellType: WorkspaceCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
                 cell.editButton.rx.tap
                     .bind(with: self) { owner, _ in
                         switch owner.isManager {
                         case true:
-                            owner.configureManagerActionSheet()
+                            owner.configureManagerActionSheet(workspaceID: element.workspace_id)
                         case false:
                             owner.configureMemberActionSheet()
                         }
                     }
                     .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        output.workspaceList
+            .bind(with: self) { owner, result in
+                owner.workspaceView.rx.isEmpty.onNext(result.isEmpty)
             }
             .disposed(by: disposeBag)
         
@@ -64,29 +78,32 @@ extension WorkspaceViewController {
                 owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        workspaceLoadTrigger.onNext(())
     }
 }
 
 // MARK: Functions
 extension WorkspaceViewController: NavigationRepresentable {
-    func configureManagerActionSheet() {
+    func configureManagerActionSheet(workspaceID: String) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let actions: [WorkspaceManagerActionSheet] = [.edit, .exit, .change, .delete, .cancel]
         actions.forEach { action in
-            actionSheet.addAction(action.managerActionSheet { action in
+            actionSheet.addAction(action.managerActionSheet { [weak self] action in
                 switch action {
                 case .edit:
                     print("워크스페이스 편집")
                     let vc = EditWorkspaceViewController()
-                    self.presentNavigationController(rootViewController: vc)
+                    self?.presentNavigationController(rootViewController: vc)
                 case .exit:
                     print("워크스페이스 나가기")
                 case .change:
                     let vc = ChangeAdminViewController()
-                    self.presentNavigationController(rootViewController: vc)
+                    self?.presentNavigationController(rootViewController: vc)
                 case .delete:
                     print("워크스페이스 삭제")
+                    self?.workspaceDeleteInput.onNext(workspaceID)
                 case .cancel:
                     print("취소")
                 }

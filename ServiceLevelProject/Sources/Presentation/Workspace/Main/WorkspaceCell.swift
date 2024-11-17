@@ -45,6 +45,7 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     
     // MARK: Properties
     let disposeBag = DisposeBag()
+    var workspaceID: String?
 
     // MARK: View Life Cycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -112,5 +113,12 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
         nameLabel.text = element.title
         createdAtLabel.text = element.createdAt
         selectionStyle = .none
+    }
+    
+    func configureCell(element: WorkSpace) {
+        //이미지 관련 핸들링은 다녀와서 하겠습니다😂
+        nameLabel.text = element.name
+        createdAtLabel.text = element.createdAt
+        workspaceID = element.workspace_id
     }
 }

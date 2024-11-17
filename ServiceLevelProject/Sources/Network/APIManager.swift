@@ -21,7 +21,14 @@ final class APIManager {
             func loop() {
                 do {
                     let request = try api.asURLRequest()
-                    AF.request(request)
+                    let method: DataRequest
+                    if let multipartFormData = api.multipartFormData {
+                        method = AF.upload(multipartFormData: multipartFormData, with: request)
+                    }
+                    else {
+                        method = AF.request(request)
+                    }
+                    method
                         .validate(statusCode: 200..<300)
                         .response { response in
                             switch response.result {
@@ -132,7 +139,14 @@ final class APIManager {
         func loop() {
             do {
                 let request = try api.asURLRequest()
-                AF.request(request)
+                let method: DataRequest
+                if let multipartFormData = api.multipartFormData {
+                    method = AF.upload(multipartFormData: multipartFormData, with: request)
+                }
+                else {
+                    method = AF.request(request)
+                }
+                method
                     .validate(statusCode: 200..<300)
                     .response { response in
                         switch response.result {
@@ -181,8 +195,14 @@ final class APIManager {
         func loop() {
             do {
                 let request = try api.asURLRequest()
-                
-                AF.request(request)
+                let method: DataRequest
+                if let multipartFormData = api.multipartFormData {
+                    method = AF.upload(multipartFormData: multipartFormData, with: request)
+                }
+                else {
+                    method = AF.request(request)
+                }
+                method
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: T.self) { response in
                         switch response.result {
