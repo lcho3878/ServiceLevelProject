@@ -11,7 +11,7 @@ import Then
 
 final class WorkspaceSettingView: BaseView {
     // MARK: UI
-    private let profileImageView = UIImageView().then {
+    let workspaceImageView = UIImageView().then {
         $0.image = UIImage(resource: .defaultProfile)
         $0.contentMode = .scaleAspectFit
         $0.backgroundColor = .brand
@@ -55,26 +55,26 @@ final class WorkspaceSettingView: BaseView {
     
     // MARK: Functions
     override func addSubviews() {
-        addSubviews([profileImageView, cameraImageView, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
+        addSubviews([workspaceImageView, cameraImageView, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
     }
     
     override func setConstraints() {
         let safeArea = safeAreaLayoutGuide
         
-        profileImageView.snp.makeConstraints {
+        workspaceImageView.snp.makeConstraints {
             $0.top.equalTo(safeArea).offset(24)
             $0.centerX.equalTo(safeArea)
             $0.height.width.equalTo(70)
         }
         
         cameraImageView.snp.makeConstraints {
-            $0.trailing.equalTo(profileImageView).offset(7)
-            $0.bottom.equalTo(profileImageView).offset(5)
+            $0.trailing.equalTo(workspaceImageView).offset(7)
+            $0.bottom.equalTo(workspaceImageView).offset(5)
             $0.height.width.equalTo(24)
         }
         
         workspaceNameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(16)
+            $0.top.equalTo(workspaceImageView.snp.bottom).offset(16)
             $0.horizontalEdges.equalTo(safeArea).inset(24)
             $0.height.equalTo(24)
         }
