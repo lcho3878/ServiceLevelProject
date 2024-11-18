@@ -10,6 +10,7 @@ import Foundation
 final class EditWorkspaceViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
     var workspace: WorkSpace?
+    weak var delegate: WorkspaceListReloadable?
     private let editWorkspaceView = WorkspaceSettingView()
     
     // MARK: View Life Cycle
@@ -48,6 +49,7 @@ extension EditWorkspaceViewController {
             switch result {
             case .success(let value):
                 print(">>> \(value)")
+                self?.delegate?.reloadWorkspaceList()
                 self?.dismiss(animated: true)
             case .failure(let errorModel):
                 print(">>> error: \(errorModel.errorCode)")

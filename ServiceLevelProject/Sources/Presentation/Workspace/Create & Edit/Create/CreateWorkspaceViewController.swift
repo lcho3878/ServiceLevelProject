@@ -10,6 +10,7 @@ import UIKit
 final class CreateWorkspaceViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
     private let createWorkspaceView = WorkspaceSettingView()
+    weak var delegate: WorkspaceListReloadable?
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -45,6 +46,7 @@ extension CreateWorkspaceViewController {
             switch result {
             case .success(let value):
                 print(value)
+                self?.delegate?.reloadWorkspaceList()
                 self?.dismiss(animated: true)
             case .failure(let errorModel):
                 self?.createWorkspaceView.showToast(message: errorModel.errorCode, bottomOffset: -120)

@@ -36,7 +36,7 @@ final class WorkspaceViewController: BaseViewController {
 
 // MARK: bind
 extension WorkspaceViewController {
-    func bind() {
+    private func bind() {
         
         let input = WorkspaceViewModel.Input(
             workspaceLoadTrigger: workspaceLoadTrigger,
@@ -83,12 +83,14 @@ extension WorkspaceViewController {
         createButtons.forEach {
             $0.rx.tap
                 .bind(with: self) { owner, _ in
-                    owner.presentNavigationController(rootViewController: CreateWorkspaceViewController())
+                    let vc = CreateWorkspaceViewController()
+                    vc.delegate = owner
+                    owner.presentNavigationController(rootViewController: vc)
                 }
                 .disposed(by: disposeBag)
         }
         
-        workspaceLoadTrigger.onNext(())
+        reloadWorkspaceList()
     }
 }
 
@@ -105,6 +107,7 @@ extension WorkspaceViewController: NavigationRepresentable {
                     print("워크스페이스 편집")
                     let vc = EditWorkspaceViewController()
                     vc.workspace = workspace
+                    vc.delegate = self
                     self?.presentNavigationController(rootViewController: vc)
                 case .exit:
                     print("워크스페이스 나가기")
@@ -192,5 +195,11 @@ extension WorkspaceViewController {
                 }
             }
         }
+    }
+}
+
+extension WorkspaceViewController: WorkspaceListReloadable {
+    func reloadWorkspaceList() {
+        workspaceLoadTrigger.onNext(())
     }
 }
