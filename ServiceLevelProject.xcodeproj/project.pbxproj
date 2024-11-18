@@ -71,6 +71,8 @@
 		684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */; };
 		684E653E2CE62E66006B2F02 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653D2CE62E66006B2F02 /* LoginViewModel.swift */; };
 		684E65422CE88A28006B2F02 /* RefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65412CE88A28006B2F02 /* RefreshToken.swift */; };
+		684E65442CEB8C5E006B2F02 /* ChannelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65432CEB8C5E006B2F02 /* ChannelRouter.swift */; };
+		684E65472CEB9068006B2F02 /* ChannelListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65462CEB9068006B2F02 /* ChannelListModel.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -196,6 +198,8 @@
 		684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitailView.swift; sourceTree = "<group>"; };
 		684E653D2CE62E66006B2F02 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		684E65412CE88A28006B2F02 /* RefreshToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshToken.swift; sourceTree = "<group>"; };
+		684E65432CEB8C5E006B2F02 /* ChannelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRouter.swift; sourceTree = "<group>"; };
+		684E65462CEB9068006B2F02 /* ChannelListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListModel.swift; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -529,6 +533,14 @@
 			path = Initial;
 			sourceTree = "<group>";
 		};
+		684E65452CEB9055006B2F02 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				684E65462CEB9068006B2F02 /* ChannelListModel.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
 		687605512CCE5CC1008167B0 /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,6 +695,7 @@
 				687605C12CE1D8B7008167B0 /* TargetType.swift */,
 				68B96EFB2CE2031100473D8B /* UserRouter.swift */,
 				5490919D2CE476DC002EE538 /* WorkSpaceRouter.swift */,
+				684E65432CEB8C5E006B2F02 /* ChannelRouter.swift */,
 				68B96EFD2CE2031700473D8B /* Header.swift */,
 				68B96EFF2CE2153B00473D8B /* APIManager.swift */,
 				68B96F012CE2177C00473D8B /* ErrorCode.swift */,
@@ -699,6 +712,7 @@
 				68B96F092CE231E500473D8B /* SignUpModel.swift */,
 				684E65412CE88A28006B2F02 /* RefreshToken.swift */,
 				549091A12CE491A1002EE538 /* WorkSpace */,
+				684E65452CEB9055006B2F02 /* Channel */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -840,6 +854,7 @@
 				5477F1C32CDA393B007D1A92 /* ChattingTableViewCell.swift in Sources */,
 				5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */,
 				687605C22CE1D8B7008167B0 /* TargetType.swift in Sources */,
+				684E65442CEB8C5E006B2F02 /* ChannelRouter.swift in Sources */,
 				684E653E2CE62E66006B2F02 /* LoginViewModel.swift in Sources */,
 				54A53FDA2CD636D500313E17 /* ProfileView.swift in Sources */,
 				549091A62CE4A206002EE538 /* UserDefault+.swift in Sources */,
@@ -860,6 +875,7 @@
 				68B96F082CE22FDD00473D8B /* APIQuery.swift in Sources */,
 				54565AE92CD1056600B5A354 /* UIViewController+.swift in Sources */,
 				54A53FE52CD6426D00313E17 /* CoinTableViewCell.swift in Sources */,
+				684E65472CEB9068006B2F02 /* ChannelListModel.swift in Sources */,
 				68B96EF82CE1DF9000473D8B /* KeyboardDismissable.swift in Sources */,
 				54A53FE72CD65E0600313E17 /* CameraImageView.swift in Sources */,
 				5477F1C52CDA3955007D1A92 /* ChattingViewController.swift in Sources */,
