@@ -598,7 +598,7 @@
 				684E65382CE60FC9006B2F02 /* Initial */,
 				687605822CD66A9D008167B0 /* Create */,
 				6876057C2CD66837008167B0 /* Edit */,
-				687605872CDA3368008167B0 /* ChangeAmin */,
+				687605872CDA3368008167B0 /* ChangeAdmin */,
 			);
 			path = "Create & Edit";
 			sourceTree = "<group>";
@@ -611,7 +611,7 @@
 			path = Create;
 			sourceTree = "<group>";
 		};
-		687605872CDA3368008167B0 /* ChangeAmin */ = {
+		687605872CDA3368008167B0 /* ChangeAdmin */ = {
 			isa = PBXGroup;
 			children = (
 				687605882CDA3389008167B0 /* ChangeAdminViewController.swift */,
@@ -619,7 +619,7 @@
 				6876058C2CDA36E0008167B0 /* ChangeAdminViewModel.swift */,
 				6876058E2CDA396F008167B0 /* ChangeAdminCell.swift */,
 			);
-			path = ChangeAmin;
+			path = ChangeAdmin;
 			sourceTree = "<group>";
 		};
 		687605942CDDF3ED008167B0 /* Home */ = {
