@@ -46,6 +46,9 @@ extension HomeViewController {
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        // viewDidLoadTrigger
+        input.viewDidLoadTrigger.onNext(())
+        
         // EmptyView - 워크스페이스 생성 버튼
         homeView.createWorkspaceButton.rx.tap
             .bind(with: self) { owner, _ in

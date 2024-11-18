@@ -24,7 +24,7 @@ final class HomeViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     
     struct Input {
-        
+        let viewDidLoadTrigger = PublishSubject<Void>()
     }
     
     struct Output {
@@ -42,6 +42,35 @@ final class HomeViewModel: ViewModelBindable {
     }
     
     func transform(input: Input) -> Output {
+        input.viewDidLoadTrigger
+            .flatMap {
+                if UserDefaultManager.workspaceID == nil {
+                    return APIManager.shared.callRequest(api: WorkSpaceRouter.list, type: [WorkSpace].self)
+                        .map { result in
+                            switch result {
+                            case .success(let workspaces):
+                                return workspaces
+                            case .failure(let error):
+                                throw error
+                            }
+                        }
+                } else {
+                    return Single.just([])
+                }
+            }
+            .bind(with: self) { owner, result in
+                if !result.isEmpty {
+                    if let firstWorkspace = result.first {
+                        // 아직 로그아웃 시, 삭제하는 코드 없는 관계로 다른 아이디로 로그인해도 이전 아이디 워크스페이스 뜰 수 있음.
+                        UserDefaultManager.workspaceID = firstWorkspace.workspace_id
+                        // HomeView 띄우기
+                    }
+                } else {
+                    // EmptyView 띄우기
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output()
     }
 }

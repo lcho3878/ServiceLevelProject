@@ -19,4 +19,7 @@ struct UserDefaultManager {
     
     @UserDefault(key: "refreshToken", defaultValue: nil)
     static var refreshToken: String?
+    
+    @UserDefault(key: "workspaceID", defaultValue: nil)
+    static var workspaceID: String?
 }
