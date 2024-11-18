@@ -51,7 +51,7 @@ extension WorkspaceViewController {
                     .bind(with: self) { owner, _ in
                         switch owner.isManager {
                         case true:
-                            owner.configureManagerActionSheet(workspaceID: element.workspace_id)
+                            owner.configureManagerActionSheet(workspace: element)
                         case false:
                             owner.configureMemberActionSheet()
                         }
@@ -94,7 +94,7 @@ extension WorkspaceViewController {
 
 // MARK: Functions
 extension WorkspaceViewController: NavigationRepresentable {
-    func configureManagerActionSheet(workspaceID: String) {
+    func configureManagerActionSheet(workspace: WorkSpace) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let actions: [WorkspaceManagerActionSheet] = [.edit, .exit, .change, .delete, .cancel]
@@ -104,6 +104,7 @@ extension WorkspaceViewController: NavigationRepresentable {
                 case .edit:
                     print("워크스페이스 편집")
                     let vc = EditWorkspaceViewController()
+                    vc.workspace = workspace
                     self?.presentNavigationController(rootViewController: vc)
                 case .exit:
                     print("워크스페이스 나가기")
@@ -112,7 +113,7 @@ extension WorkspaceViewController: NavigationRepresentable {
                     self?.presentNavigationController(rootViewController: vc)
                 case .delete:
                     print("워크스페이스 삭제")
-                    self?.workspaceDeleteInput.onNext(workspaceID)
+                    self?.workspaceDeleteInput.onNext(workspace.workspace_id)
                 case .cancel:
                     print("취소")
                 }
