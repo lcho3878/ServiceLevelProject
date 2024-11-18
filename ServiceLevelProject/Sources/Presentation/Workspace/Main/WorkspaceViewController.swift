@@ -79,6 +79,15 @@ extension WorkspaceViewController {
             }
             .disposed(by: disposeBag)
         
+        let createButtons = [workspaceView.createWorkspaceButton, workspaceView.addWorkspaceButton]
+        createButtons.forEach {
+            $0.rx.tap
+                .bind(with: self) { owner, _ in
+                    owner.presentNavigationController(rootViewController: CreateWorkspaceViewController())
+                }
+                .disposed(by: disposeBag)
+        }
+        
         workspaceLoadTrigger.onNext(())
     }
 }

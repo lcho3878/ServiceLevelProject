@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class CreateWorkspaceViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
+    private let disposeBag = DisposeBag()
     let createWorkspaceView = WorkspaceSettingView()
     
     // MARK: View Life Cycle
@@ -21,10 +24,34 @@ final class CreateWorkspaceViewController: BaseViewController, DismissButtonPres
         super.viewDidLoad()
         
         setDismissButton()
+        configureAddTarget()
     }
     
     // MARK: Functions
     override func configureNavigation() {
         title = "워크스페이스 생성"
+    }
+}
+
+// MARK: Button Functions
+extension CreateWorkspaceViewController {
+    private func configureAddTarget() {
+        createWorkspaceView.createWorkspaceButton.addTarget(self, action: #selector(createButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc
+    private func createButtonClicked() {
+        //현재는 기본 image로 워크스페이스 생성 추후에 처리해보도록 하겠습니다.
+        //이미지 추가 필요
+        let query = WorkspaceCreateQuery(name: createWorkspaceView.workspaceNameTextField.text!, description: nil, image: createWorkspaceView.workspaceImageView.image?.pngData())
+        APIManager.shared.callRequest(api: WorkSpaceRouter.create(query: query), type: WorkSpace.self) { [weak self] result in
+            switch result {
+            case .success(let value):
+                print(value)
+                self?.dismiss(animated: true)
+            case .failure(let errorModel):
+                self?.createWorkspaceView.showToast(message: errorModel.errorCode, bottomOffset: -120)
+            }
+        }
     }
 }
