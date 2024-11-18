@@ -73,6 +73,7 @@
 		684E65422CE88A28006B2F02 /* RefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65412CE88A28006B2F02 /* RefreshToken.swift */; };
 		684E65442CEB8C5E006B2F02 /* ChannelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65432CEB8C5E006B2F02 /* ChannelRouter.swift */; };
 		684E65472CEB9068006B2F02 /* ChannelListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65462CEB9068006B2F02 /* ChannelListModel.swift */; };
+		684E65492CEBA140006B2F02 /* ChannelUnreadCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -200,6 +201,7 @@
 		684E65412CE88A28006B2F02 /* RefreshToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshToken.swift; sourceTree = "<group>"; };
 		684E65432CEB8C5E006B2F02 /* ChannelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRouter.swift; sourceTree = "<group>"; };
 		684E65462CEB9068006B2F02 /* ChannelListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListModel.swift; sourceTree = "<group>"; };
+		684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUnreadCountModel.swift; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 			isa = PBXGroup;
 			children = (
 				684E65462CEB9068006B2F02 /* ChannelListModel.swift */,
+				684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -828,6 +831,7 @@
 				54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */,
 				5476C9592CD4C7FF00E95AD4 /* ProfileEditView.swift in Sources */,
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
+				684E65492CEBA140006B2F02 /* ChannelUnreadCountModel.swift in Sources */,
 				54A53FD52CD6347400313E17 /* PhoneNumberEditView.swift in Sources */,
 				687605AE2CDE4D9D008167B0 /* DMNavigationView.swift in Sources */,
 				54565AD92CD0EEB600B5A354 /* SignupViewController.swift in Sources */,

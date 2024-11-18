@@ -10,6 +10,7 @@ import Alamofire
 
 enum ChannelRouter {
     case myChannelList(workspaceID: String)
+    case unreadCount(workspaceID: String, channelID: String, after: String)
 }
 
 extension ChannelRouter : TargetType {
@@ -19,7 +20,7 @@ extension ChannelRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myChannelList:
+        case .myChannelList, .unreadCount:
             return .get
         }
     }
@@ -28,12 +29,14 @@ extension ChannelRouter : TargetType {
         switch self {
         case let .myChannelList(workspaceID):
             return "/workspaces/\(workspaceID)/my-channels"
+        case let .unreadCount(workspaceID, channelID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/unreads"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .myChannelList:
+        case .myChannelList, .unreadCount:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -44,18 +47,30 @@ extension ChannelRouter : TargetType {
     
     var parameters: [String : String]? {
         switch self {
-        case .myChannelList:
+        case .unreadCount(_, _, let after):
+            return [
+                "after": after
+            ]
+        default:
             return nil
         }
     }
     
     var queryItems: [URLQueryItem]? {
-        return nil
+        switch self {
+        case .unreadCount:
+            return parameters?.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+        default:
+            return nil
+        }
     }
     
     var body: Data? {
+        let encoder = JSONEncoder()
         switch self {
-        case .myChannelList:
+        case .myChannelList, .unreadCount:
             return nil
         }
     }

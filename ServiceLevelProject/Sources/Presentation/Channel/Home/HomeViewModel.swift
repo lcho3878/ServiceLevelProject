@@ -9,14 +9,19 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ChannelTestData {
-    let channelName: String
-    let unreadCount: Int
-}
-
 struct DirectMessageTestData {
     let chatProfileImage: String
     let chatFriendName: String
+    let unreadCount: Int
+}
+
+struct ChannelList {
+    let channelID: String
+    let name: String
+    let description: String?
+    let coverImage: String?
+    let ownerID: String
+    let createdAt: String
     let unreadCount: Int
 }
 
@@ -26,11 +31,12 @@ final class HomeViewModel: ViewModelBindable {
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
         let workspaceID = PublishSubject<String>()
-        let channelList = BehaviorSubject(value: [ChannelListModel(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "")])
+        let myChannelList = PublishSubject<[ChannelListModel]>()
+        let channelList = BehaviorSubject(value: [ChannelList(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "", unreadCount: 0)])
     }
     
     struct Output {
-        let channelList: BehaviorSubject<[ChannelListModel]>
+        let channelList: BehaviorSubject<[ChannelList]>
         
         let chatList = BehaviorSubject(value: [
             DirectMessageTestData(chatProfileImage: "star.fill", chatFriendName: "Hue", unreadCount: 8),
@@ -38,9 +44,13 @@ final class HomeViewModel: ViewModelBindable {
             DirectMessageTestData(chatProfileImage: "leaf.fill", chatFriendName: "Bran", unreadCount: 0),
             DirectMessageTestData(chatProfileImage: "person.fill", chatFriendName: "Den", unreadCount: 1)
         ])
+        
     }
     
     func transform(input: Input) -> Output {
+        var myChannelList: [ChannelListModel] = []
+        var myChannelListWithUnreadCount: [ChannelList] = []
+        
         input.viewDidLoadTrigger
             .flatMap {
                 if UserDefaultManager.workspaceID == nil {
@@ -72,18 +82,55 @@ final class HomeViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-        // ChannelList 불러오기
+        // 내가 속한 채널 리스트 조회
         input.workspaceID
             .flatMap { id in
-                print("workspaceID: \(id)")
                 return APIManager.shared.callRequest(api: ChannelRouter.myChannelList(workspaceID: id), type: [ChannelListModel].self)
             }
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(let success):
-                    input.channelList.onNext(success)
+                case .success(let succsss):
+                    for channel in succsss {
+                        myChannelList.append(ChannelListModel(
+                            channelID: channel.channelID,
+                            name: channel.name,
+                            description: channel.description,
+                            coverImage: channel.coverImage,
+                            ownerID: channel.ownerID,
+                            createdAt: channel.createdAt
+                        ))
+                        input.myChannelList.onNext(myChannelList)
+                    }
                 case .failure(let failure):
                     print(">>> Fail!!: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 내가 속한 채널 리스트 조회 + 읽지 않은 채널 채팅 개수
+        input.myChannelList
+            .bind(with: self) { owner, success in
+                guard let workspaceID = UserDefaultManager.workspaceID else { return }
+                for channel in success {
+                    APIManager.shared.callRequest(api: ChannelRouter.unreadCount(workspaceID: workspaceID, channelID: channel.channelID, after: channel.createdAt), type: ChannelUnreadCountModel.self) { result in
+                        switch result {
+                        case .success(let success):
+                            if channel.channelID == success.channelID {
+                                myChannelListWithUnreadCount.append(ChannelList(
+                                    channelID: channel.channelID,
+                                    name: channel.name,
+                                    description: channel.description,
+                                    coverImage: channel.ownerID,
+                                    ownerID: channel.ownerID,
+                                    createdAt: channel.createdAt,
+                                    unreadCount: success.count)
+                                )
+                            }
+                            input.channelList.onNext(myChannelListWithUnreadCount)
+                        case .failure(let failure):
+                            print(">>> failure: \(failure)")
+                        }
+                    }
                 }
             }
             .disposed(by: disposeBag)
