@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class AddChannelViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
-    let addChannelView = AddChannelView()
+    private let addChannelView = AddChannelView()
+    private let viewModel = AddChannelViewModel()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -20,9 +23,22 @@ final class AddChannelViewController: BaseViewController, DismissButtonPresentab
         super.viewDidLoad()
         
         setDismissButton()
+        bind()
     }
     
     override func configureNavigation() {
         title = "채널 생성"
+    }
+}
+
+extension AddChannelViewController {
+    private func bind() {
+        let input = AddChannelViewModel.Input(
+            channelNameText: addChannelView.channelNameTextField.rx.text.orEmpty,
+            channelDescriptionText: addChannelView.channelDescriptionTextField.rx.text.orEmpty,
+            createButtonTap: addChannelView.createButton.rx.tap
+        )
+        let output = viewModel.transform(input: input)
+        
     }
 }

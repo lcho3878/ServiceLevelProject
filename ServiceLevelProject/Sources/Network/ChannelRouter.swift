@@ -11,6 +11,7 @@ import Alamofire
 enum ChannelRouter {
     case myChannelList(workspaceID: String)
     case unreadCount(workspaceID: String, channelID: String, after: String)
+    case addChannel(workspaceID: String, query: AddChannelQuery)
 }
 
 extension ChannelRouter : TargetType {
@@ -22,6 +23,8 @@ extension ChannelRouter : TargetType {
         switch self {
         case .myChannelList, .unreadCount:
             return .get
+        case .addChannel:
+            return .post
         }
     }
     
@@ -31,6 +34,8 @@ extension ChannelRouter : TargetType {
             return "/workspaces/\(workspaceID)/my-channels"
         case let .unreadCount(workspaceID, channelID, _):
             return "/workspaces/\(workspaceID)/channels/\(channelID)/unreads"
+        case let .addChannel(workspaceID, _):
+            return "/workspaces/\(workspaceID)/channels"
         }
     }
     
@@ -41,6 +46,13 @@ extension ChannelRouter : TargetType {
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""
+            ]
+        case .addChannel:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.contentType.rawValue: Header.mutipart.rawValue
             ]
         }
     }
@@ -70,14 +82,33 @@ extension ChannelRouter : TargetType {
     var body: Data? {
         let encoder = JSONEncoder()
         switch self {
-        case .myChannelList, .unreadCount:
+        case let .addChannel(_, query):
+            return try? encoder.encode(query)
+        default:
             return nil
         }
     }
     
     var multipartFormData: MultipartFormData? {
+        let multipart = MultipartFormData()
         switch self {
-        default: return nil
+        case let .addChannel(_, query):
+            appendCommonFields(for: query)
+            return multipart
+        default: 
+            return nil
+        }
+        
+        func appendCommonFields(for query: AddChannelQuery) {
+            let nameData = query.name.data(using: .utf8) ?? Data()
+            multipart.append(nameData, withName: "name")
+            
+            let description = query.description?.data(using: .utf8) ?? Data()
+            multipart.append(description, withName: "description")
+            
+            if let image = query.image {
+                multipart.append(image, withName: "image", fileName: "Image.png", mimeType: "image/png")
+            }
         }
     }
 }

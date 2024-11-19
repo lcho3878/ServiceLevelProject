@@ -34,3 +34,10 @@ struct LoginQuery: Encodable {
     let password: String
     let deviceToken: String
 }
+
+// MARK: AddChannel
+struct AddChannelQuery: Encodable {
+    let name: String
+    let description: String?
+    let image: Data?
+}

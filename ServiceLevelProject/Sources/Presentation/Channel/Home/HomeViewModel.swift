@@ -44,7 +44,6 @@ final class HomeViewModel: ViewModelBindable {
             DirectMessageTestData(chatProfileImage: "leaf.fill", chatFriendName: "Bran", unreadCount: 0),
             DirectMessageTestData(chatProfileImage: "person.fill", chatFriendName: "Den", unreadCount: 1)
         ])
-        
     }
     
     func transform(input: Input) -> Output {
@@ -78,6 +77,7 @@ final class HomeViewModel: ViewModelBindable {
                 
                 if let workspaceID = UserDefaultManager.workspaceID {
                     input.workspaceID.onNext(workspaceID)
+                    print(">>> workspaceID:\(workspaceID)")
                 }
             }
             .disposed(by: disposeBag)
@@ -99,8 +99,8 @@ final class HomeViewModel: ViewModelBindable {
                             ownerID: channel.ownerID,
                             createdAt: channel.createdAt
                         ))
-                        input.myChannelList.onNext(myChannelList)
                     }
+                    input.myChannelList.onNext(myChannelList)
                 case .failure(let failure):
                     print(">>> Fail!!: \(failure.errorCode)")
                 }
