@@ -14,7 +14,6 @@ final class WorkspaceViewController: BaseViewController {
     private let workspaceView = WorkspaceView()
     private let viewModel = WorkspaceViewModel()
     private let disposeBag = DisposeBag()
-    var isManager = true
 
     // MARK: ViewModel Input
     let workspaceLoadTrigger = PublishSubject<Void>()
@@ -28,8 +27,6 @@ final class WorkspaceViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        workspaceView.workspaceEmptyView.isHidden = true // 임시
-        // workspaceView.tableView.isHidden = true
         bind()
     }
 }
@@ -49,7 +46,7 @@ extension WorkspaceViewController {
                 cell.configureCell(element: element)
                 cell.editButton.rx.tap
                     .bind(with: self) { owner, _ in
-                        switch owner.isManager {
+                        switch element.owner_id == UserDefaultManager.userID {
                         case true:
                             owner.configureManagerActionSheet(workspace: element)
                         case false:
