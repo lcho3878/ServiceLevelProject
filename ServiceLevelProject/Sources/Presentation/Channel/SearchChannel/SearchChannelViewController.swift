@@ -63,7 +63,9 @@ extension SearchChannelViewController: RootViewTransitionable {
         output.goToMyChannel
             .bind(with: self) { owner, selectedData in
                 // 채팅뷰로 바로 이동
-                owner.changeRootViewController(rootVC: ChattingViewController(), isNavigation: true)
+                let vc = ChattingViewController()
+                vc.viewModel.chattingRoomInfo.onNext(selectedData)
+                owner.changeRootViewController(rootVC: vc, isNavigation: true)
             }
             .disposed(by: disposeBag)
         
@@ -73,7 +75,9 @@ extension SearchChannelViewController: RootViewTransitionable {
                 alertVC.modalPresentationStyle = .overFullScreen
                 alertVC.setConfigure(
                     title: "채널 참여", subTitle: "[\(selectedData.name)] 채널에 참여하시겠습니까?", buttonTitle: "확인") {
-                        owner.changeRootViewController(rootVC: ChattingViewController(), isNavigation: true)
+                        let vc = ChattingViewController()
+                        vc.viewModel.chattingRoomInfo.onNext(selectedData)
+                        owner.changeRootViewController(rootVC: vc, isNavigation: true)
                     }
                 
                 self.present(alertVC, animated: true)
