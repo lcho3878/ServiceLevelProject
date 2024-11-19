@@ -162,6 +162,8 @@ final class HomeViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-        return Output(channelList: input.channelList)
+        return Output(
+            channelList: input.channelList
+        )
     }
 }

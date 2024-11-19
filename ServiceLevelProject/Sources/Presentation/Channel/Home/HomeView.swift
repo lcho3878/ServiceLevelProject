@@ -401,11 +401,13 @@ final class HomeView: BaseView {
         backgroundColor = .brandWhite
     }
     
-    func updateTableViewLayout() {
+    func updateChannelTableViewLayout() {
         channelTableView.snp.updateConstraints {
             $0.height.equalTo(channelTableView.contentSize.height)
         }
-        
+    }
+    
+    func updateDirectMessageTableViewLayout() {
         directMessageTableView.snp.updateConstraints {
             $0.height.equalTo(directMessageTableView.contentSize.height)
         }

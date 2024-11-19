@@ -116,6 +116,7 @@ extension HomeViewController {
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
+                self.homeView.updateChannelTableViewLayout()
             }
             .disposed(by: disposeBag)
         
@@ -123,10 +124,9 @@ extension HomeViewController {
         output.chatList
             .bind(to: homeView.directMessageTableView.rx.items(cellIdentifier: DirectMessageCell.id, cellType: DirectMessageCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
+                self.homeView.updateDirectMessageTableViewLayout()
             }
             .disposed(by: disposeBag)
-        
-        homeView.updateTableViewLayout()
     }
 }
 

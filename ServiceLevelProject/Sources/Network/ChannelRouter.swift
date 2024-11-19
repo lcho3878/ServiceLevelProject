@@ -83,10 +83,7 @@ extension ChannelRouter : TargetType {
     }
     
     var body: Data? {
-        let encoder = JSONEncoder()
         switch self {
-        case let .addChannel(_, query):
-            return try? encoder.encode(query)
         default:
             return nil
         }
