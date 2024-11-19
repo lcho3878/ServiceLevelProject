@@ -15,6 +15,7 @@ enum WorkSpaceRouter {
     case delete(id: String)
     case invite(id: String, query: WorkspaceMemberQuery)
     case exit(id: String)
+    case memberlist(id: String)
 }
 
 extension WorkSpaceRouter: TargetType {
@@ -24,7 +25,7 @@ extension WorkSpaceRouter: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .list, .exit:
+        case .list, .exit, .memberlist:
             return .get
         case .create, .invite:
             return .post
@@ -47,12 +48,14 @@ extension WorkSpaceRouter: TargetType {
             return "/workspaces/\(id)/members"
         case .exit(let id):
             return "/workspaces/\(id)/exit"
+        case .memberlist(let id):
+            return "/workspaces/\(id)/members"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .list, .exit:
+        case .list, .exit, .memberlist:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
