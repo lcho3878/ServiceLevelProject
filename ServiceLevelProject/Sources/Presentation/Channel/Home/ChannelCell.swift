@@ -68,8 +68,8 @@ final class ChannelCell: BaseTableViewCell {
         }
     }
     
-    func configureCell(element: ChannelTestData) {
-        channelNameLabel.text = element.channelName
+    func configureCell(element: ChannelList) {
+        channelNameLabel.text = element.name
         if element.unreadCount > 0 {
             unreadCountLabel.text = "\(element.unreadCount)"
         } else {

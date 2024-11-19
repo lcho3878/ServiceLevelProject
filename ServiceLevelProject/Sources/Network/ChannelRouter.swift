@@ -1,58 +1,53 @@
 //
-//  WorkSpaceRouter.swift
+//  ChannelRouter.swift
 //  ServiceLevelProject
 //
-//  Created by 이찬호 on 11/13/24.
+//  Created by YJ on 11/18/24.
 //
 
 import Foundation
 import Alamofire
 
-enum WorkSpaceRouter {
-    case list
-    case create(query: WorkspaceCreateQuery)
-    case edit(id: String, query: WorkspaceCreateQuery)
-    case delete(id: String)
+enum ChannelRouter {
+    case myChannelList(workspaceID: String)
+    case unreadCount(workspaceID: String, channelID: String, after: String)
+    case addChannel(workspaceID: String, query: AddChannelQuery)
 }
 
-extension WorkSpaceRouter: TargetType {
+extension ChannelRouter : TargetType {
     var baseURL: String {
         return Key.baseURL + "v1"
     }
     
     var method: HTTPMethod {
         switch self {
-        case .list:
+        case .myChannelList, .unreadCount:
             return .get
-        case .create:
+        case .addChannel:
             return .post
-        case .edit:
-            return .put
-        case.delete:
-            return .delete
         }
     }
     
     var path: String {
         switch self {
-        case .list, .create:
-            return "/workspaces"
-        case .edit(let id, _):
-            return "/workspaces/\(id)"
-        case .delete(let id):
-            return "/workspaces/\(id)"
+        case let .myChannelList(workspaceID):
+            return "/workspaces/\(workspaceID)/my-channels"
+        case let .unreadCount(workspaceID, channelID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/unreads"
+        case let .addChannel(workspaceID, _):
+            return "/workspaces/\(workspaceID)/channels"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .list:
+        case .myChannelList, .unreadCount:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""
             ]
-        case .create, .edit, .delete:
+        case .addChannel:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -64,43 +59,53 @@ extension WorkSpaceRouter: TargetType {
     
     var parameters: [String : String]? {
         switch self {
-        default: return nil
+        case .unreadCount(_, _, let after):
+            return [
+                "after": after
+            ]
+        default:
+            return nil
         }
     }
     
-    
     var queryItems: [URLQueryItem]? {
         switch self {
-        default: return nil
+        case .unreadCount:
+            return parameters?.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+        default:
+            return nil
         }
     }
     
     var body: Data? {
-        // let encoder = JSONEncoder()
+        let encoder = JSONEncoder()
         switch self {
-        default: return nil
+        case let .addChannel(_, query):
+            return try? encoder.encode(query)
+        default:
+            return nil
         }
     }
     
     var multipartFormData: MultipartFormData? {
         let multipart = MultipartFormData()
         switch self {
-        case .create(let query):
+        case let .addChannel(_, query):
             appendCommonFields(for: query)
             return multipart
-        case .edit(_, let query):
-            appendCommonFields(for: query)
-            return multipart
-        default: return nil
+        default: 
+            return nil
         }
         
-        func appendCommonFields(for query: WorkspaceCreateQuery) {
-            if let name = query.name {
-                let nameData = name.data(using: .utf8) ?? Data()
-                multipart.append(nameData, withName: "name")
-            }
+        func appendCommonFields(for query: AddChannelQuery) {
+            let nameData = query.name.data(using: .utf8) ?? Data()
+            multipart.append(nameData, withName: "name")
+            
             let description = query.description?.data(using: .utf8) ?? Data()
             multipart.append(description, withName: "description")
+            
             if let image = query.image {
                 multipart.append(image, withName: "image", fileName: "Image.png", mimeType: "image/png")
             }

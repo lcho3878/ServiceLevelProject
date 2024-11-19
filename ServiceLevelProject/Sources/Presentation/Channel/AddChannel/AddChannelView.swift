@@ -11,10 +11,10 @@ import Then
 
 final class AddChannelView: BaseView {
     private lazy var channelNameLabel = channelNameLabel(title: "채널 이름")
-    private lazy var channelNameTextField = channelTextField(placeholder: "채널 이름을 입력하세요 (필수)")
+    lazy var channelNameTextField = channelTextField(placeholder: "채널 이름을 입력하세요 (필수)")
     private lazy var channelDescriptionLabel = channelNameLabel(title: "채널 설명")
-    private lazy var channelDescriptionTextField = channelTextField(placeholder: "채널을 설명하세요 (옵션)")
-    private let createButton = BrandColorButton(title: "생성")
+    lazy var channelDescriptionTextField = channelTextField(placeholder: "채널을 설명하세요 (옵션)")
+    let createButton = BrandColorButton(title: "생성")
     
     override func addSubviews() {
         addSubviews([channelNameLabel, channelNameTextField, channelDescriptionLabel, channelDescriptionTextField, createButton])
@@ -55,6 +55,7 @@ final class AddChannelView: BaseView {
     
     override func configureUI() {
         backgroundColor = .backgroundPrimary
+        createButton.configuration?.baseBackgroundColor = .brandInactive
     }
 }
 

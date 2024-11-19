@@ -44,7 +44,7 @@ final class APIManager {
                                         case "E05":
                                             self.refreshToken { result in
                                                 switch result {
-                                                case .success(let success):
+                                                case .success(_):
                                                     loop()
                                                 case .failure(_):
                                                     print("refresh 만료! 로그인화면으로 이동")
@@ -105,7 +105,7 @@ final class APIManager {
                                         case "E05":
                                             self.refreshToken { result in
                                                 switch result {
-                                                case .success(let success):
+                                                case .success(_):
                                                     loop()
                                                 case .failure(_):
                                                     print("refresh 만료! 로그인화면으로 이동")
@@ -162,7 +162,7 @@ final class APIManager {
                                     case "E05":
                                         self.refreshToken { result in
                                             switch result {
-                                            case .success(let success):
+                                            case .success(_):
                                                 loop()
                                             case .failure(_):
                                                 print("refresh 만료! 로그인화면으로 이동")
@@ -218,7 +218,7 @@ final class APIManager {
                                     case "E05":
                                         self.refreshToken { result in
                                             switch result {
-                                            case .success(let success):
+                                            case .success(_):
                                                 loop()
                                             case .failure(_):
                                                 print("refresh 만료! 로그인화면으로 이동")

@@ -46,6 +46,9 @@ extension HomeViewController {
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        // viewDidLoadTrigger
+        input.viewDidLoadTrigger.onNext(())
+        
         // EmptyView - 워크스페이스 생성 버튼
         homeView.createWorkspaceButton.rx.tap
             .bind(with: self) { owner, _ in
@@ -99,12 +102,14 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
+        // 채널 리스트
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
             }
             .disposed(by: disposeBag)
         
+        // 다이렉트 메시지 리스트
         output.chatList
             .bind(to: homeView.directMessageTableView.rx.items(cellIdentifier: DirectMessageCell.id, cellType: DirectMessageCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
