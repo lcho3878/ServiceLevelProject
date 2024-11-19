@@ -63,4 +63,10 @@ extension ChangeAdminCell {
         userNameLabel.text = element.name
         userEmailLabel.text = element.email
     }
+    
+    func configureCell(element: WorkSpaceMember) {
+        // 이미지 처리 필요
+        userNameLabel.text = element.nickname
+        userEmailLabel.text = element.email
+    }
 }
