@@ -18,6 +18,7 @@ final class WorkspaceViewController: BaseViewController {
     // MARK: ViewModel Input
     let workspaceLoadTrigger = PublishSubject<Void>()
     let workspaceDeleteInput = PublishSubject<String>()
+    let workspaceExitInput = PublishSubject<String>()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -37,7 +38,8 @@ extension WorkspaceViewController {
         
         let input = WorkspaceViewModel.Input(
             workspaceLoadTrigger: workspaceLoadTrigger,
-            workspaceDeleteInput: workspaceDeleteInput
+            workspaceDeleteInput: workspaceDeleteInput,
+            workspaceExitInput: workspaceExitInput
         )
         let output = viewModel.transform(input: input)
         
@@ -50,7 +52,7 @@ extension WorkspaceViewController {
                         case true:
                             owner.configureManagerActionSheet(workspace: element)
                         case false:
-                            owner.configureMemberActionSheet()
+                            owner.configureMemberActionSheet(workspace: element)
                         }
                     }
                     .disposed(by: cell.disposeBag)
@@ -73,6 +75,13 @@ extension WorkspaceViewController {
             }
             .bind(with: self) { owner, indexPath in
                 owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorOutput
+            .bind(with: self) { owner, errorModel in
+                //E15 -> 채널관리자 오류
+                owner.workspaceView.showToast(message: errorModel.errorCode, bottomOffset: -120)
             }
             .disposed(by: disposeBag)
         
@@ -108,6 +117,10 @@ extension WorkspaceViewController: NavigationRepresentable {
                     self?.presentNavigationController(rootViewController: vc)
                 case .exit:
                     print("워크스페이스 나가기")
+                    let alert = SingleButtonAlertViewController()
+                    alert.modalPresentationStyle = .overFullScreen
+                    alert.setConfigure(mainTitle: "워크스페이스 나가기", subTitle: "회원님은 워크스페이스 관리자입니다. 워크스페이스 관리자를 다른 멤버로 변경한 후 나갈 수 있습니다.", buttonTitle: "확인") {}
+                    self?.present(alert, animated: true)
                 case .change:
                     let vc = ChangeAdminViewController()
                     self?.presentNavigationController(rootViewController: vc)
@@ -123,15 +136,16 @@ extension WorkspaceViewController: NavigationRepresentable {
         present(actionSheet, animated: true)
     }
     
-    func configureMemberActionSheet() {
+    func configureMemberActionSheet(workspace: WorkSpace) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let actions: [WorkSpaceMemberActionSheet] = [.exit, .cancel]
         actions.forEach { action in
-            actionSheet.addAction(action.memberActionSheet { action in
+            actionSheet.addAction(action.memberActionSheet { [weak self] action in
                 switch action {
                 case .exit:
                     print("워크스페이스 나가기")
+                    self?.workspaceExitInput.onNext(workspace.workspace_id)
                 case .cancel:
                     print("취소")
                 }
