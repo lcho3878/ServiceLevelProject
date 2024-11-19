@@ -29,4 +29,10 @@ struct UserDefaultManager {
         UserDefaultManager.userID = user.userID
         //FCM Token 관리시 저장 필요
     }
+    
+    static func removeUserData() {
+        UserDefaultManager.accessToken = nil
+        UserDefaultManager.refreshToken = nil
+        UserDefaultManager.userID = nil
+    }
 }

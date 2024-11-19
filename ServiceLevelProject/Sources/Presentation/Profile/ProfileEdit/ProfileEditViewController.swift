@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileEditViewController: BaseViewController {
+final class ProfileEditViewController: BaseViewController, RootViewTransitionable {
     private let profileEditView = ProfileEditView()
     
     override func loadView() {
@@ -55,6 +55,18 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             cell.configureData(data)
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == profileEditView.profileMenuTableView2 && TableViewMenus2.allCases[indexPath.row] == .logout {
+            let alert = DoubleButtonAlertViewController()
+            alert.modalPresentationStyle = .overFullScreen
+            alert.setConfigure(title: "로그아웃", subTitle: "정말 로그아웃 할까요?", buttonTitle: "로그아웃") { [weak self] in
+                UserDefaultManager.removeUserData()
+                self?.changeRootViewController(rootVC: OnboardingViewController())
+            }
+            present(alert, animated: true)
+        }
     }
 }
 
