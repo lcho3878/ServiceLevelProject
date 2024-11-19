@@ -40,7 +40,13 @@ extension OnboardingViewController {
         let nextVC = AuthorizationViewController()
         nextVC.modalPresentationStyle = .pageSheet
         guard let sheet = nextVC.sheetPresentationController else { return }
-        sheet.detents = [.medium(), .large()]
+        sheet.detents = [
+            .custom { _ in
+                return 270
+            }
+        ]
+        
+        sheet.prefersGrabberVisible = true
         present(nextVC, animated: true)
     }
 }

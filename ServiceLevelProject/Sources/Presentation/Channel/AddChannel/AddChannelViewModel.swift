@@ -16,34 +16,52 @@ final class AddChannelViewModel: ViewModelBindable {
         let channelNameText: ControlProperty<String>
         let channelDescriptionText: ControlProperty<String>
         let createButtonTap: ControlEvent<Void>
+        let isEmptyChannelNameText = PublishSubject<Bool>()
+        let toastMessage = PublishSubject<String>()
+        let isCreationSuccessful = PublishSubject<Bool>()
     }
     
     struct Output {
-        
+        let isEmptyChannelNameText: PublishSubject<Bool>
+        let toastMessage: PublishSubject<String>
+        let isCreationSuccessful: PublishSubject<Bool>
     }
     
     func transform(input: Input) -> Output {
-        // 채널 생성 -> 유효성 검증 코드 추가 후, 아래 코드 활성화할 예정
+        // 채널 생성
         input.createButtonTap
-            // .withLatestFrom(Observable.combineLatest(input.channelNameText, input.channelDescriptionText))
-            // .flatMap { value in
-            //     return APIManager.shared.callRequest(api: ChannelRouter.addChannel(workspaceID: UserDefaultManager.workspaceID ?? "", query: AddChannelQuery(name: value.0, description: value.1, image: nil)), type: ChannelListModel.self)
-            //         .map { result in
-            //             switch result {
-            //             case .success(let success):
-            //                 return success
-            //             case .failure(let failure):
-            //                 throw failure
-            //             }
-            //         }
-            // }
-            .bind(with: self) { owner, value in
-                print(">>> value: \(value)")
-                // 여기서 dismiss 해주기
+            .withLatestFrom(Observable.combineLatest(input.channelNameText, input.channelDescriptionText))
+            .flatMap { value in
+                return APIManager.shared.callRequest(api: ChannelRouter.addChannel(workspaceID: UserDefaultManager.workspaceID ?? "", query: AddChannelQuery(name: value.0, description: value.1, image: nil)), type: ChannelListModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    input.isCreationSuccessful.onNext(true)
+                case .failure(let error):
+                    if error.errorCode == "E12" {
+                        input.toastMessage.onNext("워크스페이스에 이미 있는 채널 이름입니다.\n다른 이름을 입력해주세요.")
+                    }
+                }
             }
             .disposed(by: disposeBag)
         
-        return Output()
+        // 생성 버튼 활성화 여부
+        input.channelNameText
+            .bind(with: self) { owner, value in
+                if value.count > 0 {
+                    input.isEmptyChannelNameText.onNext(false)
+                } else {
+                    input.isEmptyChannelNameText.onNext(true)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(
+            isEmptyChannelNameText: input.isEmptyChannelNameText,
+            toastMessage: input.toastMessage,
+            isCreationSuccessful: input.isCreationSuccessful
+        )
     }
 }
 

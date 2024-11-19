@@ -42,7 +42,7 @@ final class SearchChannelCell: BaseTableViewCell {
         }
     }
     
-    func configureCell(element: searchChannelTestData) {
-        channelNameLabel.text = element.channelName
+    func configureCell(element: ChannelListModel) {
+        channelNameLabel.text = element.name
     }
 }

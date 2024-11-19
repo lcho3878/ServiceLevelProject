@@ -15,6 +15,7 @@ final class HomeViewController: BaseViewController {
     private let homeView = HomeView()
     private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
+    private var isUpdateChannel = false
     
     // MARK: UI
     private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
@@ -29,6 +30,15 @@ final class HomeViewController: BaseViewController {
         bind()
         rightSwipeAction()
         homeView.emptyBgView.isHidden = true // 임시
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if isUpdateChannel {
+            viewModel.isUpdateChannelList.onNext(true)
+            isUpdateChannel = false
+        }
     }
     
     override func configureNavigation() {
@@ -75,8 +85,14 @@ extension HomeViewController {
         
         // 채널 추가 버튼
         homeView.addChannelButton.rx.tap
-            .bind(with: self) { owner, _ in
-                owner.configureChannelActionSheet()
+            .withLatestFrom(input.myChannelIdList)
+            .bind(with: self) { owner, IdList in
+                let createVC = AddChannelViewController()
+                createVC.delegate = owner
+                
+                let searchVC = SearchChannelViewController()
+                searchVC.viewModel.myChannelIdList.onNext(IdList)
+                owner.configureChannelActionSheet(createVC: createVC, searchVC: searchVC)
             }
             .disposed(by: disposeBag)
         
@@ -106,6 +122,7 @@ extension HomeViewController {
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
+                self.homeView.updateChannelTableViewLayout()
             }
             .disposed(by: disposeBag)
         
@@ -113,6 +130,7 @@ extension HomeViewController {
         output.chatList
             .bind(to: homeView.directMessageTableView.rx.items(cellIdentifier: DirectMessageCell.id, cellType: DirectMessageCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
+                self.homeView.updateDirectMessageTableViewLayout()
             }
             .disposed(by: disposeBag)
         
@@ -155,7 +173,7 @@ extension HomeViewController: NavigationRepresentable {
         navigationItem.rightBarButtonItem = homeNavigationView.rightNaviBarItem
     }
     
-    private func configureChannelActionSheet() {
+    private func configureChannelActionSheet(createVC: UIViewController, searchVC: UIViewController) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let actions: [AddChannelActionSheet] = [.create, .search, .cancel]
@@ -163,11 +181,9 @@ extension HomeViewController: NavigationRepresentable {
             actionSheet.addAction(action.channelActionSheet { action in
                 switch action {
                 case .create:
-                    let vc = AddChannelViewController()
-                    self.presentNavigationController(rootViewController: vc)
+                    self.presentNavigationController(rootViewController: createVC)
                 case .search:
-                    let vc = SearchChannelViewController()
-                    self.presentNavigationController(rootViewController: vc)
+                    self.presentNavigationController(rootViewController: searchVC)
                 case .cancel:
                     print("취소")
                 }
@@ -213,5 +229,13 @@ extension HomeViewController {
                 }
             }
         }
+    }
+}
+
+extension HomeViewController: UpdateChannelDelegate {
+    func updateChannelorNot(isUpdate: Bool?) {
+        guard let isUpdate = isUpdate else { return }
+        print(">>> HomeVC Delegate: \(isUpdate)")
+        isUpdateChannel = isUpdate
     }
 }
