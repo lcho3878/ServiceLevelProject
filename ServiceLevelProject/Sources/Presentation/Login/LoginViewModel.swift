@@ -66,8 +66,8 @@ final class LoginViewModel: ViewModelBindable {
                 
                 switch result {
                 case .success(let success):
-                    UserDefaultManager.accessToken = success.token.accessToken
-                    UserDefaultManager.refreshToken = success.token.refreshToken
+                    print("success: \(success)")
+                    UserDefaultManager.saveUserData(user: success)
                     input.isLoginSuccessful.onNext(())
                 case .failure(let failure):
                     errors.append(.loginFailed)

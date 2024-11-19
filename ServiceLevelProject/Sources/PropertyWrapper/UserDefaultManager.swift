@@ -22,4 +22,14 @@ struct UserDefaultManager {
     
     @UserDefault(key: "workspaceID", defaultValue: nil)
     static var workspaceID: String?
+  
+    @UserDefault(key: "userID", defaultValue: nil)
+    static var userID: String?
+    
+    static func saveUserData(user: UserModel) {
+        UserDefaultManager.accessToken = user.token.accessToken
+        UserDefaultManager.refreshToken = user.token.refreshToken
+        UserDefaultManager.userID = user.userID
+        //FCM Token 관리시 저장 필요
+    }
 }
