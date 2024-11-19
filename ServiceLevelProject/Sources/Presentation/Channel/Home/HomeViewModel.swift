@@ -27,6 +27,7 @@ struct ChannelList {
 
 final class HomeViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
+    let isUpdateChannelList = PublishSubject<Bool>()
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
@@ -77,7 +78,6 @@ final class HomeViewModel: ViewModelBindable {
                 
                 if let workspaceID = UserDefaultManager.workspaceID {
                     input.workspaceID.onNext(workspaceID)
-                    print(">>> workspaceID:\(workspaceID)")
                 }
             }
             .disposed(by: disposeBag)
@@ -90,6 +90,7 @@ final class HomeViewModel: ViewModelBindable {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let succsss):
+                    myChannelList = []
                     for channel in succsss {
                         myChannelList.append(ChannelListModel(
                             channelID: channel.channelID,
@@ -107,10 +108,11 @@ final class HomeViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-        // 내가 속한 채널 리스트 조회 + 읽지 않은 채널 채팅 개수
+        // (내가 속한 채널 리스트 조회) + 읽지 않은 채널 채팅 개수
         input.myChannelList
             .bind(with: self) { owner, success in
                 guard let workspaceID = UserDefaultManager.workspaceID else { return }
+                myChannelListWithUnreadCount = []
                 for channel in success {
                     APIManager.shared.callRequest(api: ChannelRouter.unreadCount(workspaceID: workspaceID, channelID: channel.channelID, after: channel.createdAt), type: ChannelUnreadCountModel.self) { result in
                         switch result {
@@ -131,6 +133,31 @@ final class HomeViewModel: ViewModelBindable {
                             print(">>> failure: \(failure)")
                         }
                     }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        isUpdateChannelList
+            .flatMap { value in
+                return APIManager.shared.callRequest(api: ChannelRouter.myChannelList(workspaceID: UserDefaultManager.workspaceID ?? ""), type: [ChannelListModel].self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let succsss):
+                    myChannelList = []
+                    for channel in succsss {
+                        myChannelList.append(ChannelListModel(
+                            channelID: channel.channelID,
+                            name: channel.name,
+                            description: channel.description,
+                            coverImage: channel.coverImage,
+                            ownerID: channel.ownerID,
+                            createdAt: channel.createdAt
+                        ))
+                    }
+                    input.myChannelList.onNext(myChannelList)
+                case .failure(let failure):
+                    print(">>> Fail!!: \(failure.errorCode)")
                 }
             }
             .disposed(by: disposeBag)

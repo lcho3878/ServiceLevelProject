@@ -56,6 +56,7 @@ final class AddChannelView: BaseView {
     override func configureUI() {
         backgroundColor = .backgroundPrimary
         createButton.configuration?.baseBackgroundColor = .brandInactive
+        createButton.isEnabled = false
     }
 }
 

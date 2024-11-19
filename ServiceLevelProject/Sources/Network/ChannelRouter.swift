@@ -9,6 +9,7 @@ import Foundation
 import Alamofire
 
 enum ChannelRouter {
+    case channelList(workspaceID: String)
     case myChannelList(workspaceID: String)
     case unreadCount(workspaceID: String, channelID: String, after: String)
     case addChannel(workspaceID: String, query: AddChannelQuery)
@@ -21,7 +22,7 @@ extension ChannelRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .myChannelList, .unreadCount:
+        case .channelList, .myChannelList, .unreadCount:
             return .get
         case .addChannel:
             return .post
@@ -30,6 +31,8 @@ extension ChannelRouter : TargetType {
     
     var path: String {
         switch self {
+        case let .channelList(workspaceID):
+            return "/workspaces/\(workspaceID)/channels"
         case let .myChannelList(workspaceID):
             return "/workspaces/\(workspaceID)/my-channels"
         case let .unreadCount(workspaceID, channelID, _):
@@ -41,7 +44,7 @@ extension ChannelRouter : TargetType {
     
     var header: [String : String] {
         switch self {
-        case .myChannelList, .unreadCount:
+        case .channelList, .myChannelList, .unreadCount:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,

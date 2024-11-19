@@ -15,6 +15,7 @@ final class HomeViewController: BaseViewController {
     private let homeView = HomeView()
     private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
+    private var isUpdateChannel = false
     
     // MARK: UI
     private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
@@ -29,6 +30,15 @@ final class HomeViewController: BaseViewController {
         bind()
         rightSwipeAction()
         homeView.emptyBgView.isHidden = true // 임시
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if isUpdateChannel {
+            viewModel.isUpdateChannelList.onNext(true)
+            isUpdateChannel = false
+        }
     }
     
     override func configureNavigation() {
@@ -164,6 +174,7 @@ extension HomeViewController: NavigationRepresentable {
                 switch action {
                 case .create:
                     let vc = AddChannelViewController()
+                    vc.delegate = self
                     self.presentNavigationController(rootViewController: vc)
                 case .search:
                     let vc = SearchChannelViewController()
@@ -213,5 +224,13 @@ extension HomeViewController {
                 }
             }
         }
+    }
+}
+
+extension HomeViewController: UpdateChannelDelegate {
+    func updateChannelorNot(isUpdate: Bool?) {
+        guard let isUpdate = isUpdate else { return }
+        print(">>> HomeVC Delegate: \(isUpdate)")
+        isUpdateChannel = isUpdate
     }
 }
