@@ -16,6 +16,7 @@ enum WorkSpaceRouter {
     case invite(id: String, query: WorkspaceMemberQuery)
     case exit(id: String)
     case memberlist(id: String)
+    case changeOwner(id: String, query: WorkspaceOwnerQuery)
 }
 
 extension WorkSpaceRouter: TargetType {
@@ -29,7 +30,7 @@ extension WorkSpaceRouter: TargetType {
             return .get
         case .create, .invite:
             return .post
-        case .edit:
+        case .edit, .changeOwner:
             return .put
         case.delete:
             return .delete
@@ -50,6 +51,8 @@ extension WorkSpaceRouter: TargetType {
             return "/workspaces/\(id)/exit"
         case .memberlist(let id):
             return "/workspaces/\(id)/members"
+        case .changeOwner(let id, _):
+            return "workspaces/\(id)/transfer/ownership"
         }
     }
     
@@ -68,7 +71,7 @@ extension WorkSpaceRouter: TargetType {
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.contentType.rawValue: Header.mutipart.rawValue
             ]
-        case .invite:
+        case .invite, .changeOwner:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -95,6 +98,8 @@ extension WorkSpaceRouter: TargetType {
         let encoder = JSONEncoder()
         switch self {
         case .invite(_, let query):
+            return try? encoder.encode(query)
+        case .changeOwner(_, let query):
             return try? encoder.encode(query)
         default: return nil
         }
