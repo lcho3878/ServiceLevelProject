@@ -85,8 +85,14 @@ extension HomeViewController {
         
         // 채널 추가 버튼
         homeView.addChannelButton.rx.tap
-            .bind(with: self) { owner, _ in
-                owner.configureChannelActionSheet()
+            .withLatestFrom(input.myChannelIdList)
+            .bind(with: self) { owner, IdList in
+                let createVC = AddChannelViewController()
+                createVC.delegate = owner
+                
+                let searchVC = SearchChannelViewController()
+                searchVC.viewModel.myChannelIdList.onNext(IdList)
+                owner.configureChannelActionSheet(createVC: createVC, searchVC: searchVC)
             }
             .disposed(by: disposeBag)
         
@@ -167,7 +173,7 @@ extension HomeViewController: NavigationRepresentable {
         navigationItem.rightBarButtonItem = homeNavigationView.rightNaviBarItem
     }
     
-    private func configureChannelActionSheet() {
+    private func configureChannelActionSheet(createVC: UIViewController, searchVC: UIViewController) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let actions: [AddChannelActionSheet] = [.create, .search, .cancel]
@@ -175,12 +181,9 @@ extension HomeViewController: NavigationRepresentable {
             actionSheet.addAction(action.channelActionSheet { action in
                 switch action {
                 case .create:
-                    let vc = AddChannelViewController()
-                    vc.delegate = self
-                    self.presentNavigationController(rootViewController: vc)
+                    self.presentNavigationController(rootViewController: createVC)
                 case .search:
-                    let vc = SearchChannelViewController()
-                    self.presentNavigationController(rootViewController: vc)
+                    self.presentNavigationController(rootViewController: searchVC)
                 case .cancel:
                     print("취소")
                 }

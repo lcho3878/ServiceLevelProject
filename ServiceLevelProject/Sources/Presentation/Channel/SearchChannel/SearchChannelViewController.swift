@@ -12,7 +12,7 @@ import RxCocoa
 final class SearchChannelViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
     private let searchChannelView = SearchChannelView()
-    private let viewModel = SearchChannelViewModel()
+    let viewModel = SearchChannelViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: View Life Cycle
@@ -32,9 +32,9 @@ final class SearchChannelViewController: BaseViewController, DismissButtonPresen
     }
 }
 
-extension SearchChannelViewController {
+extension SearchChannelViewController: RootViewTransitionable {
     private func bind() {
-        let input = SearchChannelViewModel.Input()
+        let input = SearchChannelViewModel.Input(modelSelected: searchChannelView.tableView.rx.modelSelected(ChannelListModel.self))
         let output = viewModel.transform(input: input)
         
         // viewDidLoadTrigger
@@ -57,6 +57,26 @@ extension SearchChannelViewController {
             }
             .bind(with: self) { owner, indexPath in
                 owner.searchChannelView.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.goToMyChannel
+            .bind(with: self) { owner, selectedData in
+                // 채팅뷰로 바로 이동
+                owner.changeRootViewController(rootVC: ChattingViewController(), isNavigation: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.goToChannelJoin
+            .bind(with: self) { owner, selectedData in
+                let alertVC = DoubleButtonAlertViewController()
+                alertVC.modalPresentationStyle = .overFullScreen
+                alertVC.setConfigure(
+                    title: "채널 참여", subTitle: "[\(selectedData.name)] 채널에 참여하시겠습니까?", buttonTitle: "확인") {
+                        owner.changeRootViewController(rootVC: ChattingViewController(), isNavigation: true)
+                    }
+                
+                self.present(alertVC, animated: true)
             }
             .disposed(by: disposeBag)
     }
