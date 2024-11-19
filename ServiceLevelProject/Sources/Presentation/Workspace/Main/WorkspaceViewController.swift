@@ -147,7 +147,15 @@ extension WorkspaceViewController: NavigationRepresentable {
                 switch action {
                 case .exit:
                     print("워크스페이스 나가기")
-                    self?.workspaceExitInput.onNext(workspace.workspace_id)
+                    let alert = DoubleButtonAlertViewController()
+                    alert.modalPresentationStyle = .overFullScreen
+                    alert.setConfigure(
+                        title: "워크스페이스 나가기",
+                        subTitle: "정말 이 워크스페이스를 떠나시겠습니까?",
+                        buttonTitle: "나가기") {
+                            self?.workspaceExitInput.onNext(workspace.workspace_id)                            
+                        }
+                    self?.present(alert, animated: true)
                 case .cancel:
                     print("취소")
                 }
