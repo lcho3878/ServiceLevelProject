@@ -24,7 +24,7 @@ final class InviteMemberView: BaseView {
         $0.horizonPadding(12)
     }
     
-    private let inviteButton = BrandColorButton(title: "초대 보내기")
+    let inviteButton = BrandColorButton(title: "초대 보내기")
     
     override func addSubviews() {
         addSubviews([emailLabel, emailTextField, inviteButton])
