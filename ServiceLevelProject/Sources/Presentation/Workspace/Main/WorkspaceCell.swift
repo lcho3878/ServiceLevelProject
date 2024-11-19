@@ -44,7 +44,7 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     }
     
     // MARK: Properties
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var workspaceID: String?
 
     // MARK: View Life Cycle
@@ -58,6 +58,11 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     // MARK: Functions

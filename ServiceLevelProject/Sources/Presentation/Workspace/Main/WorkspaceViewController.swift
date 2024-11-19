@@ -14,7 +14,6 @@ final class WorkspaceViewController: BaseViewController {
     private let workspaceView = WorkspaceView()
     private let viewModel = WorkspaceViewModel()
     private let disposeBag = DisposeBag()
-    var isManager = true
 
     // MARK: ViewModel Input
     let workspaceLoadTrigger = PublishSubject<Void>()
@@ -28,15 +27,13 @@ final class WorkspaceViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        workspaceView.workspaceEmptyView.isHidden = true // 임시
-        // workspaceView.tableView.isHidden = true
         bind()
     }
 }
 
 // MARK: bind
 extension WorkspaceViewController {
-    func bind() {
+    private func bind() {
         
         let input = WorkspaceViewModel.Input(
             workspaceLoadTrigger: workspaceLoadTrigger,
@@ -49,9 +46,9 @@ extension WorkspaceViewController {
                 cell.configureCell(element: element)
                 cell.editButton.rx.tap
                     .bind(with: self) { owner, _ in
-                        switch owner.isManager {
+                        switch element.owner_id == UserDefaultManager.userID {
                         case true:
-                            owner.configureManagerActionSheet(workspaceID: element.workspace_id)
+                            owner.configureManagerActionSheet(workspace: element)
                         case false:
                             owner.configureMemberActionSheet()
                         }
@@ -83,18 +80,20 @@ extension WorkspaceViewController {
         createButtons.forEach {
             $0.rx.tap
                 .bind(with: self) { owner, _ in
-                    owner.presentNavigationController(rootViewController: CreateWorkspaceViewController())
+                    let vc = CreateWorkspaceViewController()
+                    vc.delegate = owner
+                    owner.presentNavigationController(rootViewController: vc)
                 }
                 .disposed(by: disposeBag)
         }
         
-        workspaceLoadTrigger.onNext(())
+        reloadWorkspaceList()
     }
 }
 
 // MARK: Functions
 extension WorkspaceViewController: NavigationRepresentable {
-    func configureManagerActionSheet(workspaceID: String) {
+    func configureManagerActionSheet(workspace: WorkSpace) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let actions: [WorkspaceManagerActionSheet] = [.edit, .exit, .change, .delete, .cancel]
@@ -104,6 +103,8 @@ extension WorkspaceViewController: NavigationRepresentable {
                 case .edit:
                     print("워크스페이스 편집")
                     let vc = EditWorkspaceViewController()
+                    vc.workspace = workspace
+                    vc.delegate = self
                     self?.presentNavigationController(rootViewController: vc)
                 case .exit:
                     print("워크스페이스 나가기")
@@ -112,7 +113,7 @@ extension WorkspaceViewController: NavigationRepresentable {
                     self?.presentNavigationController(rootViewController: vc)
                 case .delete:
                     print("워크스페이스 삭제")
-                    self?.workspaceDeleteInput.onNext(workspaceID)
+                    self?.workspaceDeleteInput.onNext(workspace.workspace_id)
                 case .cancel:
                     print("취소")
                 }
@@ -191,5 +192,11 @@ extension WorkspaceViewController {
                 }
             }
         }
+    }
+}
+
+extension WorkspaceViewController: WorkspaceListReloadable {
+    func reloadWorkspaceList() {
+        workspaceLoadTrigger.onNext(())
     }
 }
