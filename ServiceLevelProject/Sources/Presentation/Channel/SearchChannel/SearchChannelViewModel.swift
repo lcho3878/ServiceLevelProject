@@ -17,23 +17,35 @@ final class SearchChannelViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     
     struct Input {
-        
+        let viewDidLoadTrigger = PublishSubject<Void>()
+        let searchChannelList = BehaviorSubject(value: [ChannelListModel(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "")])
     }
     
     struct Output {
-        let searchChannelList = BehaviorSubject(value: [
-            searchChannelTestData(channelName: "이것이 레거시다"),
-            searchChannelTestData(channelName: "취준이직정보방"),
-            searchChannelTestData(channelName: "code-review"),
-            searchChannelTestData(channelName: "그냥 떠들고 싶을 때"),
-            searchChannelTestData(channelName: "노동요 받습니다"),
-            searchChannelTestData(channelName: "질의응답"),
-            searchChannelTestData(channelName: "테스팅 좋아하는 사람들의 모임"),
-            searchChannelTestData(channelName: "모여라 떱떱")
-        ])
+        let searchChannelList: BehaviorSubject<[ChannelListModel]>
     }
     
     func transform(input: Input) -> Output {
-        return Output()
+        var channelList: [ChannelListModel] = []
+        
+        input.viewDidLoadTrigger
+            .flatMap { _ in
+                return APIManager.shared.callRequest(api: ChannelRouter.channelList(workspaceID: UserDefaultManager.workspaceID ?? ""), type: [ChannelListModel].self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    channelList = []
+                    for channel in success {
+                        channelList.append(channel)
+                    }
+                    input.searchChannelList.onNext(channelList)
+                case .failure(let failure):
+                    print(">>> Failed!!: \(failure)")
+                }
+            }
+            .disposed(by: disposeBag)
+            
+        return Output(searchChannelList: input.searchChannelList)
     }
 }

@@ -127,6 +127,8 @@ extension HomeViewController {
                 self.homeView.updateDirectMessageTableViewLayout()
             }
             .disposed(by: disposeBag)
+        
+        homeView.updateTableViewLayout()
     }
 }
 
