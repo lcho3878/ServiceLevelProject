@@ -13,6 +13,7 @@ enum WorkSpaceRouter {
     case create(query: WorkspaceCreateQuery)
     case edit(id: String, query: WorkspaceCreateQuery)
     case delete(id: String)
+    case invite(id: String, query: WorkspaceMemberQuery)
 }
 
 extension WorkSpaceRouter: TargetType {
@@ -24,7 +25,7 @@ extension WorkSpaceRouter: TargetType {
         switch self {
         case .list:
             return .get
-        case .create:
+        case .create, .invite:
             return .post
         case .edit:
             return .put
@@ -41,6 +42,8 @@ extension WorkSpaceRouter: TargetType {
             return "/workspaces/\(id)"
         case .delete(let id):
             return "/workspaces/\(id)"
+        case .invite(let id, _):
+            return "/workspaces/\(id)/members"
         }
     }
     
@@ -58,6 +61,13 @@ extension WorkSpaceRouter: TargetType {
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.contentType.rawValue: Header.mutipart.rawValue
+            ]
+        case .invite:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.contentType.rawValue: Header.json.rawValue
             ]
         }
     }
@@ -78,6 +88,8 @@ extension WorkSpaceRouter: TargetType {
     var body: Data? {
         let encoder = JSONEncoder()
         switch self {
+        case .invite(_, let query):
+            return try? encoder.encode(query)
         default: return nil
         }
     }
