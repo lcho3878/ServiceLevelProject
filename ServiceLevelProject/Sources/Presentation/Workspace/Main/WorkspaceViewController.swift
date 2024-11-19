@@ -123,6 +123,7 @@ extension WorkspaceViewController: NavigationRepresentable {
                     self?.present(alert, animated: true)
                 case .change:
                     let vc = ChangeAdminViewController()
+                    vc.delegate = self
                     vc.workspaceID = workspace.workspace_id
                     self?.presentNavigationController(rootViewController: vc)
                 case .delete:

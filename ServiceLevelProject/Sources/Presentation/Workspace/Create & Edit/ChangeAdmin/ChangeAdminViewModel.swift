@@ -9,34 +9,25 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct ChangeAdminTestData {
-    let profileImage: String
-    let name: String
-    let email: String
-}
-
 final class ChangeAdminViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     
     struct Input {
         let workspaceIDInput: PublishSubject<String>
+        let ownerIDInput: PublishSubject<String>
     }
     
     struct Output {
         let membersOutput: PublishSubject<[WorkSpaceMember]>
         let emptyOutput: PublishSubject<Void>
+        let successOutput: PublishSubject<Void>
         let errorOutput: PublishSubject<ErrorModel>
-        let testData = BehaviorSubject(value: [
-            ChangeAdminTestData(profileImage: "star.fill", name: "Courtney Henry", email: "michelle.rivera@example.com"),
-            ChangeAdminTestData(profileImage: "leaf.fill", name: "Guy Hawkins", email: "alma.lawson@example.com"),
-            ChangeAdminTestData(profileImage: "heart.fill", name: "Brooklyn Simmons", email: "dolores.chambers@example.com"),
-            ChangeAdminTestData(profileImage: "person.fill", name: "Wade Warren", email: "jackson.roberts@example.com")
-        ])
     }
     
     func transform(input: Input) -> Output {
         let membersOutput = PublishSubject<[WorkSpaceMember]>()
         let emptyOutput = PublishSubject<Void>()
+        let successOutput = PublishSubject<Void>()
         let errorOutput = PublishSubject<ErrorModel>()
         
         input.workspaceIDInput
@@ -57,9 +48,26 @@ final class ChangeAdminViewModel: ViewModelBindable {
                 }
             }
             .disposed(by: disposeBag)
+        
+        Observable.combineLatest(input.workspaceIDInput, input.ownerIDInput)
+            .flatMap { workspaceID, ownerID in
+                let query = WorkspaceOwnerQuery(owner_id: ownerID)
+                return APIManager.shared.callRequest(api: WorkSpaceRouter.changeOwner(id: workspaceID, query: query), type: WorkSpace.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    successOutput.onNext(())
+                case .failure(let errorModel):
+                    errorOutput.onNext(errorModel)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             membersOutput: membersOutput,
             emptyOutput: emptyOutput,
+            successOutput: successOutput,
             errorOutput: errorOutput
         )
     }
