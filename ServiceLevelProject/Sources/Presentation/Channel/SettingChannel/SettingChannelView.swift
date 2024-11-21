@@ -10,6 +10,14 @@ import SnapKit
 import Then
 
 final class SettingChannelView: BaseView {
+    var isOnwer: Bool = false {
+        didSet {
+            editChannelButton.isHidden = !isOnwer
+            changeChannelAdminButton.isHidden = !isOnwer
+            deleteChannelButton.isHidden = !isOnwer
+        }
+    }
+    
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
@@ -60,6 +68,12 @@ final class SettingChannelView: BaseView {
         $0.minimumInteritemSpacing = 0
     }
     
+    private let buttonStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 8
+        $0.distribution = .equalSpacing
+    }
+    
     let editChannelButton = SettingButton(title: "채널 편집", color: .brandBlack)
     let leaveChannelButton = SettingButton(title: "채널에게 나가기", color: .brandBlack)
     let changeChannelAdminButton = SettingButton(title: "채널 관리자 변경", color: .brandBlack)
@@ -73,10 +87,13 @@ final class SettingChannelView: BaseView {
             channelDescriptionLabel,
             showMembersBgView,
             userCollectionView,
+            buttonStackView
+        ])
+        buttonStackView.addArrangedSubviews([
             editChannelButton,
             leaveChannelButton,
             changeChannelAdminButton,
-            deleteChannelButton,
+            deleteChannelButton
         ])
         showMembersBgView.addSubviews([memberLabel, dropdownButton, showMembersButton])
     }
@@ -135,26 +152,26 @@ final class SettingChannelView: BaseView {
             $0.height.equalTo(0)
         }
         
-        editChannelButton.snp.makeConstraints {
+        buttonStackView.snp.makeConstraints {
             $0.top.equalTo(userCollectionView.snp.bottom).offset(8)
             $0.horizontalEdges.equalTo(safe).inset(24)
+            $0.bottom.equalTo(contentView).inset(24)
+        }
+        
+        editChannelButton.snp.makeConstraints {
             $0.height.equalTo(44)
         }
         
         leaveChannelButton.snp.makeConstraints {
-            $0.top.equalTo(editChannelButton.snp.bottom).offset(8)
-            $0.horizontalEdges.height.equalTo(editChannelButton)
+            $0.height.equalTo(44)
         }
         
         changeChannelAdminButton.snp.makeConstraints {
-            $0.top.equalTo(leaveChannelButton.snp.bottom).offset(8)
-            $0.horizontalEdges.height.equalTo(editChannelButton)
+            $0.height.equalTo(44)
         }
         
         deleteChannelButton.snp.makeConstraints {
-            $0.top.equalTo(changeChannelAdminButton.snp.bottom).offset(8)
-            $0.horizontalEdges.height.equalTo(editChannelButton)
-            $0.bottom.equalTo(contentView)
+            $0.height.equalTo(44)
         }
     }
     
