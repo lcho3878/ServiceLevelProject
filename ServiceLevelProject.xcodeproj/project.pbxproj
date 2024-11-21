@@ -56,6 +56,7 @@
 		549091A62CE4A206002EE538 /* UserDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549091A52CE4A206002EE538 /* UserDefault+.swift */; };
 		549091A82CE4A276002EE538 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549091A72CE4A276002EE538 /* UserDefaultManager.swift */; };
 		549091AA2CE52ABE002EE538 /* RootViewTransitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549091A92CE52ABE002EE538 /* RootViewTransitionable.swift */; };
+		549810952CEFA1D8004DD29E /* WorkSpaceInqury.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549810942CEFA1D8004DD29E /* WorkSpaceInqury.swift */; };
 		54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */; };
 		54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC82CD602EC00313E17 /* NicknameEditView.swift */; };
 		54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FCA2CD609B800313E17 /* UITextField+.swift */; };
@@ -188,6 +189,7 @@
 		549091A52CE4A206002EE538 /* UserDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+.swift"; sourceTree = "<group>"; };
 		549091A72CE4A276002EE538 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		549091A92CE52ABE002EE538 /* RootViewTransitionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewTransitionable.swift; sourceTree = "<group>"; };
+		549810942CEFA1D8004DD29E /* WorkSpaceInqury.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInqury.swift; sourceTree = "<group>"; };
 		54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewController.swift; sourceTree = "<group>"; };
 		54A53FC82CD602EC00313E17 /* NicknameEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditView.swift; sourceTree = "<group>"; };
 		54A53FCA2CD609B800313E17 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
@@ -486,6 +488,7 @@
 			children = (
 				5490919F2CE48DBB002EE538 /* WorkSpace.swift */,
 				548950C52CEC838C009322C9 /* WorkSpaceMember.swift */,
+				549810942CEFA1D8004DD29E /* WorkSpaceInqury.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				68B96F022CE2177C00473D8B /* ErrorCode.swift in Sources */,
 				549091A82CE4A276002EE538 /* UserDefaultManager.swift in Sources */,
+				549810952CEFA1D8004DD29E /* WorkSpaceInqury.swift in Sources */,
 				687605A42CDE119D008167B0 /* AddChannelView.swift in Sources */,
 				687605A72CDE40D3008167B0 /* InviteMemberViewController.swift in Sources */,
 				548950C22CEB7841009322C9 /* WorkspaceListReloadable.swift in Sources */,
