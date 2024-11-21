@@ -11,9 +11,9 @@ import RxCocoa
 
 final class SettingChannelViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
-    let roomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: "", ownerID: ""))
     
     struct Input {
+        let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: "", ownerID: ""))
         let deleteChannelButtonTap: ControlEvent<Void>
         let deleteChannelCheckAlertMessage = PublishSubject<String>()
         let deleteChannelAction = PublishSubject<Void>()
@@ -43,7 +43,7 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         input.deleteChannelAction
-            .withLatestFrom(roomInfo)
+            .withLatestFrom(input.chattingRoomInfo)
             .flatMap { value in
                 return APIManager.shared.callRequest(api: ChannelRouter.deleteChannel(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: value.channelID))
             }
@@ -58,7 +58,7 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         input.leaveChannelButtonTap
-            .withLatestFrom(roomInfo)
+            .withLatestFrom(input.chattingRoomInfo)
             .bind(with: self) { owner, roomInfo in
                 if UserDefaultManager.userID == roomInfo.ownerID {
                     isOwner.onNext((true, "채널에서 나가기", "회원님은 채널 관리자 입니다. 채널 관리자를 다른 멤버로\n변경한 후 나갈 수 있습니다.", "확인"))
@@ -69,7 +69,7 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         input.exitChannel
-            .withLatestFrom(roomInfo)
+            .withLatestFrom(input.chattingRoomInfo)
             .flatMap { value in
                 return APIManager.shared.callRequest(api: ChannelRouter.exitChannel(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: value.channelID), type: [ChannelListModel].self)
             }

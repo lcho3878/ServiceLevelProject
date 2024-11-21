@@ -40,6 +40,10 @@ extension SettingChannelViewController: RootViewTransitionable {
         )
         let output = viewModel.transform(input: input)
         
+        if let roomInfoData = roomInfoData {
+            input.chattingRoomInfo.onNext(roomInfoData)
+        }
+        
         // 채널 관리자 여부 체크
         output.isOwner
             .bind(with: self) { owner, value in
