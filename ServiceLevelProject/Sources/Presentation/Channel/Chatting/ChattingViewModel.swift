@@ -11,7 +11,7 @@ import RxCocoa
 
 final class ChattingViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
-    let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: ""))
+    let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: "", ownerID: ""))
     
     struct Input {
         

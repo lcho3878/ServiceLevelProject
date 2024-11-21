@@ -11,7 +11,7 @@ import RxCocoa
 
 final class SettingChannelViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
-    let roomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: ""))
+    let roomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: "", ownerID: ""))
     
     struct Input {
         let deleteChannelButtonTap: ControlEvent<Void>
