@@ -21,6 +21,8 @@ final class HomeViewController: BaseViewController {
     // MARK: UI
 //    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
     private var menu: SideMenuNavigationController?
+    // titleView
+    let homeNavigationView = HomeNavigationView()
     
     override func loadView() {
         view = homeView
@@ -130,6 +132,13 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
+        // 네비게이션뷰 UI 업데이트
+        output.workspaceOutput
+            .bind(with: self) { owner, value in
+                owner.homeNavigationView.updateUI(value)
+            }
+            .disposed(by: disposeBag)
+        
         // 채널 리스트
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
@@ -153,8 +162,6 @@ extension HomeViewController {
 // MARK: Functions
 extension HomeViewController: NavigationRepresentable {    
     private func configureNavigaionItem() {
-        // titleView
-        let homeNavigationView = HomeNavigationView()
         
         navigationItem.titleView = homeNavigationView.titleView
         
@@ -255,8 +262,9 @@ extension HomeViewController: UpdateChannelDelegate {
 }
 
 extension HomeViewController: WorkspaceChangable {
-    func workspaceChange(_ workspaceID: String) {
-        UserDefaultManager.workspaceID = workspaceID
-        workspaceIDInput.onNext(workspaceID)
+    func workspaceChange(_ workspace: WorkSpace) {
+        UserDefaultManager.workspaceID = workspace.workspace_id
+        workspaceIDInput.onNext(workspace.workspace_id)
+        homeNavigationView.updateUI(workspace)
     }
 }

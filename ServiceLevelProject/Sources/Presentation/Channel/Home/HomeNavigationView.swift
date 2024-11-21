@@ -61,3 +61,11 @@ final class HomeNavigationView: BaseView {
         ])
     }
 }
+
+// MARK: Update UI
+extension HomeNavigationView {
+    func updateUI(_ workspace: WorkSpace) {
+        naviTitleLabel.text = workspace.name
+        // coverButton 이미지 변경은 추후 이미지 핸들링 완료후 처리
+    }
+}

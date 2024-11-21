@@ -79,7 +79,7 @@ extension WorkspaceViewController {
                 if let indexPath = owner.workspaceView.tableView.indexPathForSelectedRow {
                     owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
                 }
-                owner.delegate?.workspaceChange(workspace.workspace_id)
+                owner.delegate?.workspaceChange(workspace)
             }
             .disposed(by: disposeBag)
         
@@ -231,5 +231,5 @@ extension WorkspaceViewController: WorkspaceListReloadable {
 }
 
 protocol WorkspaceChangable: AnyObject {
-    func workspaceChange(_ workspaceID: String)
+    func workspaceChange(_ workspace: WorkSpace)
 }
