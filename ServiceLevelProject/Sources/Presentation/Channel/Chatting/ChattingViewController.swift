@@ -67,8 +67,10 @@ extension ChattingViewController: RootViewTransitionable {
         button.tintColor = .black
         
         button.rx.tap
-            .bind(with: self) { owner, _ in
+            .withLatestFrom(viewModel.chattingRoomInfo)
+            .bind(with: self) { owner, value in
                 let vc = SettingChannelViewController()
+                vc.viewModel.roomInfo.onNext(value)
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

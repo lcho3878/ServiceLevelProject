@@ -11,8 +11,8 @@ import RxCocoa
 
 final class SettingChannelViewController: BaseViewController {
     private let settingChannelView = SettingChannelView()
-    private let viewModel = SettingChannelViewModel()
     private let disposeBag = DisposeBag()
+    let viewModel = SettingChannelViewModel()
     
     override func loadView() {
         view = settingChannelView
@@ -29,9 +29,9 @@ final class SettingChannelViewController: BaseViewController {
     }
 }
 
-extension SettingChannelViewController {
+extension SettingChannelViewController: RootViewTransitionable {
     private func bind() {
-        let input = SettingChannelViewModel.Input()
+        let input = SettingChannelViewModel.Input(deleteChannelButtonTap: settingChannelView.deleteChannelButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         settingChannelView.editChannelButton.rx.tap
@@ -58,9 +58,27 @@ extension SettingChannelViewController {
             }
             .disposed(by: disposeBag)
         
-        settingChannelView.deleteChannelButton.rx.tap
+        output.deleteChannelCheckAlertMessage
+            .bind(with: self) { owner, message in
+                let alertVC = DoubleButtonAlertViewController()
+                alertVC.modalPresentationStyle = .overFullScreen
+                
+                alertVC.setConfigure(title: "채널 삭제", subTitle: message, buttonTitle: "삭제") {
+                    input.deleteChannelAction.onNext(())
+                }
+                owner.present(alertVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.deleteSuccessNavigate
             .bind(with: self) { owner, _ in
-                //채널 삭제 코드
+                owner.changeRootViewController(rootVC: HomeViewController())
+            }
+            .disposed(by: disposeBag)
+        
+        output.deleteFailMessage
+            .bind(with: self) { owner, message in
+                owner.settingChannelView.showToast(message: message, bottomOffset: -120)
             }
             .disposed(by: disposeBag)
         
