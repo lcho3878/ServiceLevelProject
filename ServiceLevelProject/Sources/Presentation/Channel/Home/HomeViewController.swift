@@ -33,6 +33,7 @@ final class HomeViewController: BaseViewController {
         
         bind()
         rightSwipeAction()
+        setupObservers()
         homeView.emptyBgView.isHidden = true // 임시
     }
     
@@ -267,5 +268,23 @@ extension HomeViewController: WorkspaceChangable {
         UserDefaultManager.workspaceID = workspace.workspace_id
         workspaceIDInput.onNext(workspace.workspace_id)
         homeNavigationView.updateUI(workspace)
+    }
+}
+
+extension HomeViewController {
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(changeAdminRecieved),
+            name: Notification.Name(NotificationKey.changeAdmin.rawValue),
+            object: nil)
+    }
+    
+    @objc
+    private func changeAdminRecieved(_ notification: Notification) {
+        if let userinfo = notification.userInfo,
+           let message = userinfo[NotificationKey.toastMessage] as? String {
+            homeView.showToast(message: message, bottomOffset: -120)
+        }
     }
 }

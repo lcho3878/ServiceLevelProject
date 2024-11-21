@@ -72,6 +72,12 @@ extension ChangeAdminViewController {
                 owner.dismiss(animated: true)
                 owner.delegate?.reloadWorkspaceList()
                 //HomeView toastmessage notification Center 활용 예정
+                let key = NotificationKey.changeAdmin
+                NotificationCenter.default.post(
+                    name: Notification.Name(key.rawValue),
+                    object: nil,
+                    userInfo: [NotificationKey.toastMessage: key.message]
+                )
             }
             .disposed(by: disposeBag)
         
