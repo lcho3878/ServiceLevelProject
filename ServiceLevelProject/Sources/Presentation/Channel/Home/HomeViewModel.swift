@@ -31,13 +31,14 @@ final class HomeViewModel: ViewModelBindable {
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
-        let workspaceID = PublishSubject<String>()
+        let workspaceID: PublishSubject<String>
         let myChannelList = PublishSubject<[ChannelListModel]>()
         let channelList = BehaviorSubject(value: [ChannelList(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "", unreadCount: 0)])
         let myChannelIdList = PublishSubject<[String]>()
     }
     
     struct Output {
+        let workspaceOutput: PublishSubject<WorkSpace>
         let channelList: BehaviorSubject<[ChannelList]>
         let chatList = BehaviorSubject(value: [
             DirectMessageTestData(chatProfileImage: "star.fill", chatFriendName: "Hue", unreadCount: 8),
@@ -52,6 +53,9 @@ final class HomeViewModel: ViewModelBindable {
         var myChannelList: [ChannelListModel] = []
         var myChannelListWithUnreadCount: [ChannelList] = []
         var myChannelIdList: [String] = []
+        let workspaceIDInput = input.workspaceID.share()
+        
+        let workspaceOutput = PublishSubject<WorkSpace>()
         
         input.viewDidLoadTrigger
             .flatMap {
@@ -84,8 +88,24 @@ final class HomeViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
+        // 워크스페이스 정보 조회
+        workspaceIDInput
+            .flatMap { id in
+                APIManager.shared.callRequest(api: WorkSpaceRouter.inquiry(id: id), type: WorkSpaceInqury.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    let workspace = success.workspace
+                    workspaceOutput.onNext(workspace)
+                case .failure(let failure):
+                    print(">>> Fail!!: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
         // 내가 속한 채널 리스트 조회
-        input.workspaceID
+        workspaceIDInput
             .flatMap { id in
                 print(">>> workspaceID: \(id)")
                 return APIManager.shared.callRequest(api: ChannelRouter.myChannelList(workspaceID: id), type: [ChannelListModel].self)
@@ -121,6 +141,7 @@ final class HomeViewModel: ViewModelBindable {
             .bind(with: self) { owner, success in
                 guard let workspaceID = UserDefaultManager.workspaceID else { return }
                 
+                myChannelIdList = []
                 myChannelListWithUnreadCount = []
                 
                 for channel in success {
@@ -137,8 +158,12 @@ final class HomeViewModel: ViewModelBindable {
                                     createdAt: channel.createdAt,
                                     unreadCount: success.count)
                                 )
+                                
+                                myChannelIdList.append(success.channelID)
                             }
                             input.channelList.onNext(myChannelListWithUnreadCount)
+                            input.myChannelIdList.onNext(myChannelIdList)
+                            
                         case .failure(let failure):
                             print(">>> failure: \(failure)")
                         }
@@ -174,7 +199,9 @@ final class HomeViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         return Output(
-            channelList: input.channelList, myChannelIdList: input.myChannelIdList
+            workspaceOutput: workspaceOutput,
+            channelList: input.channelList,
+            myChannelIdList: input.myChannelIdList
         )
     }
 }

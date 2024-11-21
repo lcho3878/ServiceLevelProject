@@ -16,9 +16,13 @@ final class HomeViewController: BaseViewController {
     private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     private var isUpdateChannel = false
+    private let workspaceIDInput = PublishSubject<String>()
     
     // MARK: UI
-    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
+//    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
+    private var menu: SideMenuNavigationController?
+    // titleView
+    let homeNavigationView = HomeNavigationView()
     
     override func loadView() {
         view = homeView
@@ -29,6 +33,7 @@ final class HomeViewController: BaseViewController {
         
         bind()
         rightSwipeAction()
+        setupObservers()
         homeView.emptyBgView.isHidden = true // 임시
     }
     
@@ -42,6 +47,10 @@ final class HomeViewController: BaseViewController {
     }
     
     override func configureNavigation() {
+        let vc = WorkspaceViewController()
+        vc.delegate = self
+        menu = SideMenuNavigationController(rootViewController: vc)
+        guard let menu else { return }
         menu.leftSide = true
         menu.presentationStyle = .menuSlideIn
         menu.menuWidth = 317
@@ -53,7 +62,9 @@ final class HomeViewController: BaseViewController {
 // MARK: bind
 extension HomeViewController {
     private func bind() {
-        let input = HomeViewModel.Input()
+        let input = HomeViewModel.Input(
+            workspaceID: workspaceIDInput
+        )
         let output = viewModel.transform(input: input)
         
         // viewDidLoadTrigger
@@ -98,9 +109,14 @@ extension HomeViewController {
         
         // 팀원 추가 버튼
         homeView.addMemberButton.rx.tap
-            .bind(with: self) { owner, _ in
+            .withLatestFrom(output.workspaceOutput)
+            .bind(with: self) { owner, workspace in
+                guard UserDefaultManager.userID == workspace.owner_id else {
+                    owner.homeView.showToast(message: "워크스페이스 관리자만 팀원을 초대할 수 있어요. 관리자에게 요청을 해보세요.", bottomOffset: -120)
+                    return
+                }
                 let vc = InviteMemberViewController()
-                self.presentNavigationController(rootViewController: vc)
+                owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
         
@@ -115,6 +131,13 @@ extension HomeViewController {
         homeView.floatingButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.tabBarController?.selectedIndex = 1
+            }
+            .disposed(by: disposeBag)
+        
+        // 네비게이션뷰 UI 업데이트
+        output.workspaceOutput
+            .bind(with: self) { owner, value in
+                owner.homeNavigationView.updateUI(value)
             }
             .disposed(by: disposeBag)
         
@@ -141,8 +164,6 @@ extension HomeViewController {
 // MARK: Functions
 extension HomeViewController: NavigationRepresentable {    
     private func configureNavigaionItem() {
-        // titleView
-        let homeNavigationView = HomeNavigationView()
         
         navigationItem.titleView = homeNavigationView.titleView
         
@@ -151,7 +172,8 @@ extension HomeViewController: NavigationRepresentable {
         
         tapGesture.rx.event
             .bind(with: self) { owner, _ in
-                owner.present(owner.menu, animated: true)
+                guard let menu = owner.menu else { return }
+                owner.present(menu, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -200,7 +222,8 @@ extension HomeViewController: NavigationRepresentable {
         
         swipeRight.rx.event
             .bind(with: self) { owner, _ in
-                owner.present(owner.menu, animated: true)
+                guard let menu = owner.menu else { return }
+                owner.present(menu, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -237,5 +260,31 @@ extension HomeViewController: UpdateChannelDelegate {
         guard let isUpdate = isUpdate else { return }
         print(">>> HomeVC Delegate: \(isUpdate)")
         isUpdateChannel = isUpdate
+    }
+}
+
+extension HomeViewController: WorkspaceChangable {
+    func workspaceChange(_ workspace: WorkSpace) {
+        UserDefaultManager.workspaceID = workspace.workspace_id
+        workspaceIDInput.onNext(workspace.workspace_id)
+        homeNavigationView.updateUI(workspace)
+    }
+}
+
+extension HomeViewController {
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(changeAdminRecieved),
+            name: Notification.Name(NotificationKey.changeAdmin.rawValue),
+            object: nil)
+    }
+    
+    @objc
+    private func changeAdminRecieved(_ notification: Notification) {
+        if let userinfo = notification.userInfo,
+           let message = userinfo[NotificationKey.toastMessage] as? String {
+            homeView.showToast(message: message, bottomOffset: -120)
+        }
     }
 }
