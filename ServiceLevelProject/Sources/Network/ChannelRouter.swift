@@ -14,6 +14,8 @@ enum ChannelRouter {
     case unreadCount(workspaceID: String, channelID: String, after: String)
     case addChannel(workspaceID: String, query: AddChannelQuery)
     case deleteChannel(workspaceID: String, channelID: String)
+    case exitChannel(workspaceID: String, channelID: String)
+    case fetchChannelChatHistory(cursorDate: String, workspaceID: String, ChannelID: String)
 }
 
 extension ChannelRouter : TargetType {
@@ -23,7 +25,7 @@ extension ChannelRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .channelList, .myChannelList, .unreadCount:
+        case .channelList, .myChannelList, .unreadCount, .exitChannel, .fetchChannelChatHistory:
             return .get
         case .addChannel:
             return .post
@@ -44,12 +46,16 @@ extension ChannelRouter : TargetType {
             return "/workspaces/\(workspaceID)/channels"
         case let .deleteChannel(workspaceID, channelID):
             return "/workspaces/\(workspaceID)/channels/\(channelID)"
+        case let .exitChannel(workspaceID, channelID):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/exit"
+        case let .fetchChannelChatHistory(_, workspaceID, ChannelID):
+            return "/workspaces/\(workspaceID)/channels/\(ChannelID)/chats"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .channelList, .myChannelList, .unreadCount, .deleteChannel:
+        case .channelList, .myChannelList, .unreadCount, .deleteChannel, .exitChannel, .fetchChannelChatHistory:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -67,9 +73,13 @@ extension ChannelRouter : TargetType {
     
     var parameters: [String : String]? {
         switch self {
-        case .unreadCount(_, _, let after):
+        case let .unreadCount(_, _,after):
             return [
                 "after": after
+            ]
+        case let .fetchChannelChatHistory(cursorDate, _, _):
+            return [
+                "cursor_date": cursorDate
             ]
         default:
             return nil
@@ -78,7 +88,7 @@ extension ChannelRouter : TargetType {
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .unreadCount:
+        case .unreadCount, .fetchChannelChatHistory:
             return parameters?.map {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
