@@ -31,7 +31,7 @@ final class HomeViewModel: ViewModelBindable {
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
-        let workspaceID = PublishSubject<String>()
+        let workspaceID: PublishSubject<String>
         let myChannelList = PublishSubject<[ChannelListModel]>()
         let channelList = BehaviorSubject(value: [ChannelList(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "", unreadCount: 0)])
         let myChannelIdList = PublishSubject<[String]>()

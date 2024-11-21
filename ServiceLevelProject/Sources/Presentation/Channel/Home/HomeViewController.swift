@@ -16,9 +16,11 @@ final class HomeViewController: BaseViewController {
     private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     private var isUpdateChannel = false
+    private let workspaceIDInput = PublishSubject<String>()
     
     // MARK: UI
-    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
+//    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
+    private var menu: SideMenuNavigationController?
     
     override func loadView() {
         view = homeView
@@ -42,6 +44,10 @@ final class HomeViewController: BaseViewController {
     }
     
     override func configureNavigation() {
+        let vc = WorkspaceViewController()
+        vc.delegate = self
+        menu = SideMenuNavigationController(rootViewController: vc)
+        guard let menu else { return }
         menu.leftSide = true
         menu.presentationStyle = .menuSlideIn
         menu.menuWidth = 317
@@ -53,7 +59,9 @@ final class HomeViewController: BaseViewController {
 // MARK: bind
 extension HomeViewController {
     private func bind() {
-        let input = HomeViewModel.Input()
+        let input = HomeViewModel.Input(
+            workspaceID: workspaceIDInput
+        )
         let output = viewModel.transform(input: input)
         
         // viewDidLoadTrigger
@@ -155,7 +163,8 @@ extension HomeViewController: NavigationRepresentable {
         
         tapGesture.rx.event
             .bind(with: self) { owner, _ in
-                owner.present(owner.menu, animated: true)
+                guard let menu = owner.menu else { return }
+                owner.present(menu, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -204,7 +213,8 @@ extension HomeViewController: NavigationRepresentable {
         
         swipeRight.rx.event
             .bind(with: self) { owner, _ in
-                owner.present(owner.menu, animated: true)
+                guard let menu = owner.menu else { return }
+                owner.present(menu, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -241,5 +251,12 @@ extension HomeViewController: UpdateChannelDelegate {
         guard let isUpdate = isUpdate else { return }
         print(">>> HomeVC Delegate: \(isUpdate)")
         isUpdateChannel = isUpdate
+    }
+}
+
+extension HomeViewController: WorkspaceChangable {
+    func workspaceChange(_ workspaceID: String) {
+        UserDefaultManager.workspaceID = workspaceID
+        workspaceIDInput.onNext(workspaceID)
     }
 }

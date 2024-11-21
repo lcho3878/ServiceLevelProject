@@ -14,6 +14,7 @@ final class WorkspaceViewController: BaseViewController {
     private let workspaceView = WorkspaceView()
     private let viewModel = WorkspaceViewModel()
     private let disposeBag = DisposeBag()
+    weak var delegate: WorkspaceChangable?
 
     // MARK: ViewModel Input
     let workspaceLoadTrigger = PublishSubject<Void>()
@@ -65,16 +66,20 @@ extension WorkspaceViewController {
             }
             .disposed(by: disposeBag)
         
-        workspaceView.tableView.rx.itemSelected
-            .flatMapLatest { [weak self] indexPath -> Observable<IndexPath> in
+        workspaceView.tableView.rx.modelSelected(WorkSpace.self)
+            .flatMapLatest { [weak self] workspace -> Observable<WorkSpace> in
                 guard let self = self else { return .empty() }
-                self.workspaceView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-                
-                return Observable.just(indexPath)
+                if let indexPath = self.workspaceView.tableView.indexPathForSelectedRow {
+                    self.workspaceView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+                }
+                return Observable.just(workspace)
                     .delay(.milliseconds(300), scheduler: MainScheduler.instance)
             }
-            .bind(with: self) { owner, indexPath in
-                owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
+            .bind(with: self) { owner, workspace in
+                if let indexPath = owner.workspaceView.tableView.indexPathForSelectedRow {
+                    owner.workspaceView.tableView.deselectRow(at: indexPath, animated: true)
+                }
+                owner.delegate?.workspaceChange(workspace.workspace_id)
             }
             .disposed(by: disposeBag)
         
@@ -223,4 +228,8 @@ extension WorkspaceViewController: WorkspaceListReloadable {
     func reloadWorkspaceList() {
         workspaceLoadTrigger.onNext(())
     }
+}
+
+protocol WorkspaceChangable: AnyObject {
+    func workspaceChange(_ workspaceID: String)
 }
