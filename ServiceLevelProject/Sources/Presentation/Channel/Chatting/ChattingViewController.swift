@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class ChattingViewController: BaseViewController {
+    // MARK: Properties
     private let chattingView = ChattingView()
+    private let disposeBag = DisposeBag()
+    let viewModel = ChattingViewModel()
     
+    // MARK: View Life Cycle
     override func loadView() {
         view = chattingView
     }
@@ -17,11 +23,63 @@ final class ChattingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("chat VC load")
         configureTableView()
+        configureNavigation()
+        bind()
+    }
+    
+    override func configureNavigation() {
+        navigationItem.leftBarButtonItem = leftBarButtonItem()
+        navigationItem.rightBarButtonItem = rightBarButtonItem()
     }
 }
 
+extension ChattingViewController: RootViewTransitionable {
+    private func bind() {
+        let input = ChattingViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
+        output.chattingRoomInfo
+            .bind(with: self) { owner, roomInfo in
+                owner.navigationItem.title = "# \(roomInfo.name)"
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func leftBarButtonItem() -> UIBarButtonItem {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .chevronLeft), for: .normal)
+        button.tintColor = .black
+        
+        button.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = TabbarViewController()
+                owner.changeRootViewController(rootVC: vc)
+            }
+            .disposed(by: disposeBag)
+        
+        return UIBarButtonItem(customView: button)
+    }
+    
+    private func rightBarButtonItem() -> UIBarButtonItem {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .homeActive), for: .normal)
+        button.tintColor = .black
+        
+        button.rx.tap
+            .withLatestFrom(viewModel.chattingRoomInfo)
+            .bind(with: self) { owner, value in
+                let vc = SettingChannelViewController()
+                vc.viewModel.roomInfo.onNext(value)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        return UIBarButtonItem(customView: button)
+    }
+}
+
+// ⬇︎⬇︎ 나중에 지울 코드 ⬇︎⬇︎
 extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
     private func configureTableView() {
         chattingView.chattingTableView.delegate = self
@@ -38,12 +96,6 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configureData(data)
         return cell
     }
-    
-    
-}
-
-extension ChattingViewController {
-    
 }
 
 struct ChattingData {

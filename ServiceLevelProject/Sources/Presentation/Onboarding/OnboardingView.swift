@@ -19,7 +19,7 @@ final class OnboardingView: BaseView {
     }
     
     private let onboardingImageView = UIImageView().then {
-        $0.backgroundColor = .lightGray
+        $0.image = UIImage(resource: .onboarding)
         $0.contentMode = .scaleAspectFill
     }
     

@@ -95,7 +95,7 @@ extension WorkSpaceRouter: TargetType {
     }
     
     var body: Data? {
-        let encoder = JSONEncoder()
+        // let encoder = JSONEncoder()
         switch self {
         case .invite(_, let query):
             return try? encoder.encode(query)

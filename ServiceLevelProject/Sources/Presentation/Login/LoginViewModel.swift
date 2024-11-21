@@ -70,7 +70,6 @@ final class LoginViewModel: ViewModelBindable {
                     UserDefaultManager.saveUserData(user: success)
                     input.isLoginSuccessful.onNext(())
                 case .failure(let failure):
-                    print("fail!!: \(failure)")
                     errors.append(.loginFailed)
                     loginErrorOutput.onNext(errors)
                 }

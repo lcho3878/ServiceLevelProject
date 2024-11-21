@@ -411,6 +411,18 @@ final class HomeView: BaseView {
         }
     }
     
+    func updateChannelTableViewLayout() {
+        channelTableView.snp.updateConstraints {
+            $0.height.equalTo(channelTableView.contentSize.height)
+        }
+    }
+    
+    func updateDirectMessageTableViewLayout() {
+        directMessageTableView.snp.updateConstraints {
+            $0.height.equalTo(directMessageTableView.contentSize.height)
+        }
+    }
+    
     func hideChannelTableView() {
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self else { return }
