@@ -38,7 +38,7 @@ extension TabbarViewController {
             case .home: return HomeViewController()
             case .dm: return DMViewController()
             case .search: return OnboardingViewController()
-            case .setting: return HomeViewController()
+            case .setting: return ProfileEditViewController()
             }
         }
     

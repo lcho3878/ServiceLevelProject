@@ -23,10 +23,12 @@ final class WorkspaceViewModel: ViewModelBindable {
     struct Input {
         let workspaceLoadTrigger: PublishSubject<Void>
         let workspaceDeleteInput: PublishSubject<String>
+        let workspaceExitInput: PublishSubject<String>
     }
     
     struct Output {
         let workspaceList: PublishSubject<[WorkSpace]>
+        let errorOutput: PublishSubject<ErrorModel>
         let testData = BehaviorSubject(value: [
             WorkspaceTestData(coverImage: "star.fill", title: "iOS_Developer_Study", createdAt: "2024.10.29"),
             WorkspaceTestData(coverImage: "leaf.fill", title: "SeSAC_Study", createdAt: "2023.10.10"),
@@ -36,6 +38,8 @@ final class WorkspaceViewModel: ViewModelBindable {
     
     func transform(input: Input) -> Output {
         let workspaceList = PublishSubject<[WorkSpace]>()
+        let errorOutput = PublishSubject<ErrorModel>()
+
         input.workspaceLoadTrigger
             .flatMap {
                 print(">>> API Call")
@@ -66,7 +70,22 @@ final class WorkspaceViewModel: ViewModelBindable {
                 }
             }
             .disposed(by: disposeBag)
+        
+        input.workspaceExitInput
+            .flatMap {
+                APIManager.shared.callRequest(api: WorkSpaceRouter.exit(id: $0), type: [WorkSpace].self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let value):
+                    owner.workSpacelist = value
+                    workspaceList.onNext(owner.workSpacelist)
+                case .failure(let errorModel):
+                    errorOutput.onNext(errorModel)
+                }
+            }
+            .disposed(by: disposeBag)
            
-        return Output(workspaceList: workspaceList)
+        return Output(workspaceList: workspaceList, errorOutput: errorOutput)
     }
 }

@@ -27,6 +27,15 @@ struct WorkspaceCreateQuery: Encodable {
     let description: String?
     let image: Data?
 }
+// MARK: WorkspaceMember Invite
+struct WorkspaceMemberQuery: Encodable {
+    let email: String
+}
+
+// MARK: WorkspaceOwner Change
+struct WorkspaceOwnerQuery: Encodable {
+    let owner_id: String
+}
 
 // MARK: Login
 struct LoginQuery: Encodable {

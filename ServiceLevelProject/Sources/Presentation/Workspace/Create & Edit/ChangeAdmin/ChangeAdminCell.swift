@@ -55,12 +55,17 @@ final class ChangeAdminCell: BaseTableViewCell {
             $0.trailing.equalTo(safeArea).offset(-74)
         }
     }
+    
+    override func configureUI() {
+        selectionStyle = .none
+    }
 }
 
 extension ChangeAdminCell {
-    func configureCell(element: ChangeAdminTestData) {
-        profileImageView.image = UIImage(systemName: element.profileImage)
-        userNameLabel.text = element.name
+    
+    func configureCell(element: WorkSpaceMember) {
+        // 이미지 처리 필요
+        userNameLabel.text = element.nickname
         userEmailLabel.text = element.email
     }
 }

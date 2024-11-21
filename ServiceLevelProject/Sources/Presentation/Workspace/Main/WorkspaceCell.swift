@@ -19,6 +19,7 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     let coverImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 8
+        $0.clipsToBounds = true
     }
     
     private let contentsStackView = UIStackView().then {
