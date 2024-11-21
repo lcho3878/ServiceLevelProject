@@ -13,6 +13,7 @@ enum ChannelRouter {
     case myChannelList(workspaceID: String)
     case unreadCount(workspaceID: String, channelID: String, after: String)
     case addChannel(workspaceID: String, query: AddChannelQuery)
+    case deleteChannel(workspaceID: String, channelID: String)
 }
 
 extension ChannelRouter : TargetType {
@@ -26,6 +27,8 @@ extension ChannelRouter : TargetType {
             return .get
         case .addChannel:
             return .post
+        case .deleteChannel:
+            return .delete
         }
     }
     
@@ -39,12 +42,14 @@ extension ChannelRouter : TargetType {
             return "/workspaces/\(workspaceID)/channels/\(channelID)/unreads"
         case let .addChannel(workspaceID, _):
             return "/workspaces/\(workspaceID)/channels"
+        case let .deleteChannel(workspaceID, channelID):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .channelList, .myChannelList, .unreadCount:
+        case .channelList, .myChannelList, .unreadCount, .deleteChannel:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
