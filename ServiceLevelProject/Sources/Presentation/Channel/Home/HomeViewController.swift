@@ -108,8 +108,9 @@ extension HomeViewController {
         
         // 팀원 추가 버튼
         homeView.addMemberButton.rx.tap
-            .bind(with: self) { owner, _ in
-                guard UserDefaultManager.userID == UserDefaultManager.workspaceID else {
+            .withLatestFrom(output.workspaceOutput)
+            .bind(with: self) { owner, workspace in
+                guard UserDefaultManager.userID == workspace.owner_id else {
                     owner.homeView.showToast(message: "워크스페이스 관리자만 팀원을 초대할 수 있어요. 관리자에게 요청을 해보세요.", bottomOffset: -120)
                     return
                 }
