@@ -13,7 +13,8 @@ final class ChattingViewController: BaseViewController {
     // MARK: Properties
     private let chattingView = ChattingView()
     private let disposeBag = DisposeBag()
-    let viewModel = ChattingViewModel()
+    private let viewModel = ChattingViewModel()
+    var roomInfoData: SearchChannelViewModel.selectedChannelData?
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -39,9 +40,26 @@ extension ChattingViewController: RootViewTransitionable {
         let input = ChattingViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        input.viewDidLoadTrigger.onNext(())
+        
+        if let roomInfoData = roomInfoData {
+            input.chattingRoomInfo.onNext(roomInfoData)
+        }
+        
         output.chattingRoomInfo
             .bind(with: self) { owner, roomInfo in
                 owner.navigationItem.title = "# \(roomInfo.name)"
+            }
+            .disposed(by: disposeBag)
+        
+        output.inValidChannelMessage
+            .bind(with: self) { owner, value in
+                let (title, subtitle, buttonTitle) = value
+                let AlertVC = SingleButtonAlertViewController()
+                AlertVC.setConfigure(mainTitle: title, subTitle: subtitle, buttonTitle: buttonTitle) {
+                    let vc = TabbarViewController()
+                    owner.changeRootViewController(rootVC: vc)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -67,10 +85,9 @@ extension ChattingViewController: RootViewTransitionable {
         button.tintColor = .black
         
         button.rx.tap
-            .withLatestFrom(viewModel.chattingRoomInfo)
-            .bind(with: self) { owner, value in
+            .bind(with: self) { owner, _ in
                 let vc = SettingChannelViewController()
-                vc.viewModel.roomInfo.onNext(value)
+                vc.roomInfoData = owner.roomInfoData
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

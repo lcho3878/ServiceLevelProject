@@ -78,6 +78,7 @@
 		684E65492CEBA140006B2F02 /* ChannelUnreadCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */; };
 		684E654B2CEC7E93006B2F02 /* AddChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654A2CEC7E93006B2F02 /* AddChannelViewModel.swift */; };
 		684E654D2CECE077006B2F02 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654C2CECE077006B2F02 /* ChattingViewModel.swift */; };
+		684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -210,6 +211,7 @@
 		684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUnreadCountModel.swift; sourceTree = "<group>"; };
 		684E654A2CEC7E93006B2F02 /* AddChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelViewModel.swift; sourceTree = "<group>"; };
 		684E654C2CECE077006B2F02 /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
+		684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatHistoryModel.swift; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -551,6 +553,7 @@
 			children = (
 				684E65462CEB9068006B2F02 /* ChannelListModel.swift */,
 				684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */,
+				684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -888,6 +891,7 @@
 				684E65422CE88A28006B2F02 /* RefreshToken.swift in Sources */,
 				687605AC2CDE4877008167B0 /* DMViewController.swift in Sources */,
 				68B96F002CE2153B00473D8B /* APIManager.swift in Sources */,
+				684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */,
 				684E654D2CECE077006B2F02 /* ChattingViewModel.swift in Sources */,
 				687605892CDA3389008167B0 /* ChangeAdminViewController.swift in Sources */,
 				687605862CD66AD0008167B0 /* WorkspaceSettingView.swift in Sources */,
