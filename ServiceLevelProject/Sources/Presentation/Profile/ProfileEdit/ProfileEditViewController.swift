@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileEditViewController: BaseViewController, RootViewTransitionable {
+final class ProfileEditViewController: BaseViewController {
     private let profileEditView = ProfileEditView()
     
     override func loadView() {

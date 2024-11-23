@@ -35,7 +35,7 @@ final class ChattingViewController: BaseViewController {
     }
 }
 
-extension ChattingViewController: RootViewTransitionable {
+extension ChattingViewController {
     private func bind() {
         let input = ChattingViewModel.Input()
         let output = viewModel.transform(input: input)

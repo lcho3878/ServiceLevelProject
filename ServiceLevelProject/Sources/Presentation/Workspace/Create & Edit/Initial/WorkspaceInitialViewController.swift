@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class WorkspaceInitialViewController: BaseViewController, RootViewTransitionable, NavigationRepresentable {
+final class WorkspaceInitialViewController: BaseViewController, NavigationRepresentable {
     // MARK: Properties
     private let workspaceInitialView = WorkspaceInitailView()
     private let disposeBag = DisposeBag()

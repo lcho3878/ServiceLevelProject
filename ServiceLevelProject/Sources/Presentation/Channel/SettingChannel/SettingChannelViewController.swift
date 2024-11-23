@@ -32,7 +32,7 @@ final class SettingChannelViewController: BaseViewController {
 }
 
 // TODO: 채널 편집, 채널 관리자 변경
-extension SettingChannelViewController: RootViewTransitionable {
+extension SettingChannelViewController {
     private func bind() {
         let input = SettingChannelViewModel.Input(
             deleteChannelButtonTap: settingChannelView.deleteChannelButton.rx.tap,
