@@ -36,7 +36,9 @@ final class ChangeChannelAdminViewController: BaseViewController, DismissButtonP
 
 extension ChangeChannelAdminViewController {
     private func bind() {
-        let input = ChangeChannelAdminViewModel.Input()
+        let input = ChangeChannelAdminViewModel.Input(
+            tableViewModelSelected: changeChannelAdminView.tableView.rx.modelSelected(MemberData.self)
+        )
         let output = viewModel.transform(input: input)
         
         if let memberData = memberData, let ownerID = ownerID {

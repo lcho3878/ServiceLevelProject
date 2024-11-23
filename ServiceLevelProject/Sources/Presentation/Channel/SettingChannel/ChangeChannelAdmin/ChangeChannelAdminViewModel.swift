@@ -16,17 +16,17 @@ final class ChangeChannelAdminViewModel: ViewModelBindable {
         let memberData = PublishSubject<[ChannelDetailsModel.ChannelMembers]>()
         let ownerID = PublishSubject<String>()
         let nonOwnerMembers = BehaviorSubject(value: [MemberData(nickname: "", email: "", profileImage: nil)])
+        let tableViewModelSelected: ControlEvent<MemberData>
     }
     
     struct Output {
         let nonOwnerMembers: BehaviorSubject<[MemberData]>
-        let isOwnerOnly: BehaviorSubject<(String, String, String)>
+        let isOwnerOnly: ReplaySubject<(String, String, String)>
     }
     
     func transform(input: Input) -> Output {
         var nonOwnerMembers: [MemberData] = []
-        let isOwnerOnly = BehaviorSubject(value: ("", "", ""))
-        
+        let isOwnerOnly = ReplaySubject<(String, String, String)>.create(bufferSize: 1)
         
         Observable.combineLatest(input.memberData, input.ownerID)
             .bind(with: self) { owner, value in
@@ -37,13 +37,18 @@ final class ChangeChannelAdminViewModel: ViewModelBindable {
                         nonOwnerMembers.append(MemberData(nickname: member.nickname, email: member.email, profileImage: member.profileImage))
                     }
                 }
-                print(">>> noneOwnerMemebers: \(nonOwnerMembers)")
                 
                 if !nonOwnerMembers.isEmpty {
                     input.nonOwnerMembers.onNext(nonOwnerMembers)
                 } else {
                     isOwnerOnly.onNext(("채널 관리자 변경 불가", "채널 멤버가 없어 관리자 변경을 할 수 없습니다.", "확인"))
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        input.tableViewModelSelected
+            .bind(with: self) { owner, data in
+                print(">>> data\(data)")
             }
             .disposed(by: disposeBag)
         
