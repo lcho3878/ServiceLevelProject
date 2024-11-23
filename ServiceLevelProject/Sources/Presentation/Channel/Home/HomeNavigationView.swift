@@ -66,6 +66,10 @@ final class HomeNavigationView: BaseView {
 extension HomeNavigationView {
     func updateUI(_ workspace: WorkSpace) {
         naviTitleLabel.text = workspace.name
-        // coverButton 이미지 변경은 추후 이미지 핸들링 완료후 처리
+        Task {
+            let coverImageData = try await APIManager.shared.loadImage(workspace.coverImage)
+            let coverImage = UIImage(data: coverImageData)
+            coverButton.setImage(coverImage, for: .normal)
+        }
     }
 }

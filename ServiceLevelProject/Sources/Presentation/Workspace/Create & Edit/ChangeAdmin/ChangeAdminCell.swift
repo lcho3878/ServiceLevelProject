@@ -14,6 +14,7 @@ final class ChangeAdminCell: BaseTableViewCell {
     let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 8
+        $0.clipsToBounds = true
     }
     
     private let userInfoStackView = UIStackView().then {
@@ -67,5 +68,13 @@ extension ChangeAdminCell {
         // 이미지 처리 필요
         userNameLabel.text = element.nickname
         userEmailLabel.text = element.email
+        if let profileImage = element.profileImage {
+            Task {
+                let profileImageData = try await APIManager.shared.loadImage(profileImage)
+                profileImageView.image = UIImage(data: profileImageData)
+            }
+        } else {
+            profileImageView.image = UIImage(resource: .noPhotoB)
+        }
     }
 }
