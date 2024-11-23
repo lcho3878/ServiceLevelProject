@@ -51,7 +51,7 @@ final class ChangeAdminViewModel: ViewModelBindable {
         
         Observable.combineLatest(input.workspaceIDInput, input.ownerIDInput)
             .flatMap { workspaceID, ownerID in
-                let query = WorkspaceOwnerQuery(owner_id: ownerID)
+                let query = OwnerQuery(owner_id: ownerID)
                 return APIManager.shared.callRequest(api: WorkSpaceRouter.changeOwner(id: workspaceID, query: query), type: WorkSpace.self)
             }
             .bind(with: self) { owner, result in

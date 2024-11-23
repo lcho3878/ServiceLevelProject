@@ -32,8 +32,8 @@ struct WorkspaceMemberQuery: Encodable {
     let email: String
 }
 
-// MARK: WorkspaceOwner Change
-struct WorkspaceOwnerQuery: Encodable {
+// MARK: WorkspaceOwner Change & ChannelOwner Change
+struct OwnerQuery: Encodable {
     let owner_id: String
 }
 
