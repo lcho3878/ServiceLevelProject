@@ -46,9 +46,9 @@ extension ChattingViewController: RootViewTransitionable {
             input.chattingRoomInfo.onNext(roomInfoData)
         }
         
-        output.chattingRoomInfo
-            .bind(with: self) { owner, roomInfo in
-                owner.navigationItem.title = "# \(roomInfo.name)"
+        output.channelName
+            .bind(with: self) { owner, value in
+                owner.navigationItem.title = "# \(value)"
             }
             .disposed(by: disposeBag)
         
