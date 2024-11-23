@@ -87,12 +87,24 @@ extension ChattingViewController: RootViewTransitionable {
         button.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = SettingChannelViewController()
+                vc.delegate = self
                 vc.roomInfoData = owner.roomInfoData
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
         return UIBarButtonItem(customView: button)
+    }
+}
+
+extension ChattingViewController: EditInfoDelegate {
+    func editInfo(data: ChannelListModel) {
+        viewModel.editInfo.onNext(SearchChannelViewModel.selectedChannelData(
+            name: data.name,
+            description: data.description,
+            channelID: data.channelID,
+            ownerID: data.ownerID)
+        )
     }
 }
 

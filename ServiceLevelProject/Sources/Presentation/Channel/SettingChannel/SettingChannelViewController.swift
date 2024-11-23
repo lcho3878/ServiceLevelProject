@@ -13,6 +13,7 @@ final class SettingChannelViewController: BaseViewController {
     private let settingChannelView = SettingChannelView()
     private let disposeBag = DisposeBag()
     private let viewModel = SettingChannelViewModel()
+    weak var delegate: EditInfoDelegate?
     var roomInfoData: SearchChannelViewModel.selectedChannelData?
     
     override func loadView() {
@@ -52,9 +53,10 @@ extension SettingChannelViewController: RootViewTransitionable, NavigationRepres
         
         // 채널 편집
         settingChannelView.editChannelButton.rx.tap
-            .bind(with: self) { owner, _ in
+            .withLatestFrom(input.chattingRoomInfo)
+            .bind(with: self) { owner, value in
                 let vc = EditChannelViewController()
-                vc.roomInfo = owner.roomInfoData
+                vc.roomInfo = value
                 vc.delegate = self
                 owner.presentNavigationController(rootViewController: vc)
             }
@@ -144,5 +146,7 @@ extension SettingChannelViewController: EditInfoDelegate {
             channelID: data.channelID,
             ownerID: data.ownerID)
         )
+        
+        delegate?.editInfo(data: data)
     }
 }

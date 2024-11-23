@@ -11,6 +11,7 @@ import RxCocoa
 
 final class ChattingViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
+    let editInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
@@ -25,6 +26,12 @@ final class ChattingViewModel: ViewModelBindable {
     func transform(input: Input) -> Output {
         let inValidChannelMessage = PublishSubject<(String, String, String)>()
         let channelName = BehaviorSubject(value: "")
+        
+        editInfo
+            .bind(with: self) { owner, editInfo in
+                channelName.onNext(editInfo.name)
+            }
+            .disposed(by: disposeBag)
         
         input.chattingRoomInfo
             .flatMap { roomInfo in
