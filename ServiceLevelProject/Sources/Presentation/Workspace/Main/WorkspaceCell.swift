@@ -18,6 +18,7 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     
     let coverImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.backgroundColor = .lightGray
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
     }
@@ -122,9 +123,13 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     }
     
     func configureCell(element: WorkSpace) {
-        //이미지 관련 핸들링은 다녀와서 하겠습니다😂
         nameLabel.text = element.name
         createdAtLabel.text = element.createdAt
         workspaceID = element.workspace_id
+        
+        Task {
+            let data = try await APIManager.shared.loadImage(element.coverImage)
+            coverImageView.image = UIImage(data: data)
+        }
     }
 }

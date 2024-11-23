@@ -32,7 +32,7 @@ final class SettingChannelViewController: BaseViewController {
     }
 }
 
-extension SettingChannelViewController: RootViewTransitionable, NavigationRepresentable {
+extension SettingChannelViewController: NavigationRepresentable {
     private func bind() {
         let input = SettingChannelViewModel.Input(
             deleteChannelButtonTap: settingChannelView.deleteChannelButton.rx.tap,

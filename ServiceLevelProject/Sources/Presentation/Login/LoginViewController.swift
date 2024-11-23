@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class LoginViewController: BaseViewController, DismissButtonPresentable, RootViewTransitionable {
+final class LoginViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
     private let loginView = LoginView()
     private let viewModel = LoginViewModel()

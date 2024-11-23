@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SignupViewController: BaseViewController, DismissButtonPresentable, KeyboardDismissable, RootViewTransitionable {
+final class SignupViewController: BaseViewController, DismissButtonPresentable, KeyboardDismissable {
     private let signupView = SignupView()
     private let viewModel = SignupViewModel()
     private let disposeBag = DisposeBag()
