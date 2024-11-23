@@ -21,13 +21,11 @@ final class SettingChannelView: BaseView {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private let channelTitleLabel = UILabel().then {
-        $0.text = "#그냥 떠들고 싶을 때"
+    let channelTitleLabel = UILabel().then {
         $0.font = .title2
     }
     
-    private let channelDescriptionLabel = UILabel().then {
-        $0.text = "안녕하세요 새싹 여러분? 심심하셨죠? 이 채널은 나머지 모든 것을 위한 채널이에요. 팀원들이 농담하거나 순간적인 아이디어를 공유하는 곳이죠! 마음껏 즐기세요!"
+    let channelDescriptionLabel = UILabel().then {
         $0.font = .body
         $0.numberOfLines = 0
     }

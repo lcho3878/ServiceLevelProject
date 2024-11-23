@@ -31,8 +31,7 @@ final class SettingChannelViewController: BaseViewController {
     }
 }
 
-// TODO: 채널 편집, 채널 관리자 변경
-extension SettingChannelViewController: RootViewTransitionable {
+extension SettingChannelViewController: RootViewTransitionable, NavigationRepresentable {
     private func bind() {
         let input = SettingChannelViewModel.Input(
             deleteChannelButtonTap: settingChannelView.deleteChannelButton.rx.tap,
@@ -43,6 +42,22 @@ extension SettingChannelViewController: RootViewTransitionable {
         if let roomInfoData = roomInfoData {
             input.chattingRoomInfo.onNext(roomInfoData)
         }
+        // channelTitleLabel
+        output.chattingRoomInfo
+            .bind(with: self) { owner, roomInfo in
+                owner.settingChannelView.channelTitleLabel.text = "#\(roomInfo.name)"
+                owner.settingChannelView.channelDescriptionLabel.text = roomInfo.description
+            }
+            .disposed(by: disposeBag)
+        
+        // 채널 편집
+        settingChannelView.editChannelButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = EditChannelViewController()
+                vc.roomInfo = owner.roomInfoData
+                owner.presentNavigationController(rootViewController: vc)
+            }
+            .disposed(by: disposeBag)
         
         // 채널 관리자 여부 체크
         output.isOwner

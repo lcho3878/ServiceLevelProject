@@ -52,10 +52,10 @@ final class SearchChannelViewModel: ViewModelBindable {
             .bind(with: self) { owner, value in
                 if value.1.contains(value.0.channelID) {
                     // 내 채널인 경우
-                    input.goToMyChannel.onNext(selectedChannelData(name: value.0.name, channelID: value.0.channelID, ownerID: value.0.ownerID))
+                    input.goToMyChannel.onNext(selectedChannelData(name: value.0.name, description: value.0.description, channelID: value.0.channelID, ownerID: value.0.ownerID))
                 } else {
                     // 내 채널이 아닌 경우
-                    input.goToChannelJoin.onNext(selectedChannelData(name: value.0.name, channelID: value.0.channelID, ownerID: value.0.ownerID))
+                    input.goToChannelJoin.onNext(selectedChannelData(name: value.0.name, description: value.0.description, channelID: value.0.channelID, ownerID: value.0.ownerID))
                 }
             }
             .disposed(by: disposeBag)
@@ -71,6 +71,7 @@ final class SearchChannelViewModel: ViewModelBindable {
 extension SearchChannelViewModel {
     struct selectedChannelData {
         let name: String
+        let description: String?
         let channelID: String
         let ownerID: String
     }

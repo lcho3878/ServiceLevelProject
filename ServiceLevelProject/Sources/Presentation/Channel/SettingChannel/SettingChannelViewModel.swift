@@ -13,7 +13,7 @@ final class SettingChannelViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     
     struct Input {
-        let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: "", ownerID: ""))
+        let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
         let deleteChannelButtonTap: ControlEvent<Void>
         let deleteChannelCheckAlertMessage = PublishSubject<String>()
         let deleteChannelAction = PublishSubject<Void>()
@@ -24,6 +24,7 @@ final class SettingChannelViewModel: ViewModelBindable {
     }
     
     struct Output {
+        let chattingRoomInfo: BehaviorSubject<SearchChannelViewModel.selectedChannelData>
         let userOutput = BehaviorSubject(value: UserTestData.dummy)
         let deleteChannelCheckAlertMessage: PublishSubject<String>
         let deleteFailMessage: PublishSubject<String>
@@ -84,6 +85,7 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
             
         return Output(
+            chattingRoomInfo: input.chattingRoomInfo,
             deleteChannelCheckAlertMessage: input.deleteChannelCheckAlertMessage,
             deleteFailMessage: input.deleteFailMessage,
             deleteSuccessNavigate: input.deleteSuccessNavigate,
