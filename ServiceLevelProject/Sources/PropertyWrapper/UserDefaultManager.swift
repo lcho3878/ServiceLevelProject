@@ -34,8 +34,9 @@ struct UserDefaultManager {
     }
     
     static func removeUserData() {
-        UserDefaultManager.accessToken = nil
-        UserDefaultManager.refreshToken = nil
-        UserDefaultManager.userID = nil
+        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+            if key == "fcmToken" { continue }
+            UserDefaults.standard.removeObject(forKey: key)
+        }
     }
 }
