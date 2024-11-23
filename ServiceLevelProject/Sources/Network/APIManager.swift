@@ -257,4 +257,32 @@ final class APIManager {
             }
         }
     }
+
+}
+
+// MARK: loadImage Function
+extension APIManager {
+    
+    /// 응답값의 Image를 가져오는 메서드입니다.
+    ///
+    /// 사용예시
+    ///
+    ///     Task {
+    ///         let data = try await APIManager.shared.loadImage(element.coverImage)
+    ///         coverImageView.image = UIImage(data: data)
+    ///     }
+    
+    func loadImage(_ image: String) async throws -> Data {
+        let request = try ImageRouter.image(image: image).asURLRequest()
+        let response = AF.request(request)
+            .validate(statusCode: 200..<300)
+            .serializingResponse(using: .data)
+        
+        switch await response.result {
+        case .success(let data):
+            return data
+        case .failure(let error):
+            throw error
+        }
+    }
 }
