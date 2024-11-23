@@ -119,14 +119,7 @@ final class HomeViewModel: ViewModelBindable {
                     
                     for channel in succsss {
                         myChannelIdList.append(channel.channelID)
-                        myChannelList.append(ChannelListModel(
-                            channelID: channel.channelID,
-                            name: channel.name,
-                            description: channel.description,
-                            coverImage: channel.coverImage,
-                            ownerID: channel.ownerID,
-                            createdAt: channel.createdAt
-                        ))
+                        myChannelList = succsss
                     }
                     input.myChannelIdList.onNext(myChannelIdList)
                     input.myChannelList.onNext(myChannelList)

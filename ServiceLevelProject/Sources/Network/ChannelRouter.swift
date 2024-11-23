@@ -12,10 +12,13 @@ enum ChannelRouter {
     case channelList(workspaceID: String)
     case myChannelList(workspaceID: String)
     case unreadCount(workspaceID: String, channelID: String, after: String)
-    case addChannel(workspaceID: String, query: AddChannelQuery)
+    case addChannel(workspaceID: String, query: ChannelQuery)
     case deleteChannel(workspaceID: String, channelID: String)
     case exitChannel(workspaceID: String, channelID: String)
     case fetchChannelChatHistory(cursorDate: String, workspaceID: String, ChannelID: String)
+    case editChannel(workspaceID: String, channelID: String, query: ChannelQuery)
+    case channelDetails(workspaceID: String, channelID: String)
+    case changeAdmin(workspaceID: String, channelID: String, query: OwnerQuery)
 }
 
 extension ChannelRouter : TargetType {
@@ -25,12 +28,14 @@ extension ChannelRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .channelList, .myChannelList, .unreadCount, .exitChannel, .fetchChannelChatHistory:
+        case .channelList, .myChannelList, .unreadCount, .exitChannel, .fetchChannelChatHistory, .channelDetails:
             return .get
         case .addChannel:
             return .post
         case .deleteChannel:
             return .delete
+        case .editChannel, .changeAdmin:
+            return .put
         }
     }
     
@@ -50,23 +55,36 @@ extension ChannelRouter : TargetType {
             return "/workspaces/\(workspaceID)/channels/\(channelID)/exit"
         case let .fetchChannelChatHistory(_, workspaceID, ChannelID):
             return "/workspaces/\(workspaceID)/channels/\(ChannelID)/chats"
+        case let .editChannel(workspaceID, channelID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)"
+        case let .channelDetails(workspaceID, channelID):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)"
+        case let .changeAdmin(workspaceID, channelID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/transfer/ownership"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .channelList, .myChannelList, .unreadCount, .deleteChannel, .exitChannel, .fetchChannelChatHistory:
+        case .channelList, .myChannelList, .unreadCount, .deleteChannel, .exitChannel, .fetchChannelChatHistory, .channelDetails:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""
             ]
-        case .addChannel:
+        case .addChannel, .editChannel:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.contentType.rawValue: Header.mutipart.rawValue
+            ]
+        case .changeAdmin:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.contentType.rawValue: Header.json.rawValue
             ]
         }
     }
@@ -98,9 +116,11 @@ extension ChannelRouter : TargetType {
     }
     
     var body: Data? {
+        let encoder = JSONEncoder()
         switch self {
-        default:
-            return nil
+        case let .changeAdmin(_, _, query):
+            return try? encoder.encode(query)
+        default: return nil
         }
     }
     
@@ -110,11 +130,14 @@ extension ChannelRouter : TargetType {
         case let .addChannel(_, query):
             appendCommonFields(for: query)
             return multipart
-        default: 
+        case let .editChannel(_, _, query):
+            appendCommonFields(for: query)
+            return multipart
+        default:
             return nil
         }
         
-        func appendCommonFields(for query: AddChannelQuery) {
+        func appendCommonFields(for query: ChannelQuery) {
             let nameData = query.name.data(using: .utf8) ?? Data()
             multipart.append(nameData, withName: "name")
             

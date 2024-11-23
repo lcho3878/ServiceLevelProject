@@ -11,9 +11,11 @@ import RxCocoa
 
 final class SettingChannelViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
-    let roomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: "", ownerID: ""))
+    let chattingRoomInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
     
     struct Input {
+        let viewDidLoadTrigger = PublishSubject<Void>()
+        let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
         let deleteChannelButtonTap: ControlEvent<Void>
         let deleteChannelCheckAlertMessage = PublishSubject<String>()
         let deleteChannelAction = PublishSubject<Void>()
@@ -24,17 +26,43 @@ final class SettingChannelViewModel: ViewModelBindable {
     }
     
     struct Output {
-        let userOutput = BehaviorSubject(value: UserTestData.dummy)
+        let chattingRoomInfo: BehaviorSubject<SearchChannelViewModel.selectedChannelData>
+        let userOutput: PublishSubject<[ChannelDetailsModel.ChannelMembers]>
         let deleteChannelCheckAlertMessage: PublishSubject<String>
         let deleteFailMessage: PublishSubject<String>
         let deleteSuccessNavigate: PublishSubject<Void>
         let isOwner: PublishSubject<(Bool, String, String, String)>
         let exitChannelSuccessful: PublishSubject<Void>
+        let channelDetail: PublishSubject<ChannelDetailsModel>
     }
     
     func transform(input: Input) -> Output {
         let isOwner = PublishSubject<(Bool, String, String, String)>()
         let exitChannelSuccessful = PublishSubject<Void>()
+        let channelDetail = PublishSubject<ChannelDetailsModel>()
+        let userOutput = PublishSubject<[ChannelDetailsModel.ChannelMembers]>()
+        
+        input.viewDidLoadTrigger
+            .withLatestFrom(input.chattingRoomInfo)
+            .flatMap { roomInfo in
+                return APIManager.shared.callRequest(api: ChannelRouter.channelDetails(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: roomInfo.channelID), type: ChannelDetailsModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    channelDetail.onNext(success)
+                    userOutput.onNext(success.channelMembers)
+                case .failure(let failure):
+                    print(">>> Failed: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        chattingRoomInfo
+            .bind(with: self) { owner, value in
+                input.chattingRoomInfo.onNext(value)
+            }
+            .disposed(by: disposeBag)
         
         input.deleteChannelButtonTap
             .bind(with: self) { owner, _ in
@@ -43,7 +71,7 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         input.deleteChannelAction
-            .withLatestFrom(roomInfo)
+            .withLatestFrom(input.chattingRoomInfo)
             .flatMap { value in
                 return APIManager.shared.callRequest(api: ChannelRouter.deleteChannel(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: value.channelID))
             }
@@ -58,7 +86,7 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         input.leaveChannelButtonTap
-            .withLatestFrom(roomInfo)
+            .withLatestFrom(input.chattingRoomInfo)
             .bind(with: self) { owner, roomInfo in
                 if UserDefaultManager.userID == roomInfo.ownerID {
                     isOwner.onNext((true, "채널에서 나가기", "회원님은 채널 관리자 입니다. 채널 관리자를 다른 멤버로\n변경한 후 나갈 수 있습니다.", "확인"))
@@ -69,7 +97,7 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         input.exitChannel
-            .withLatestFrom(roomInfo)
+            .withLatestFrom(input.chattingRoomInfo)
             .flatMap { value in
                 return APIManager.shared.callRequest(api: ChannelRouter.exitChannel(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: value.channelID), type: [ChannelListModel].self)
             }
@@ -84,17 +112,14 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
             
         return Output(
+            chattingRoomInfo: input.chattingRoomInfo, 
+            userOutput: userOutput,
             deleteChannelCheckAlertMessage: input.deleteChannelCheckAlertMessage,
             deleteFailMessage: input.deleteFailMessage,
             deleteSuccessNavigate: input.deleteSuccessNavigate,
             isOwner: isOwner,
-            exitChannelSuccessful: exitChannelSuccessful
+            exitChannelSuccessful: exitChannelSuccessful,
+            channelDetail: channelDetail
         )
-    }
-}
-
-extension SettingChannelViewModel {
-    struct UserTestData {
-        static let dummy: [Int] = .init(repeating: 0, count: 40)
     }
 }

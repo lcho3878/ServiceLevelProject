@@ -11,29 +11,37 @@ import RxCocoa
 
 final class ChattingViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
+    let editInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
-        let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", channelID: "", ownerID: ""))
+        let chattingRoomInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
     }
     
     struct Output {
-        let chattingRoomInfo: BehaviorSubject<SearchChannelViewModel.selectedChannelData>
+        let channelName: BehaviorSubject<String>
         let inValidChannelMessage: PublishSubject<(String, String, String)>
     }
     
     func transform(input: Input) -> Output {
         let inValidChannelMessage = PublishSubject<(String, String, String)>()
+        let channelName = BehaviorSubject(value: "")
         
-        input.viewDidLoadTrigger
-            .withLatestFrom(input.chattingRoomInfo)
+        editInfo
+            .bind(with: self) { owner, editInfo in
+                channelName.onNext(editInfo.name)
+            }
+            .disposed(by: disposeBag)
+        
+        input.chattingRoomInfo
             .flatMap { roomInfo in
+                channelName.onNext(roomInfo.name)
                 return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: self.currentDate(), workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomInfo.channelID), type: [ChannelChatHistoryModel].self)
             }
             .bind(with: self) { owner, value in
                 switch value {
-                case .success(_):
-                    print(">>> 성공!!")
+                case .success(let success):
+                    print(">>> 성공!!: \(success)")
                     // 이 응답값은 추후 소켓통신에 필요한 경우 사용
                 case .failure(let failure):
                     print(">>> Failed!!: \(failure.errorCode)")
@@ -42,19 +50,21 @@ final class ChattingViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-        return Output(chattingRoomInfo: input.chattingRoomInfo, inValidChannelMessage: inValidChannelMessage)
+        return Output(channelName: channelName, inValidChannelMessage: inValidChannelMessage)
     }
 }
 
 extension ChattingViewModel {
     private func currentDate() -> String {
         if let timeZone = TimeZone(identifier: "Asia/Seoul") {
-            let date = ISO8601DateFormatter.string(from: Date(), timeZone: timeZone)
+            let formatter = ISO8601DateFormatter()
+            formatter.timeZone = timeZone
+            let date = formatter.string(from: Date())
             return date
         } else {
             print("currentDate() 메서드 정보 받아올 수 없음")
         }
         
-        return ""
+        return " "
     }
 }

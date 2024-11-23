@@ -13,6 +13,7 @@ final class SettingChannelViewController: BaseViewController {
     private let settingChannelView = SettingChannelView()
     private let disposeBag = DisposeBag()
     private let viewModel = SettingChannelViewModel()
+    weak var delegate: EditInfoDelegate?
     var roomInfoData: SearchChannelViewModel.selectedChannelData?
     
     override func loadView() {
@@ -31,14 +32,44 @@ final class SettingChannelViewController: BaseViewController {
     }
 }
 
-// TODO: 채널 편집, 채널 관리자 변경
-extension SettingChannelViewController {
+extension SettingChannelViewController: NavigationRepresentable {
     private func bind() {
         let input = SettingChannelViewModel.Input(
             deleteChannelButtonTap: settingChannelView.deleteChannelButton.rx.tap,
             leaveChannelButtonTap: settingChannelView.leaveChannelButton.rx.tap
         )
         let output = viewModel.transform(input: input)
+        
+        if let roomInfoData = roomInfoData {
+            input.chattingRoomInfo.onNext(roomInfoData)
+            // ViewDidLoadTrigger
+            input.viewDidLoadTrigger.onNext(())
+        }
+        
+        // channelTitleLabel
+        output.chattingRoomInfo
+            .bind(with: self) { owner, roomInfo in
+                owner.settingChannelView.channelTitleLabel.text = "#\(roomInfo.name)"
+                owner.settingChannelView.channelDescriptionLabel.text = roomInfo.description
+            }
+            .disposed(by: disposeBag)
+        
+        output.channelDetail
+            .bind(with: self) { owner, detail in
+                owner.settingChannelView.memberLabel.text = "멤버 (\(detail.channelMembers.count))"
+            }
+            .disposed(by: disposeBag)
+        
+        // 채널 편집
+        settingChannelView.editChannelButton.rx.tap
+            .withLatestFrom(input.chattingRoomInfo)
+            .bind(with: self) { owner, value in
+                let vc = EditChannelViewController()
+                vc.roomInfo = value
+                vc.delegate = self
+                owner.presentNavigationController(rootViewController: vc)
+            }
+            .disposed(by: disposeBag)
         
         // 채널 관리자 여부 체크
         output.isOwner
@@ -97,12 +128,32 @@ extension SettingChannelViewController {
             }
             .disposed(by: disposeBag)
         
+        // 채널 관리자 변경
+        settingChannelView.changeChannelAdminButton.rx.tap
+            .withLatestFrom(Observable.combineLatest(output.userOutput, output.chattingRoomInfo))
+            .bind(with: self) { owner, value in
+                let (memberData, roomInfo) = value
+                let vc = ChangeChannelAdminViewController()
+                vc.delegate = self
+                vc.memberData = memberData
+                vc.roomInfo = roomInfo
+                owner.presentNavigationController(rootViewController: vc)
+            }
+            .disposed(by: disposeBag)
+        
+        // 채널 맴버 CollecionView
         output.userOutput.bind(to: settingChannelView.userCollectionView.rx.items(cellIdentifier: SettingChannelCell.id, cellType: SettingChannelCell.self)) { row, element, cell in
-            //cell configureUI 추가
+            cell.configureCell(element: element)
         }
         .disposed(by: disposeBag)
         
-        settingChannelView.updateCollectionViewLayout()
+        // CollectionView 높이 업데이트
+        output.userOutput
+            .bind(with: self) { owner, value in
+                owner.settingChannelView.updateCollecionViewHeight()
+            }
+            .disposed(by: disposeBag)
+
     }
     
     func configureOwner() {
@@ -113,5 +164,24 @@ extension SettingChannelViewController {
                 settingChannelView.isOnwer = false
             }
         }
+    }
+}
+
+extension SettingChannelViewController: EditInfoDelegate {
+    func editInfo(data: ChannelListModel) {
+        viewModel.chattingRoomInfo.onNext(SearchChannelViewModel.selectedChannelData(
+            name: data.name,
+            description: data.description,
+            channelID: data.channelID,
+            ownerID: data.ownerID)
+        )
+        
+        delegate?.editInfo(data: data)
+    }
+}
+
+extension SettingChannelViewController: adminDidChangeDelegate {
+    func ownerChanged(isOwner: Bool) {
+        settingChannelView.isOnwer = isOwner
     }
 }

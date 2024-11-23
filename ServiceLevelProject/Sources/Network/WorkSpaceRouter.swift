@@ -16,7 +16,7 @@ enum WorkSpaceRouter {
     case invite(id: String, query: WorkspaceMemberQuery)
     case exit(id: String)
     case memberlist(id: String)
-    case changeOwner(id: String, query: WorkspaceOwnerQuery)
+    case changeOwner(id: String, query: OwnerQuery)
     case inquiry(id: String)
 }
 

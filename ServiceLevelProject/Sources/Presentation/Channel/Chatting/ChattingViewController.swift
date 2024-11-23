@@ -46,9 +46,9 @@ extension ChattingViewController {
             input.chattingRoomInfo.onNext(roomInfoData)
         }
         
-        output.chattingRoomInfo
-            .bind(with: self) { owner, roomInfo in
-                owner.navigationItem.title = "# \(roomInfo.name)"
+        output.channelName
+            .bind(with: self) { owner, value in
+                owner.navigationItem.title = "# \(value)"
             }
             .disposed(by: disposeBag)
         
@@ -87,12 +87,24 @@ extension ChattingViewController {
         button.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = SettingChannelViewController()
+                vc.delegate = self
                 vc.roomInfoData = owner.roomInfoData
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
         return UIBarButtonItem(customView: button)
+    }
+}
+
+extension ChattingViewController: EditInfoDelegate {
+    func editInfo(data: ChannelListModel) {
+        viewModel.editInfo.onNext(SearchChannelViewModel.selectedChannelData(
+            name: data.name,
+            description: data.description,
+            channelID: data.channelID,
+            ownerID: data.ownerID)
+        )
     }
 }
 

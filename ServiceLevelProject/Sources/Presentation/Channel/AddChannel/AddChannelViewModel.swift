@@ -32,7 +32,7 @@ final class AddChannelViewModel: ViewModelBindable {
         input.createButtonTap
             .withLatestFrom(Observable.combineLatest(input.channelNameText, input.channelDescriptionText))
             .flatMap { value in
-                return APIManager.shared.callRequest(api: ChannelRouter.addChannel(workspaceID: UserDefaultManager.workspaceID ?? "", query: AddChannelQuery(name: value.0, description: value.1, image: nil)), type: ChannelListModel.self)
+                return APIManager.shared.callRequest(api: ChannelRouter.addChannel(workspaceID: UserDefaultManager.workspaceID ?? "", query: ChannelQuery(name: value.0, description: value.1, image: nil)), type: ChannelListModel.self)
             }
             .bind(with: self) { owner, result in
                 switch result {
