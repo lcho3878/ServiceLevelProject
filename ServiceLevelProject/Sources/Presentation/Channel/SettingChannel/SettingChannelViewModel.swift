@@ -11,6 +11,7 @@ import RxCocoa
 
 final class SettingChannelViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
+    let chattingRoomInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
     
     struct Input {
         let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
@@ -36,6 +37,12 @@ final class SettingChannelViewModel: ViewModelBindable {
     func transform(input: Input) -> Output {
         let isOwner = PublishSubject<(Bool, String, String, String)>()
         let exitChannelSuccessful = PublishSubject<Void>()
+        
+        chattingRoomInfo
+            .bind(with: self) { owner, value in
+                input.chattingRoomInfo.onNext(value)
+            }
+            .disposed(by: disposeBag)
         
         input.deleteChannelButtonTap
             .bind(with: self) { owner, _ in

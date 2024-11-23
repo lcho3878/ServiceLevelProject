@@ -14,17 +14,20 @@ final class EditChannelView: BaseView {
         $0.text = "채널 이름"
         $0.font = .title2
     }
-    private let channelNameTextField = BaseTextField(placeholder: "채널 이름을 입력하세요 (필수)")
+    let channelNameTextField = BaseTextField(placeholder: "채널 이름을 입력하세요 (필수)")
     private let channelDescriptionLabel = UILabel().then {
         $0.text = "채널 설명"
         $0.font = .title2
     }
-    private let channelDescriptionTextField = BaseTextField(placeholder: "채널을 설명하세요 (옵션)")
+    let channelDescriptionTextField = BaseTextField(placeholder: "채널을 설명하세요 (옵션)")
+    let completeButton = BrandColorButton(title: "완료")
+    
 
     override func addSubviews() {
         addSubviews([
             channelNameLabel, channelNameTextField,
-            channelDescriptionLabel, channelDescriptionTextField
+            channelDescriptionLabel, channelDescriptionTextField,
+            completeButton
         ])
     }
     
@@ -52,6 +55,12 @@ final class EditChannelView: BaseView {
             $0.top.equalTo(channelDescriptionLabel.snp.bottom).offset(8)
             $0.horizontalEdges.equalTo(channelNameLabel)
             $0.height.equalTo(44)
+        }
+        
+        completeButton.snp.makeConstraints {
+            $0.height.equalTo(44)
+            $0.horizontalEdges.bottom.equalTo(safeArea).inset(24)
+            adjustableConstraint = $0.bottom.equalTo(safeArea).inset(24).constraint.layoutConstraints.first
         }
     }
     

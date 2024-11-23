@@ -12,7 +12,7 @@ final class BaseTextField: UITextField {
         super.init(frame: CGRect.zero)
         
         self.placeholder = placeholder
-        font = UIFont.title2
+        font = UIFont.body
         backgroundColor = .brandWhite
         layer.cornerRadius = 8
         self.keyboardType = keyboardType

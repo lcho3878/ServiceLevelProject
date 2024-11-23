@@ -55,6 +55,7 @@ extension SettingChannelViewController: RootViewTransitionable, NavigationRepres
             .bind(with: self) { owner, _ in
                 let vc = EditChannelViewController()
                 vc.roomInfo = owner.roomInfoData
+                vc.delegate = self
                 owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
@@ -132,5 +133,16 @@ extension SettingChannelViewController: RootViewTransitionable, NavigationRepres
                 settingChannelView.isOnwer = false
             }
         }
+    }
+}
+
+extension SettingChannelViewController: EditInfoDelegate {
+    func editInfo(data: ChannelListModel) {
+        viewModel.chattingRoomInfo.onNext(SearchChannelViewModel.selectedChannelData(
+            name: data.name,
+            description: data.description,
+            channelID: data.channelID,
+            ownerID: data.ownerID)
+        )
     }
 }
