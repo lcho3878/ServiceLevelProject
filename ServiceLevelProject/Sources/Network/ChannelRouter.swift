@@ -18,6 +18,7 @@ enum ChannelRouter {
     case fetchChannelChatHistory(cursorDate: String, workspaceID: String, ChannelID: String)
     case editChannel(workspaceID: String, channelID: String, query: ChannelQuery)
     case channelDetails(workspaceID: String, channelID: String)
+    case changeAdmin(workspaceID: String, channelID: String, query: OwnerQuery)
 }
 
 extension ChannelRouter : TargetType {
@@ -33,7 +34,7 @@ extension ChannelRouter : TargetType {
             return .post
         case .deleteChannel:
             return .delete
-        case .editChannel:
+        case .editChannel, .changeAdmin:
             return .put
         }
     }
@@ -58,6 +59,8 @@ extension ChannelRouter : TargetType {
             return "/workspaces/\(workspaceID)/channels/\(channelID)"
         case let .channelDetails(workspaceID, channelID):
             return "/workspaces/\(workspaceID)/channels/\(channelID)"
+        case let .changeAdmin(workspaceID, channelID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/transfer/ownership"
         }
     }
     
@@ -75,6 +78,13 @@ extension ChannelRouter : TargetType {
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.contentType.rawValue: Header.mutipart.rawValue
+            ]
+        case .changeAdmin:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.contentType.rawValue: Header.json.rawValue
             ]
         }
     }
@@ -106,9 +116,11 @@ extension ChannelRouter : TargetType {
     }
     
     var body: Data? {
+        let encoder = JSONEncoder()
         switch self {
-        default:
-            return nil
+        case let .changeAdmin(_, _, query):
+            return try? encoder.encode(query)
+        default: return nil
         }
     }
     

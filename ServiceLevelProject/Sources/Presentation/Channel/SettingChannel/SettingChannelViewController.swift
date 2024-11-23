@@ -134,8 +134,9 @@ extension SettingChannelViewController: RootViewTransitionable, NavigationRepres
             .bind(with: self) { owner, value in
                 let (memberData, roomInfo) = value
                 let vc = ChangeChannelAdminViewController()
+                vc.delegate = self
                 vc.memberData = memberData
-                vc.ownerID = roomInfo.ownerID
+                vc.roomInfo = roomInfo
                 owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
@@ -176,5 +177,11 @@ extension SettingChannelViewController: EditInfoDelegate {
         )
         
         delegate?.editInfo(data: data)
+    }
+}
+
+extension SettingChannelViewController: adminDidChangeDelegate {
+    func ownerChanged(isOwner: Bool) {
+        settingChannelView.isOnwer = isOwner
     }
 }
