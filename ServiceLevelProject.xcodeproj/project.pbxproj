@@ -83,6 +83,10 @@
 		684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */; };
 		684E65542CF1C204006B2F02 /* EditChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65532CF1C204006B2F02 /* EditChannelViewModel.swift */; };
 		684E65572CF1FEA6006B2F02 /* ChannelDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */; };
+		684E65592CF225B5006B2F02 /* ChangeChannelAdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65582CF225B5006B2F02 /* ChangeChannelAdminViewController.swift */; };
+		684E655C2CF226E1006B2F02 /* ChangeChannelAdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E655B2CF226E1006B2F02 /* ChangeChannelAdminView.swift */; };
+		684E655E2CF226FC006B2F02 /* ChangeChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E655D2CF226FC006B2F02 /* ChangeChannelCell.swift */; };
+		684E65602CF22818006B2F02 /* ChangeChannelAdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E655F2CF22818006B2F02 /* ChangeChannelAdminViewModel.swift */; };
 		6876053C2CCE58B1008167B0 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876053B2CCE58B1008167B0 /* Key.swift */; };
 		6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6876053E2CCE58F0008167B0 /* SnapKit */; };
 		687605422CCE5901008167B0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 687605412CCE5901008167B0 /* Then */; };
@@ -220,6 +224,10 @@
 		684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatHistoryModel.swift; sourceTree = "<group>"; };
 		684E65532CF1C204006B2F02 /* EditChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelViewModel.swift; sourceTree = "<group>"; };
 		684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailsModel.swift; sourceTree = "<group>"; };
+		684E65582CF225B5006B2F02 /* ChangeChannelAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannelAdminViewController.swift; sourceTree = "<group>"; };
+		684E655B2CF226E1006B2F02 /* ChangeChannelAdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannelAdminView.swift; sourceTree = "<group>"; };
+		684E655D2CF226FC006B2F02 /* ChangeChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannelCell.swift; sourceTree = "<group>"; };
+		684E655F2CF22818006B2F02 /* ChangeChannelAdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannelAdminViewModel.swift; sourceTree = "<group>"; };
 		6876053B2CCE58B1008167B0 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		687605522CCE5D67008167B0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		687605552CCE6991008167B0 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -297,11 +305,12 @@
 		541DC7142CDE38450051E898 /* SettingChannel */ = {
 			isa = PBXGroup;
 			children = (
-				541DC71D2CE0F5610051E898 /* EditChannel */,
 				541DC7152CDE38960051E898 /* SettingChannelViewController.swift */,
 				541DC71B2CDE51F30051E898 /* SettingChannelViewModel.swift */,
 				541DC7172CDE389D0051E898 /* SettingChannelView.swift */,
 				541DC7192CDE38A60051E898 /* SettingChannelCell.swift */,
+				541DC71D2CE0F5610051E898 /* EditChannel */,
+				684E655A2CF225BA006B2F02 /* ChangeChannelAdmin */,
 			);
 			path = SettingChannel;
 			sourceTree = "<group>";
@@ -576,6 +585,17 @@
 				684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */,
 			);
 			path = Channel;
+			sourceTree = "<group>";
+		};
+		684E655A2CF225BA006B2F02 /* ChangeChannelAdmin */ = {
+			isa = PBXGroup;
+			children = (
+				684E65582CF225B5006B2F02 /* ChangeChannelAdminViewController.swift */,
+				684E655B2CF226E1006B2F02 /* ChangeChannelAdminView.swift */,
+				684E655D2CF226FC006B2F02 /* ChangeChannelCell.swift */,
+				684E655F2CF22818006B2F02 /* ChangeChannelAdminViewModel.swift */,
+			);
+			path = ChangeChannelAdmin;
 			sourceTree = "<group>";
 		};
 		687605512CCE5CC1008167B0 /* Workspace */ = {
@@ -892,6 +912,7 @@
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				68B96F052CE2195800473D8B /* ErrorModel.swift in Sources */,
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
+				684E65592CF225B5006B2F02 /* ChangeChannelAdminViewController.swift in Sources */,
 				544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */,
 				5477F1C32CDA393B007D1A92 /* ChattingTableViewCell.swift in Sources */,
 				5476C95B2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift in Sources */,
@@ -915,6 +936,7 @@
 				684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */,
 				684E654D2CECE077006B2F02 /* ChattingViewModel.swift in Sources */,
 				687605892CDA3389008167B0 /* ChangeAdminViewController.swift in Sources */,
+				684E65602CF22818006B2F02 /* ChangeChannelAdminViewModel.swift in Sources */,
 				687605862CD66AD0008167B0 /* WorkspaceSettingView.swift in Sources */,
 				68B96F082CE22FDD00473D8B /* APIQuery.swift in Sources */,
 				54565AE92CD1056600B5A354 /* UIViewController+.swift in Sources */,
@@ -951,6 +973,7 @@
 				541DC7162CDE38960051E898 /* SettingChannelViewController.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				6876058F2CDA396F008167B0 /* ChangeAdminCell.swift in Sources */,
+				684E655E2CF226FC006B2F02 /* ChangeChannelCell.swift in Sources */,
 				687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */,
 				549091A02CE48DBB002EE538 /* WorkSpace.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
@@ -961,6 +984,7 @@
 				54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */,
 				5476C9572CD4C7CA00E95AD4 /* ProfileEditViewController.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
+				684E655C2CF226E1006B2F02 /* ChangeChannelAdminView.swift in Sources */,
 				687605742CD4CAE4008167B0 /* CustomAlertTransition.swift in Sources */,
 				687605B42CDE51ED008167B0 /* DMMemberCell.swift in Sources */,
 				54565AE72CD1053700B5A354 /* DismissButtonPresentable.swift in Sources */,

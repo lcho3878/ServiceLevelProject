@@ -101,9 +101,9 @@ final class SingleButtonAlertViewController: UIViewController {
     private func alertAction() {
         okButton.rx.tap
             .bind(with: self) { owner, _ in
-                owner.buttonAction?()
-                owner.view.backgroundColor = .clear
                 owner.dismiss(animated: true)
+                owner.view.backgroundColor = .clear
+                owner.buttonAction?()
             }
             .disposed(by: disposeBag)
     }

@@ -128,6 +128,18 @@ extension SettingChannelViewController: RootViewTransitionable, NavigationRepres
             }
             .disposed(by: disposeBag)
         
+        // 채널 관리자 변경
+        settingChannelView.changeChannelAdminButton.rx.tap
+            .withLatestFrom(Observable.combineLatest(output.userOutput, output.chattingRoomInfo))
+            .bind(with: self) { owner, value in
+                let (memberData, roomInfo) = value
+                let vc = ChangeChannelAdminViewController()
+                vc.memberData = memberData
+                vc.ownerID = roomInfo.ownerID
+                owner.presentNavigationController(rootViewController: vc)
+            }
+            .disposed(by: disposeBag)
+        
         // 채널 맴버 CollecionView
         output.userOutput.bind(to: settingChannelView.userCollectionView.rx.items(cellIdentifier: SettingChannelCell.id, cellType: SettingChannelCell.self)) { row, element, cell in
             cell.configureCell(element: element)
