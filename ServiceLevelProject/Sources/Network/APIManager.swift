@@ -108,6 +108,7 @@ final class APIManager {
                                                 case .success(_):
                                                     loop()
                                                 case .failure(_):
+
                                                     print("refresh 만료! 로그인화면으로 이동")
                                                     observer(.success(.failure(errorModel)))
                                                 }
@@ -253,8 +254,20 @@ final class APIManager {
                 UserDefaultManager.accessToken = success.accessToken
                 completion(.success(success))
             case .failure(let failure):
+                self.addNotification()
                 completion(.failure(failure)) // 여기는 200, 400밖에 없음 -> Failure인 경우 리프레시 만료로 재로그인 필요
             }
         }
+    }
+}
+
+extension APIManager {
+    private func addNotification() {
+        let key = NotificationKey.refreshExpiration
+        NotificationCenter.default.post(
+            name: Notification.Name(key.rawValue),
+            object: nil,
+            userInfo: [NotificationKey.toastMessage: key.message]
+        )
     }
 }
