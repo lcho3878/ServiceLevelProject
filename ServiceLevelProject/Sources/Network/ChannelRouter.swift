@@ -17,6 +17,7 @@ enum ChannelRouter {
     case exitChannel(workspaceID: String, channelID: String)
     case fetchChannelChatHistory(cursorDate: String, workspaceID: String, ChannelID: String)
     case editChannel(workspaceID: String, channelID: String, query: ChannelQuery)
+    case channelDetails(workspaceID: String, channelID: String)
 }
 
 extension ChannelRouter : TargetType {
@@ -26,7 +27,7 @@ extension ChannelRouter : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .channelList, .myChannelList, .unreadCount, .exitChannel, .fetchChannelChatHistory:
+        case .channelList, .myChannelList, .unreadCount, .exitChannel, .fetchChannelChatHistory, .channelDetails:
             return .get
         case .addChannel:
             return .post
@@ -55,12 +56,14 @@ extension ChannelRouter : TargetType {
             return "/workspaces/\(workspaceID)/channels/\(ChannelID)/chats"
         case let .editChannel(workspaceID, channelID, _):
             return "/workspaces/\(workspaceID)/channels/\(channelID)"
+        case let .channelDetails(workspaceID, channelID):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)"
         }
     }
     
     var header: [String : String] {
         switch self {
-        case .channelList, .myChannelList, .unreadCount, .deleteChannel, .exitChannel, .fetchChannelChatHistory:
+        case .channelList, .myChannelList, .unreadCount, .deleteChannel, .exitChannel, .fetchChannelChatHistory, .channelDetails:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,

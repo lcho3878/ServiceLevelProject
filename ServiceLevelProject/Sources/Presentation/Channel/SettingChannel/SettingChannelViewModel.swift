@@ -14,6 +14,7 @@ final class SettingChannelViewModel: ViewModelBindable {
     let chattingRoomInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
     
     struct Input {
+        let viewDidLoadTrigger = PublishSubject<Void>()
         let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
         let deleteChannelButtonTap: ControlEvent<Void>
         let deleteChannelCheckAlertMessage = PublishSubject<String>()
@@ -26,17 +27,36 @@ final class SettingChannelViewModel: ViewModelBindable {
     
     struct Output {
         let chattingRoomInfo: BehaviorSubject<SearchChannelViewModel.selectedChannelData>
-        let userOutput = BehaviorSubject(value: UserTestData.dummy)
+        let userOutput: PublishSubject<[ChannelDetailsModel.ChannelMembers]>
         let deleteChannelCheckAlertMessage: PublishSubject<String>
         let deleteFailMessage: PublishSubject<String>
         let deleteSuccessNavigate: PublishSubject<Void>
         let isOwner: PublishSubject<(Bool, String, String, String)>
         let exitChannelSuccessful: PublishSubject<Void>
+        let channelDetail: PublishSubject<ChannelDetailsModel>
     }
     
     func transform(input: Input) -> Output {
         let isOwner = PublishSubject<(Bool, String, String, String)>()
         let exitChannelSuccessful = PublishSubject<Void>()
+        let channelDetail = PublishSubject<ChannelDetailsModel>()
+        let userOutput = PublishSubject<[ChannelDetailsModel.ChannelMembers]>()
+        
+        input.viewDidLoadTrigger
+            .withLatestFrom(input.chattingRoomInfo)
+            .flatMap { roomInfo in
+                return APIManager.shared.callRequest(api: ChannelRouter.channelDetails(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: roomInfo.channelID), type: ChannelDetailsModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    channelDetail.onNext(success)
+                    userOutput.onNext(success.channelMembers)
+                case .failure(let failure):
+                    print(">>> Failed: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
         
         chattingRoomInfo
             .bind(with: self) { owner, value in
@@ -92,18 +112,14 @@ final class SettingChannelViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
             
         return Output(
-            chattingRoomInfo: input.chattingRoomInfo,
+            chattingRoomInfo: input.chattingRoomInfo, 
+            userOutput: userOutput,
             deleteChannelCheckAlertMessage: input.deleteChannelCheckAlertMessage,
             deleteFailMessage: input.deleteFailMessage,
             deleteSuccessNavigate: input.deleteSuccessNavigate,
             isOwner: isOwner,
-            exitChannelSuccessful: exitChannelSuccessful
+            exitChannelSuccessful: exitChannelSuccessful,
+            channelDetail: channelDetail
         )
-    }
-}
-
-extension SettingChannelViewModel {
-    struct UserTestData {
-        static let dummy: [Int] = .init(repeating: 0, count: 40)
     }
 }

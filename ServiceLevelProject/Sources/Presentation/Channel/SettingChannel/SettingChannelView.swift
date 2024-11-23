@@ -32,38 +32,24 @@ final class SettingChannelView: BaseView {
     
     private let showMembersBgView = UIView()
     
-    private let memberLabel = UILabel().then {
-        $0.text = "멤버 (14)"
+    let memberLabel = UILabel().then {
         $0.textColor = .textPrimary
         $0.font = .title2
     }
     
     private let dropdownButton = UIButton().then {
-        $0.setImage(UIImage(resource: .chevronDown), for: .normal)
+        $0.setImage(UIImage(resource: .chevronRight), for: .normal)
         $0.tintColor = .brandBlack
     }
     
-    private lazy var showMembersButton = UIButton().then {
+    lazy var showMembersButton = UIButton().then {
         $0.addTarget(self, action: #selector(dropdownButtonClicked), for: .touchUpInside)
     }
     
-    lazy var userCollectionView = UICollectionView(frame: .zero, collectionViewLayout: userCollectionLayout).then {
+    let userCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout()).then {
         $0.register(SettingChannelCell.self, forCellWithReuseIdentifier: SettingChannelCell.id)
         $0.isScrollEnabled = false
         $0.backgroundColor = .backgroundPrimary
-    }
-    
-    private let userCollectionLayout = UICollectionViewFlowLayout().then {
-        let inset: CGFloat = 7
-        let cellsPerRow: CGFloat = 5
-        let cellHeight: CGFloat = 100
-        let totalHorizontalInsets = inset * 2 + (cellsPerRow - 1) * $0.minimumInteritemSpacing
-        let cellWidth = (UIScreen.main.bounds.width - totalHorizontalInsets) / cellsPerRow
-        
-        $0.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-        $0.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        $0.minimumLineSpacing = 0
-        $0.minimumInteritemSpacing = 0
     }
     
     private let buttonStackView = UIStackView().then {
@@ -176,30 +162,36 @@ final class SettingChannelView: BaseView {
     override func configureUI() {
         backgroundColor = .backgroundPrimary
     }
+    
+    static func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width - 14
+        layout.itemSize = CGSize(width: width / 5, height: 100)
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        return layout
+    }
 }
 
 extension SettingChannelView {
-    func updateCollectionViewLayout() {
-        let itemHeight: CGFloat = 100
-        let itemsCount = userCollectionView.numberOfItems(inSection: 0)
-        let rows = (itemsCount + 2) / 5
-        let totalHeight = CGFloat(rows) * itemHeight
-        userCollectionView.snp.updateConstraints { $0.height.equalTo(totalHeight) }
-    }
-    
-    func toggleCollectionview() {
+    func updateCollecionViewHeight() {
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self else { return }
-            switch dropdownButton.isSelected {
+            switch showMembersButton.isSelected {
             case true:
+                dropdownButton.setImage(UIImage(resource: .chevronDown), for: .normal)
+                userCollectionView.snp.updateConstraints {
+                    $0.height.equalTo(self.userCollectionView.contentSize.height)
+                }
+                
+            case false:
                 dropdownButton.setImage(UIImage(resource: .chevronRight), for: .normal)
                 userCollectionView.snp.updateConstraints {
                     $0.height.equalTo(0)
                 }
-            case false:
-                dropdownButton.setImage(UIImage(resource: .chevronDown), for: .normal)
-                updateCollectionViewLayout()
             }
+            
             layoutIfNeeded()
         }
     }
@@ -231,7 +223,7 @@ extension SettingChannelView {
 extension SettingChannelView {
     @objc
     private func dropdownButtonClicked() {
-        dropdownButton.isSelected.toggle()
-        toggleCollectionview()
+        showMembersButton.isSelected.toggle()
+        updateCollecionViewHeight()
     }
 }

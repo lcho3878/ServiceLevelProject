@@ -42,12 +42,21 @@ extension SettingChannelViewController: RootViewTransitionable, NavigationRepres
         
         if let roomInfoData = roomInfoData {
             input.chattingRoomInfo.onNext(roomInfoData)
+            // ViewDidLoadTrigger
+            input.viewDidLoadTrigger.onNext(())
         }
+        
         // channelTitleLabel
         output.chattingRoomInfo
             .bind(with: self) { owner, roomInfo in
                 owner.settingChannelView.channelTitleLabel.text = "#\(roomInfo.name)"
                 owner.settingChannelView.channelDescriptionLabel.text = roomInfo.description
+            }
+            .disposed(by: disposeBag)
+        
+        output.channelDetail
+            .bind(with: self) { owner, detail in
+                owner.settingChannelView.memberLabel.text = "멤버 (\(detail.channelMembers.count))"
             }
             .disposed(by: disposeBag)
         
@@ -119,12 +128,19 @@ extension SettingChannelViewController: RootViewTransitionable, NavigationRepres
             }
             .disposed(by: disposeBag)
         
+        // 채널 맴버 CollecionView
         output.userOutput.bind(to: settingChannelView.userCollectionView.rx.items(cellIdentifier: SettingChannelCell.id, cellType: SettingChannelCell.self)) { row, element, cell in
-            //cell configureUI 추가
+            cell.configureCell(element: element)
         }
         .disposed(by: disposeBag)
         
-        settingChannelView.updateCollectionViewLayout()
+        // CollectionView 높이 업데이트
+        output.userOutput
+            .bind(with: self) { owner, value in
+                owner.settingChannelView.updateCollecionViewHeight()
+            }
+            .disposed(by: disposeBag)
+
     }
     
     func configureOwner() {

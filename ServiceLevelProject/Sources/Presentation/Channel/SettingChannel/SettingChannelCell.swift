@@ -41,4 +41,9 @@ final class SettingChannelCell: BaseCollectionViewCell {
             $0.centerX.equalTo(safe)
         }
     }
+    
+    func configureCell(element: ChannelDetailsModel.ChannelMembers) {
+        // 이미지도 넣기
+        nameLabel.text = element.nickname
+    }
 }
