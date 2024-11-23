@@ -32,7 +32,7 @@ final class SearchChannelViewController: BaseViewController, DismissButtonPresen
     }
 }
 
-extension SearchChannelViewController: RootViewTransitionable {
+extension SearchChannelViewController {
     private func bind() {
         let input = SearchChannelViewModel.Input(modelSelected: searchChannelView.tableView.rx.modelSelected(ChannelListModel.self))
         let output = viewModel.transform(input: input)
