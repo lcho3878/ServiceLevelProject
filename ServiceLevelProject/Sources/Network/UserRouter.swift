@@ -13,6 +13,7 @@ enum UserRouter {
     case signUp(query: SignUpQuery)
     case login(query: LoginQuery)
     case refreshToken
+    case profile
 }
 
 extension UserRouter : TargetType {
@@ -24,7 +25,7 @@ extension UserRouter : TargetType {
         switch self {
         case .signUp, .validationEmail, .login:
             return .post
-        case .refreshToken:
+        case .refreshToken, .profile:
             return .get
         }
     }
@@ -39,6 +40,8 @@ extension UserRouter : TargetType {
             return "/users/login"
         case .refreshToken:
             return "/auth/refresh"
+        case .profile:
+            return "/users/me"
         }
     }
     
@@ -58,12 +61,18 @@ extension UserRouter : TargetType {
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.sesacKey.rawValue: Key.sesacKey,
             ]
+        case .profile:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.sesacKey.rawValue: Key.sesacKey,
+            ]
         }
     }
     
     var parameters: [String : String]? {
         switch self {
-        case .signUp, .validationEmail, .login , .refreshToken: // 파라미터 있는 경우 이 둘은 'default: return nil'로 빼주시면 됩니다 :)
+        case .signUp, .validationEmail, .login , .refreshToken, .profile: // 파라미터 있는 경우 이 둘은 'default: return nil'로 빼주시면 됩니다 :)
             return nil
         }
     }

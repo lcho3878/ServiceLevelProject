@@ -59,6 +59,8 @@
 		549810952CEFA1D8004DD29E /* WorkSpaceInqury.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549810942CEFA1D8004DD29E /* WorkSpaceInqury.swift */; };
 		549810982CEFB296004DD29E /* NotificationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549810972CEFB296004DD29E /* NotificationKey.swift */; };
 		5498109A2CF1CC33004DD29E /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549810992CF1CC33004DD29E /* ImageRouter.swift */; };
+		549810A42CF1FF64004DD29E /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549810A32CF1FF64004DD29E /* UserProfileModel.swift */; };
+		549810A62CF200DF004DD29E /* ProfileEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549810A52CF200DF004DD29E /* ProfileEditViewModel.swift */; };
 		54A53FC72CD602E300313E17 /* NicknameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */; };
 		54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FC82CD602EC00313E17 /* NicknameEditView.swift */; };
 		54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FCA2CD609B800313E17 /* UITextField+.swift */; };
@@ -195,6 +197,8 @@
 		549810942CEFA1D8004DD29E /* WorkSpaceInqury.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInqury.swift; sourceTree = "<group>"; };
 		549810972CEFB296004DD29E /* NotificationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKey.swift; sourceTree = "<group>"; };
 		549810992CF1CC33004DD29E /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
+		549810A32CF1FF64004DD29E /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
+		549810A52CF200DF004DD29E /* ProfileEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewModel.swift; sourceTree = "<group>"; };
 		54A53FC62CD602E300313E17 /* NicknameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewController.swift; sourceTree = "<group>"; };
 		54A53FC82CD602EC00313E17 /* NicknameEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditView.swift; sourceTree = "<group>"; };
 		54A53FCA2CD609B800313E17 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */,
+				549810A52CF200DF004DD29E /* ProfileEditViewModel.swift */,
 				5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */,
 				5476C95A2CD4CF0000E95AD4 /* ProfileEditTableViewCell.swift */,
 			);
@@ -744,6 +749,7 @@
 			isa = PBXGroup;
 			children = (
 				68B96F042CE2195800473D8B /* ErrorModel.swift */,
+				549810A32CF1FF64004DD29E /* UserProfileModel.swift */,
 				68B96F092CE231E500473D8B /* SignUpModel.swift */,
 				684E65412CE88A28006B2F02 /* RefreshToken.swift */,
 				549091A12CE491A1002EE538 /* WorkSpace */,
@@ -887,6 +893,7 @@
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
+				549810A42CF1FF64004DD29E /* UserProfileModel.swift in Sources */,
 				68B96F052CE2195800473D8B /* ErrorModel.swift in Sources */,
 				687605582CCE69A9008167B0 /* UIStackView+.swift in Sources */,
 				544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */,
@@ -934,6 +941,7 @@
 				54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				68B96F022CE2177C00473D8B /* ErrorCode.swift in Sources */,
+				549810A62CF200DF004DD29E /* ProfileEditViewModel.swift in Sources */,
 				549091A82CE4A276002EE538 /* UserDefaultManager.swift in Sources */,
 				549810952CEFA1D8004DD29E /* WorkSpaceInqury.swift in Sources */,
 				687605A42CDE119D008167B0 /* AddChannelView.swift in Sources */,
