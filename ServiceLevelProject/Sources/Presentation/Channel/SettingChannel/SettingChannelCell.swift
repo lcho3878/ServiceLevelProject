@@ -11,7 +11,7 @@ import Then
 
 final class SettingChannelCell: BaseCollectionViewCell {
     private let profileImageView = UIImageView().then {
-        $0.image = UIImage.profile
+        $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .lightGray
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
@@ -42,8 +42,21 @@ final class SettingChannelCell: BaseCollectionViewCell {
         }
     }
     
+    override func configureUI() {
+        profileImageView.image = UIImage.randomDefaultImage()
+    }
+}
+
+extension SettingChannelCell {
+    
     func configureCell(element: ChannelDetailsModel.ChannelMembers) {
         // 이미지도 넣기
         nameLabel.text = element.nickname
+        Task {
+            if let image = element.profileImage {
+                let data = try await APIManager.shared.loadImage(image)
+                profileImageView.image = UIImage(data: data)
+            }
+        }
     }
 }

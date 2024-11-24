@@ -14,7 +14,7 @@ final class SettingChannelViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = SettingChannelViewModel()
     weak var delegate: EditInfoDelegate?
-    var roomInfoData: SearchChannelViewModel.selectedChannelData?
+    var roomInfoData: SelectedChannelData?
     
     override func loadView() {
         view = settingChannelView
@@ -169,7 +169,7 @@ extension SettingChannelViewController: NavigationRepresentable {
 
 extension SettingChannelViewController: EditInfoDelegate {
     func editInfo(data: ChannelListModel) {
-        viewModel.chattingRoomInfo.onNext(SearchChannelViewModel.selectedChannelData(
+        viewModel.chattingRoomInfo.onNext(SelectedChannelData(
             name: data.name,
             description: data.description,
             channelID: data.channelID,

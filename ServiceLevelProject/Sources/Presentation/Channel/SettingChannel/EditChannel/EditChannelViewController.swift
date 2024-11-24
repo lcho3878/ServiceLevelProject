@@ -15,7 +15,7 @@ final class EditChannelViewController: BaseViewController, DismissButtonPresenta
     private let viewModel = EditChannelViewModel()
     private let disposeBag = DisposeBag()
     weak var delegate: EditInfoDelegate?
-    var roomInfo: SearchChannelViewModel.selectedChannelData?
+    var roomInfo: SelectedChannelData?
     
     override func loadView() {
         view = editChannelView

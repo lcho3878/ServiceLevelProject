@@ -151,6 +151,7 @@
 		68DD92052CF36D5200A8A466 /* EditProfileImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92042CF36D5200A8A466 /* EditProfileImageModel.swift */; };
 		68DD92082CF3702700A8A466 /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92072CF3702700A8A466 /* NicknameEditViewModel.swift */; };
 		68DD920A2CF3706200A8A466 /* PhoneNumberEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92092CF3706200A8A466 /* PhoneNumberEditViewModel.swift */; };
+		68DD920C2CF38E1000A8A466 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD920B2CF38E1000A8A466 /* UIImage+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -291,6 +292,7 @@
 		68DD92042CF36D5200A8A466 /* EditProfileImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageModel.swift; sourceTree = "<group>"; };
 		68DD92072CF3702700A8A466 /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
 		68DD92092CF3706200A8A466 /* PhoneNumberEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditViewModel.swift; sourceTree = "<group>"; };
+		68DD920B2CF38E1000A8A466 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -631,6 +633,7 @@
 				54565AE82CD1056600B5A354 /* UIViewController+.swift */,
 				6876056C2CD2721C008167B0 /* UIButton+.swift */,
 				54A53FCA2CD609B800313E17 /* UITextField+.swift */,
+				68DD920B2CF38E1000A8A466 /* UIImage+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -954,6 +957,7 @@
 				684E65592CF225B5006B2F02 /* ChangeChannelAdminViewController.swift in Sources */,
 				544CA78D2CDA306F0066F0AD /* BaseTableViewCell.swift in Sources */,
 				5477F1C32CDA393B007D1A92 /* ChattingTableViewCell.swift in Sources */,
+				68DD920C2CF38E1000A8A466 /* UIImage+.swift in Sources */,
 				687605C22CE1D8B7008167B0 /* TargetType.swift in Sources */,
 				684E65442CEB8C5E006B2F02 /* ChannelRouter.swift in Sources */,
 				684E653E2CE62E66006B2F02 /* LoginViewModel.swift in Sources */,

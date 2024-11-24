@@ -14,7 +14,7 @@ final class ChattingViewController: BaseViewController {
     private let chattingView = ChattingView()
     private let disposeBag = DisposeBag()
     private let viewModel = ChattingViewModel()
-    var roomInfoData: SearchChannelViewModel.selectedChannelData?
+    var roomInfoData: SelectedChannelData?
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -99,7 +99,7 @@ extension ChattingViewController {
 
 extension ChattingViewController: EditInfoDelegate {
     func editInfo(data: ChannelListModel) {
-        viewModel.editInfo.onNext(SearchChannelViewModel.selectedChannelData(
+        viewModel.editInfo.onNext(SelectedChannelData(
             name: data.name,
             description: data.description,
             channelID: data.channelID,

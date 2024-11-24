@@ -15,17 +15,17 @@ final class EditChannelViewModel: ViewModelBindable {
     struct Input {
         let channelNameText: ControlProperty<String>
         let channelDescriptionText: ControlProperty<String>
-        let roomInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
+        let roomInfo = PublishSubject<SelectedChannelData>()
         let completeButtonTap: ControlEvent<Void>
     }
 
     struct Output {
-        let roomInfo: BehaviorSubject<SearchChannelViewModel.selectedChannelData>
+        let roomInfo: BehaviorSubject<SelectedChannelData>
         let editSuccessful: PublishSubject<ChannelListModel>
     }
     
     func transform(input: Input) -> Output {
-        let channelRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
+        let channelRoomInfo = BehaviorSubject(value: SelectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
         let editSuccessful = PublishSubject<ChannelListModel>()
         
         input.roomInfo

@@ -11,11 +11,11 @@ import RxCocoa
 
 final class SettingChannelViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
-    let chattingRoomInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
+    let chattingRoomInfo = PublishSubject<SelectedChannelData>()
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
-        let chattingRoomInfo = BehaviorSubject(value: SearchChannelViewModel.selectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
+        let chattingRoomInfo = BehaviorSubject(value: SelectedChannelData(name: "", description: nil, channelID: "", ownerID: ""))
         let deleteChannelButtonTap: ControlEvent<Void>
         let deleteChannelCheckAlertMessage = PublishSubject<String>()
         let deleteChannelAction = PublishSubject<Void>()
@@ -26,7 +26,7 @@ final class SettingChannelViewModel: ViewModelBindable {
     }
     
     struct Output {
-        let chattingRoomInfo: BehaviorSubject<SearchChannelViewModel.selectedChannelData>
+        let chattingRoomInfo: BehaviorSubject<SelectedChannelData>
         let userOutput: PublishSubject<[ChannelDetailsModel.ChannelMembers]>
         let deleteChannelCheckAlertMessage: PublishSubject<String>
         let deleteFailMessage: PublishSubject<String>

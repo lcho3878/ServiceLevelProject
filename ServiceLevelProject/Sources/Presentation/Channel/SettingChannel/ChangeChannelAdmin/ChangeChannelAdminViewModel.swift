@@ -66,7 +66,7 @@ final class ChangeChannelAdminViewModel: ViewModelBindable {
             }
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(let success):
+                case .success(_):
                     changeAdminSuccessful.onNext(())
                 case .failure(let failure):
                     print(">>> Failed!: \(failure.errorCode)")
