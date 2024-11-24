@@ -147,6 +147,7 @@
 		68B96F0A2CE231E500473D8B /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F092CE231E500473D8B /* SignUpModel.swift */; };
 		68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F0B2CE477F600473D8B /* SignupViewModel.swift */; };
 		68DD92012CF3188800A8A466 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92002CF3188800A8A466 /* SettingViewController.swift */; };
+		68DD92032CF3514A00A8A466 /* ProfileEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92022CF3514A00A8A466 /* ProfileEditViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -283,6 +284,7 @@
 		68B96F092CE231E500473D8B /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
 		68B96F0B2CE477F600473D8B /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		68DD92002CF3188800A8A466 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		68DD92022CF3514A00A8A466 /* ProfileEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -502,6 +504,7 @@
 			children = (
 				5476C9562CD4C7CA00E95AD4 /* ProfileEditViewController.swift */,
 				5476C9582CD4C7FF00E95AD4 /* ProfileEditView.swift */,
+				68DD92022CF3514A00A8A466 /* ProfileEditViewModel.swift */,
 			);
 			path = ProfileEdit;
 			sourceTree = "<group>";
@@ -915,6 +918,7 @@
 				687605632CCF8D68008167B0 /* WorkspaceView.swift in Sources */,
 				68B96EFC2CE2031100473D8B /* UserRouter.swift in Sources */,
 				54A53FD32CD6346D00313E17 /* PhoneNumberEditViewController.swift in Sources */,
+				68DD92032CF3514A00A8A466 /* ProfileEditViewModel.swift in Sources */,
 				6876058B2CDA33D8008167B0 /* ChangeAdminView.swift in Sources */,
 				5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */,
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
