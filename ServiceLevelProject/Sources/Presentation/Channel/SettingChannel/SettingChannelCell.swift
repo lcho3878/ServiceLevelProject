@@ -43,7 +43,7 @@ final class SettingChannelCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
-        profileImageView.image = randomImage()
+        profileImageView.image = UIImage.randomDefaultImage()
     }
 }
 
@@ -58,11 +58,5 @@ extension SettingChannelCell {
                 profileImageView.image = UIImage(data: data)
             }
         }
-    }
-    
-    func randomImage() -> UIImage {
-        let defaultImages: [UIImage] = [.noPhotoA, .noPhotoB, .noPhotoC]
-        guard let randomImage = defaultImages.randomElement() else { return UIImage(resource: .noPhotoB)}
-        return randomImage
     }
 }

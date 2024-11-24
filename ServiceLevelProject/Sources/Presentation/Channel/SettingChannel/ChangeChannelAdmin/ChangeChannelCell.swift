@@ -61,7 +61,7 @@ final class ChangeChannelAdminCell: BaseTableViewCell {
     override func configureUI() {
         selectionStyle = .none
         
-        profileImageView.image = randomImage()
+        profileImageView.image = UIImage.randomDefaultImage()
     }
 }
 
@@ -76,11 +76,5 @@ extension ChangeChannelAdminCell {
                 profileImageView.image = UIImage(data: data)
             }
         }
-    }
-    
-    func randomImage() -> UIImage {
-        let defaultImages: [UIImage] = [.noPhotoA, .noPhotoB, .noPhotoC]
-        guard let randomImage = defaultImages.randomElement() else { return UIImage(resource: .noPhotoB)}
-        return randomImage
     }
 }
