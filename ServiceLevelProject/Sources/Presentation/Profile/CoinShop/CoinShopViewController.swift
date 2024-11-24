@@ -19,6 +19,10 @@ final class CoinShopViewController: BaseViewController {
         
         configureTableView()
     }
+    
+    override func configureNavigation() {
+        title = "코인샵"
+    }
 }
 
 extension CoinShopViewController: UITableViewDelegate, UITableViewDataSource {
