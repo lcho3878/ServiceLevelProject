@@ -10,14 +10,13 @@ import SnapKit
 import Then
 
 final class CoinShopView: BaseView {
-//    🌱
     private let coinView = UIView().then {
         $0.backgroundColor = .brandWhite
         $0.layer.cornerRadius = 8
     }
     
     private let titleLabel = UILabel().then {
-        $0.text = "🌱현재 보유한 코인 333개"
+        $0.text = "🌱현재 보유한 코인 0개"
         $0.font = .bodyBold
         $0.backgroundColor = .brandWhite
     }

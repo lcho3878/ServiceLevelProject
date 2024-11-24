@@ -10,7 +10,14 @@ import SnapKit
 import Then
 
 final class NicknameEditView: BaseView {
-    private let nicknameTextField = UITextField().then {
+    var isTextFieldEmpty: Bool = false {
+        didSet {
+            confirmButton.isEnabled = !isTextFieldEmpty
+            confirmButton.configuration?.baseBackgroundColor = isTextFieldEmpty ? .brandInactive : .brand
+        }
+    }
+    
+    let nicknameTextField = UITextField().then {
         $0.placeholder = "닉네임을 입력하세요"
         $0.backgroundColor = .brandWhite
         $0.font = UIFont.body
@@ -18,7 +25,7 @@ final class NicknameEditView: BaseView {
         $0.horizonPadding(12)
     }
     
-    private let confirmButton = BrandColorButton(title: "완료")
+    let confirmButton = BrandColorButton(title: "완료")
 
     override func addSubviews() {
         addSubviews([nicknameTextField, confirmButton])

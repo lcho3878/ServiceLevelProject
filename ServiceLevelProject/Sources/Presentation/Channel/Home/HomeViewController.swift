@@ -188,6 +188,9 @@ extension HomeViewController: NavigationRepresentable {
         homeNavigationView.profileButton.rx.tap
             .bind(with: self) { owner, _ in
                 print("profileImageClicked")
+                let vc = ProfileEditViewController()
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -258,7 +261,6 @@ extension HomeViewController {
 extension HomeViewController: UpdateChannelDelegate {
     func updateChannelorNot(isUpdate: Bool?) {
         guard let isUpdate = isUpdate else { return }
-        print(">>> HomeVC Delegate: \(isUpdate)")
         isUpdateChannel = isUpdate
     }
 }

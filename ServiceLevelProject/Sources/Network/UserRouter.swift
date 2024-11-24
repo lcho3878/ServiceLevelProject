@@ -14,6 +14,9 @@ enum UserRouter {
     case login(query: LoginQuery)
     case refreshToken
     case profile
+    case editProfileImage(query: ProfileImageQuery)
+    case editNicknameProfile(query: EditNicknameQuery)
+    case editPhoneNumberProfile(query: EditPhoneNumberQuery)
 }
 
 extension UserRouter : TargetType {
@@ -27,6 +30,8 @@ extension UserRouter : TargetType {
             return .post
         case .refreshToken, .profile:
             return .get
+        case .editProfileImage, .editNicknameProfile, .editPhoneNumberProfile:
+            return .put
         }
     }
     
@@ -40,8 +45,10 @@ extension UserRouter : TargetType {
             return "/users/login"
         case .refreshToken:
             return "/auth/refresh"
-        case .profile:
+        case .profile, .editNicknameProfile, .editPhoneNumberProfile:
             return "/users/me"
+        case .editProfileImage:
+            return "/users/me/image"
         }
     }
     
@@ -67,13 +74,26 @@ extension UserRouter : TargetType {
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.sesacKey.rawValue: Key.sesacKey,
             ]
+        case .editProfileImage:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.contentType.rawValue: Header.mutipart.rawValue
+            ]
+        case .editNicknameProfile, .editPhoneNumberProfile:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.contentType.rawValue: Header.json.rawValue
+            ]
         }
     }
     
     var parameters: [String : String]? {
         switch self {
-        case .signUp, .validationEmail, .login , .refreshToken, .profile: // 파라미터 있는 경우 이 둘은 'default: return nil'로 빼주시면 됩니다 :)
-            return nil
+        default: return nil
         }
     }
     
@@ -94,11 +114,15 @@ extension UserRouter : TargetType {
     var body: Data? {
         let encoder = JSONEncoder()
         switch self {
-        case.validationEmail(let query):
+        case let .validationEmail(query):
             return try? encoder.encode(query)
-        case .signUp(let query):
+        case let .signUp(query):
             return try? encoder.encode(query)
-        case .login(let query):
+        case let .login(query):
+            return try? encoder.encode(query)
+        case let .editNicknameProfile(query):
+            return try? encoder.encode(query)
+        case let .editPhoneNumberProfile(query):
             return try? encoder.encode(query)
         default:
             return nil
@@ -106,12 +130,17 @@ extension UserRouter : TargetType {
     }
     
     var multipartFormData: MultipartFormData? {
-        /*
-         multipartFormData를 사용하는 Router에서 구현해주시면 됩니다.
-         사용하지 않는 경우 기본적으로 nil return 해주세요.
-         */
+        let multipart = MultipartFormData()
+        
         switch self {
+        case let .editProfileImage(query):
+            appendCommonFields(for: query)
+            return multipart
         default: return nil
+        }
+        
+        func appendCommonFields(for query: ProfileImageQuery) {
+            multipart.append(query.image, withName: "image", fileName: "Image.jpeg", mimeType: "image/jpeg")
         }
     }
 }
