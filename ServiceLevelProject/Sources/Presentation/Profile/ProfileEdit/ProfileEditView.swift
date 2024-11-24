@@ -121,19 +121,19 @@ final class ProfileEditView: BaseView {
         $0.spacing = 4
         $0.distribution = .fillEqually
     }
-    private let appleView = UIView().then {
+    let appleView = UIView().then {
         $0.backgroundColor = .brandBlack
         $0.layer.cornerRadius = 10
     }
-    let appleAccountImageView = UIImageView().then {
+    private let appleAccountImageView = UIImageView().then {
         $0.image = UIImage(resource: .apple)
     }
     
-    private let kakaoView = UIView().then {
+    let kakaoView = UIView().then {
         $0.backgroundColor = .brandYellow
         $0.layer.cornerRadius = 10
     }
-    let kakaoAccountImageView = UIImageView().then {
+    private let kakaoAccountImageView = UIImageView().then {
         $0.image = UIImage(resource: .kakao)
     }
     
@@ -287,8 +287,14 @@ final class ProfileEditView: BaseView {
         socialAccountStackView.snp.makeConstraints {
             $0.trailing.equalTo(linkedSocialAccountsView.snp.trailing).offset(-14)
             $0.centerY.equalTo(linkedSocialAccountsView.snp.centerY)
-            $0.width.equalTo(44)
-            $0.height.equalTo(20)
+        }
+        
+        appleView.snp.makeConstraints {
+            $0.height.width.equalTo(20)
+        }
+        
+        kakaoView.snp.makeConstraints {
+            $0.height.width.equalTo(20)
         }
         
         appleAccountImageView.snp.makeConstraints {
