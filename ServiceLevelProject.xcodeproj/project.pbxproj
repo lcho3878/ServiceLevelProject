@@ -148,6 +148,7 @@
 		68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B96F0B2CE477F600473D8B /* SignupViewModel.swift */; };
 		68DD92012CF3188800A8A466 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92002CF3188800A8A466 /* SettingViewController.swift */; };
 		68DD92032CF3514A00A8A466 /* ProfileEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92022CF3514A00A8A466 /* ProfileEditViewModel.swift */; };
+		68DD92052CF36D5200A8A466 /* EditProfileImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92042CF36D5200A8A466 /* EditProfileImageModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -285,6 +286,7 @@
 		68B96F0B2CE477F600473D8B /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		68DD92002CF3188800A8A466 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		68DD92022CF3514A00A8A466 /* ProfileEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewModel.swift; sourceTree = "<group>"; };
+		68DD92042CF36D5200A8A466 /* EditProfileImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -775,9 +777,7 @@
 			isa = PBXGroup;
 			children = (
 				68B96F042CE2195800473D8B /* ErrorModel.swift */,
-				549810A32CF1FF64004DD29E /* UserProfileModel.swift */,
-				68B96F092CE231E500473D8B /* SignUpModel.swift */,
-				684E65412CE88A28006B2F02 /* RefreshToken.swift */,
+				68DD92062CF36D5D00A8A466 /* User */,
 				549091A12CE491A1002EE538 /* WorkSpace */,
 				684E65452CEB9055006B2F02 /* Channel */,
 			);
@@ -798,6 +798,17 @@
 				68DD92002CF3188800A8A466 /* SettingViewController.swift */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		68DD92062CF36D5D00A8A466 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				549810A32CF1FF64004DD29E /* UserProfileModel.swift */,
+				68B96F092CE231E500473D8B /* SignUpModel.swift */,
+				684E65412CE88A28006B2F02 /* RefreshToken.swift */,
+				68DD92042CF36D5200A8A466 /* EditProfileImageModel.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -926,6 +937,7 @@
 				544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */,
 				687605932CDB2D04008167B0 /* DirectMessageCell.swift in Sources */,
 				54565ABE2CCF631100B5A354 /* OnboardingView.swift in Sources */,
+				68DD92052CF36D5200A8A466 /* EditProfileImageModel.swift in Sources */,
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
