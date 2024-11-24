@@ -11,11 +11,11 @@ import RxCocoa
 
 final class ChattingViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
-    let editInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
+    let editInfo = PublishSubject<SelectedChannelData>()
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
-        let chattingRoomInfo = PublishSubject<SearchChannelViewModel.selectedChannelData>()
+        let chattingRoomInfo = PublishSubject<SelectedChannelData>()
     }
     
     struct Output {

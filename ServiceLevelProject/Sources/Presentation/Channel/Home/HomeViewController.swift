@@ -30,7 +30,7 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         bind()
         rightSwipeAction()
         setupObservers()
@@ -63,7 +63,8 @@ final class HomeViewController: BaseViewController {
 extension HomeViewController {
     private func bind() {
         let input = HomeViewModel.Input(
-            workspaceID: workspaceIDInput
+            workspaceID: workspaceIDInput,
+            tableViewModelSelected: homeView.channelTableView.rx.modelSelected(ChannelList.self)
         )
         let output = viewModel.transform(input: input)
         
@@ -134,6 +135,16 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
+        // 채널 클릭
+        output.goToMyChannel
+            .bind(with: self) { owner, selectedData in
+                // 채팅뷰로 바로 이동
+                let vc = ChattingViewController()
+                vc.roomInfoData = selectedData
+                owner.changeRootViewController(rootVC: vc, isNavigation: true)
+            }
+            .disposed(by: disposeBag)
+        
         // 네비게이션뷰 UI 업데이트
         output.workspaceOutput
             .bind(with: self) { owner, value in
@@ -187,7 +198,6 @@ extension HomeViewController: NavigationRepresentable {
         // rightBarButtonItem
         homeNavigationView.profileButton.rx.tap
             .bind(with: self) { owner, _ in
-                print("profileImageClicked")
                 let vc = ProfileEditViewController()
                 vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)

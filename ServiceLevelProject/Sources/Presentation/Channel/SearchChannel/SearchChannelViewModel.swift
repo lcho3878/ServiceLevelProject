@@ -17,14 +17,14 @@ final class SearchChannelViewModel: ViewModelBindable {
         let viewDidLoadTrigger = PublishSubject<Void>()
         let searchChannelList = BehaviorSubject(value: [ChannelListModel(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "")])
         let modelSelected: ControlEvent<ChannelListModel>
-        let goToMyChannel = PublishSubject<selectedChannelData>()
-        let goToChannelJoin = PublishSubject<selectedChannelData>()
+        let goToMyChannel = PublishSubject<SelectedChannelData>()
+        let goToChannelJoin = PublishSubject<SelectedChannelData>()
     }
     
     struct Output {
         let searchChannelList: BehaviorSubject<[ChannelListModel]>
-        let goToMyChannel: PublishSubject<selectedChannelData>
-        let goToChannelJoin: PublishSubject<selectedChannelData>
+        let goToMyChannel: PublishSubject<SelectedChannelData>
+        let goToChannelJoin: PublishSubject<SelectedChannelData>
     }
     
     func transform(input: Input) -> Output {
@@ -52,10 +52,10 @@ final class SearchChannelViewModel: ViewModelBindable {
             .bind(with: self) { owner, value in
                 if value.1.contains(value.0.channelID) {
                     // 내 채널인 경우
-                    input.goToMyChannel.onNext(selectedChannelData(name: value.0.name, description: value.0.description, channelID: value.0.channelID, ownerID: value.0.ownerID))
+                    input.goToMyChannel.onNext(SelectedChannelData(name: value.0.name, description: value.0.description, channelID: value.0.channelID, ownerID: value.0.ownerID))
                 } else {
                     // 내 채널이 아닌 경우
-                    input.goToChannelJoin.onNext(selectedChannelData(name: value.0.name, description: value.0.description, channelID: value.0.channelID, ownerID: value.0.ownerID))
+                    input.goToChannelJoin.onNext(SelectedChannelData(name: value.0.name, description: value.0.description, channelID: value.0.channelID, ownerID: value.0.ownerID))
                 }
             }
             .disposed(by: disposeBag)
@@ -65,14 +65,5 @@ final class SearchChannelViewModel: ViewModelBindable {
             goToMyChannel: input.goToMyChannel,
             goToChannelJoin: input.goToChannelJoin
         )
-    }
-}
-
-extension SearchChannelViewModel {
-    struct selectedChannelData {
-        let name: String
-        let description: String?
-        let channelID: String
-        let ownerID: String
     }
 }

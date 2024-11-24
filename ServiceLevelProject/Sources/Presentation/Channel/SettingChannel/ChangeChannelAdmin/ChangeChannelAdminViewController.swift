@@ -16,7 +16,7 @@ final class ChangeChannelAdminViewController: BaseViewController, DismissButtonP
     private let disposeBag = DisposeBag()
     weak var delegate: adminDidChangeDelegate?
     var memberData: [ChannelDetailsModel.ChannelMembers]?
-    var roomInfo: SearchChannelViewModel.selectedChannelData?
+    var roomInfo: SelectedChannelData?
     
     // MARK: View Life Cycle
     override func loadView() {
