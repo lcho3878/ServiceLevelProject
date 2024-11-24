@@ -65,3 +65,8 @@ extension ProfileViewController {
         }
     }
 }
+
+protocol TableViewRepresentable {
+    var titleString: String { get }
+    var subTitleString: String { get }
+}

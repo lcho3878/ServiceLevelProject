@@ -10,6 +10,10 @@ import SnapKit
 import Then
 
 final class ProfileEditView: BaseView {
+    private let topDividerView = UIView().then {
+        $0.backgroundColor = .viewSeperator
+    }
+    
     private let profileImageView = UIImageView().then {
         $0.image = UIImage(systemName: "person")
         $0.backgroundColor = .systemGray
@@ -19,32 +23,155 @@ final class ProfileEditView: BaseView {
     
     private let cameraImageView = CameraImageView()
     
-    let profileMenuTableView = UITableView().then {
+    // 내 새싹 코인 / 닉네임 / 연락처 뷰
+    private let firstView = UIStackView().then {
         $0.backgroundColor = .brandWhite
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
         $0.layer.cornerRadius = 8
-        $0.rowHeight = 44
-        $0.register(ProfileEditTableViewCell.self, forCellReuseIdentifier: ProfileEditTableViewCell.id)
-        $0.isScrollEnabled = false
     }
     
-    let profileMenuTableView2 = UITableView().then {
-        $0.backgroundColor = .brandWhite
-        $0.layer.cornerRadius = 8
-        $0.rowHeight = 44
-        $0.register(ProfileEditTableViewCell.self, forCellReuseIdentifier: ProfileEditTableViewCell.id)
-        $0.isScrollEnabled = false
+    private let sesacCoinView = UIView()
+    private let nicknameView = UIView()
+    private let contactView = UIView()
+    
+    private let sesacCoinTextLabel = UILabel().then {
+        $0.text = "내 새싹 코인"
+        $0.font = .bodyBold
+        $0.textColor = .brandBlack
     }
+    let coinCountLabel = UILabel().then {
+        $0.text = "130" // 임시
+        $0.font = .bodyBold
+        $0.textColor = .brand
+    }
+    private let chargeLabel = UILabel().then {
+        $0.text = "충전하기"
+        $0.font = .body
+        $0.textColor = .darkGray
+    }
+    private let coinRightButton = UIButton().then {
+        $0.setImage(UIImage(resource: .chevronRightLight), for: .normal)
+        $0.tintColor = .darkGray
+    }
+    let chargeButton = UIButton()
+    
+    private let nicknameTextLabel = UILabel().then {
+        $0.text = "닉네임"
+        $0.font = .bodyBold
+        $0.textColor = .brandBlack
+    }
+    let nicknameLabel = UILabel().then {
+        $0.text = "옹골찬 고래밥" // 임시
+        $0.font = .body
+        $0.textColor = .darkGray
+    }
+    private let nicknameRightButton = UIButton().then {
+        $0.setImage(UIImage(resource: .chevronRightLight), for: .normal)
+        $0.tintColor = .darkGray
+    }
+    let nicknameButton = UIButton()
+    
+    private let contactTextLabel = UILabel().then {
+        $0.text = "연락처"
+        $0.font = .bodyBold
+        $0.textColor = .brandBlack
+    }
+    let contactLabel = UILabel().then {
+        $0.text = "010-1234-1234" // 임시
+        $0.font = .body
+        $0.textColor = .darkGray
+    }
+    private let contactRightButton = UIButton().then {
+        $0.setImage(UIImage(resource: .chevronRightLight), for: .normal)
+        $0.tintColor = .darkGray
+    }
+    let contactButton = UIButton()
+    
+    // 이메일 / 연결된 소셜 계정 / 로그아웃 뷰
+    private let secondView = UIStackView().then {
+        $0.backgroundColor = .brandWhite
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+        $0.layer.cornerRadius = 8
+    }
+    
+    private let emailView = UIView()
+    private let linkedSocialAccountsView = UIView()
+    private let logoutView = UIView()
+    
+    private let emailTextLabel = UILabel().then {
+        $0.text = "이메일"
+        $0.font = .bodyBold
+        $0.textColor = .brandBlack
+    }
+    let emailLabel = UILabel().then {
+        $0.text = "sesac@sesac.com" // 임시
+        $0.font = .body
+        $0.textColor = .darkGray
+    }
+    
+    private let linkedSocialAccountsTextLabel = UILabel().then {
+        $0.text = "연결된 소셜 계정"
+        $0.font = .bodyBold
+        $0.textColor = .brandBlack
+    }
+    private let socialAccountStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 4
+        $0.distribution = .fillEqually
+    }
+    private let appleView = UIView().then {
+        $0.backgroundColor = .brandBlack
+        $0.layer.cornerRadius = 10
+    }
+    let appleAccountImageView = UIImageView().then {
+        $0.image = UIImage(resource: .apple)
+    }
+    
+    private let kakaoView = UIView().then {
+        $0.backgroundColor = .brandYellow
+        $0.layer.cornerRadius = 10
+    }
+    let kakaoAccountImageView = UIImageView().then {
+        $0.image = UIImage(resource: .kakao)
+    }
+    
+    private let logoutLabel = UILabel().then {
+        $0.text = "로그아웃"
+        $0.font = .bodyBold
+        $0.textColor = .brandBlack
+    }
+    let logoutButton = UIButton()
     
     override func addSubviews() {
-        addSubviews([
-            profileImageView, cameraImageView,
-            profileMenuTableView, profileMenuTableView2
-        ])
+        addSubviews([topDividerView, profileImageView, cameraImageView])
+        addSubview(firstView)
+        firstView.addArrangedSubviews([sesacCoinView, nicknameView, contactView])
+        sesacCoinView.addSubviews([sesacCoinTextLabel, coinCountLabel, chargeLabel, coinRightButton, chargeButton])
+        nicknameView.addSubviews([nicknameTextLabel, nicknameLabel, nicknameRightButton, nicknameButton])
+        contactView.addSubviews([contactTextLabel, contactLabel, contactRightButton, contactButton])
+        addSubview(secondView)
+        secondView.addArrangedSubviews([emailView, linkedSocialAccountsView, logoutView])
+        emailView.addSubviews([emailTextLabel, emailLabel])
+        linkedSocialAccountsView.addSubviews([linkedSocialAccountsTextLabel, socialAccountStackView])
+        socialAccountStackView.addArrangedSubviews([appleView, kakaoView])
+        appleView.addSubview(appleAccountImageView)
+        kakaoView.addSubview(kakaoAccountImageView)
+        logoutView.addSubviews([logoutLabel, logoutButton])
     }
     
     override func setConstraints() {
+        let safeArea = safeAreaLayoutGuide
+        
+        topDividerView.snp.makeConstraints {
+            $0.top.equalTo(safeArea).offset(8)
+            $0.horizontalEdges.equalTo(safeArea)
+            $0.height.equalTo(1)
+        }
+        
         profileImageView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(24)
+            $0.top.equalTo(topDividerView.snp.bottom).offset(24)
             $0.size.equalTo(70)
             $0.centerX.equalToSuperview()
         }
@@ -55,16 +182,133 @@ final class ProfileEditView: BaseView {
             $0.bottom.equalTo(profileImageView).offset(5)
         }
         
-        profileMenuTableView.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(35)
-            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(24)
+        // --- firstView ---
+        firstView.snp.makeConstraints {
+            $0.top.equalTo(cameraImageView.snp.bottom).offset(35)
+            $0.horizontalEdges.equalTo(safeArea).inset(24)
             $0.height.equalTo(132)
         }
         
-        profileMenuTableView2.snp.makeConstraints {
-            $0.top.equalTo(profileMenuTableView.snp.bottom).offset(35)
-            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(24)
+        // sesacCoinView
+        sesacCoinTextLabel.snp.makeConstraints {
+            $0.leading.equalTo(sesacCoinView.snp.leading).offset(15)
+            $0.centerY.equalTo(sesacCoinView.snp.centerY)
+        }
+        
+        coinCountLabel.snp.makeConstraints {
+            $0.leading.equalTo(sesacCoinTextLabel.snp.trailing).offset(5)
+            $0.centerY.equalTo(sesacCoinTextLabel.snp.centerY)
+        }
+        
+        chargeLabel.snp.makeConstraints {
+            $0.trailing.equalTo(coinRightButton.snp.leading).offset(-10)
+            $0.centerY.equalTo(sesacCoinView.snp.centerY)
+        }
+        
+        coinRightButton.snp.makeConstraints {
+            $0.trailing.equalTo(sesacCoinView.snp.trailing).offset(-12)
+            $0.centerY.equalTo(sesacCoinView.snp.centerY)
+            $0.height.equalTo(18)
+            $0.width.equalTo(22)
+        }
+        
+        chargeButton.snp.makeConstraints {
+            $0.edges.equalTo(sesacCoinView)
+        }
+        
+        // nicknameView
+        nicknameTextLabel.snp.makeConstraints {
+            $0.leading.equalTo(nicknameView.snp.leading).offset(15)
+            $0.centerY.equalTo(nicknameView.snp.centerY)
+        }
+        
+        nicknameLabel.snp.makeConstraints {
+            $0.trailing.equalTo(nicknameRightButton.snp.leading).offset(-10)
+            $0.centerY.equalTo(nicknameView.snp.centerY)
+        }
+        
+        nicknameRightButton.snp.makeConstraints {
+            $0.trailing.equalTo(nicknameView.snp.trailing).offset(-12)
+            $0.centerY.equalTo(nicknameView.snp.centerY)
+            $0.height.equalTo(18)
+            $0.width.equalTo(22)
+        }
+        
+        nicknameButton.snp.makeConstraints {
+            $0.edges.equalTo(nicknameView)
+        }
+        
+        // contactView
+        contactTextLabel.snp.makeConstraints {
+            $0.leading.equalTo(contactView.snp.leading).offset(15)
+            $0.centerY.equalTo(contactView.snp.centerY)
+        }
+        
+        contactLabel.snp.makeConstraints {
+            $0.trailing.equalTo(contactRightButton.snp.leading).offset(-10)
+            $0.centerY.equalTo(contactView.snp.centerY)
+        }
+        
+        contactRightButton.snp.makeConstraints {
+            $0.trailing.equalTo(contactView.snp.trailing).offset(-12)
+            $0.centerY.equalTo(contactView.snp.centerY)
+            $0.height.equalTo(18)
+            $0.width.equalTo(22)
+        }
+        
+        contactButton.snp.makeConstraints {
+            $0.edges.equalTo(contactView)
+        }
+        
+        // --- secondView ---
+        secondView.snp.makeConstraints {
+            $0.top.equalTo(firstView.snp.bottom).offset(16)
+            $0.horizontalEdges.equalTo(safeArea).inset(24)
             $0.height.equalTo(132)
+        }
+        
+        // emailView
+        emailTextLabel.snp.makeConstraints {
+            $0.leading.equalTo(emailView.snp.leading).offset(15)
+            $0.centerY.equalTo(emailView.snp.centerY)
+        }
+        
+        emailLabel.snp.makeConstraints {
+            $0.trailing.equalTo(emailView.snp.trailing).offset(-12)
+            $0.centerY.equalTo(emailView.snp.centerY)
+        }
+        
+        // linkedSocialAccountsView
+        linkedSocialAccountsTextLabel.snp.makeConstraints {
+            $0.leading.equalTo(linkedSocialAccountsView.snp.leading).offset(15)
+            $0.centerY.equalTo(linkedSocialAccountsView.snp.centerY)
+        }
+        
+        socialAccountStackView.snp.makeConstraints {
+            $0.trailing.equalTo(linkedSocialAccountsView.snp.trailing).offset(-14)
+            $0.centerY.equalTo(linkedSocialAccountsView.snp.centerY)
+            $0.width.equalTo(44)
+            $0.height.equalTo(20)
+        }
+        
+        appleAccountImageView.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(appleView.snp.horizontalEdges).inset(5.5)
+            $0.verticalEdges.equalTo(appleView.snp.verticalEdges).inset(4.38)
+        }
+        
+        kakaoAccountImageView.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(kakaoView.snp.horizontalEdges).inset(5)
+            $0.verticalEdges.equalTo(kakaoView.snp.verticalEdges).inset(5)
+        }
+        
+        // logoutView
+        logoutLabel.snp.makeConstraints {
+            $0.leading.equalTo(logoutView.snp.leading).offset(15)
+            $0.centerY.equalTo(logoutView.snp.centerY)
+        }
+        
+        logoutButton.snp.makeConstraints {
+            $0.edges.equalTo(logoutView)
         }
     }
     
