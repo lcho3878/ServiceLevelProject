@@ -50,3 +50,8 @@ struct ChannelQuery: Encodable {
     let description: String?
     let image: Data?
 }
+
+// MARK: EditProfileImage
+struct ProfileImageQuery: Encodable {
+    let image: Data
+}

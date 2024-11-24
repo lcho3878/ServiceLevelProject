@@ -14,14 +14,16 @@ final class ProfileEditView: BaseView {
         $0.backgroundColor = .viewSeperator
     }
     
-    private let profileImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "person")
-        $0.backgroundColor = .systemGray
+    let profileImageView = UIImageView().then {
+        $0.image = UIImage(resource: .noPhotoB)
+        $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
     }
     
     private let cameraImageView = CameraImageView()
+    
+    let camerButton = UIButton()
     
     // 내 새싹 코인 / 닉네임 / 연락처 뷰
     private let firstView = UIStackView().then {
@@ -41,7 +43,7 @@ final class ProfileEditView: BaseView {
         $0.textColor = .brandBlack
     }
     let coinCountLabel = UILabel().then {
-        $0.text = "130" // 임시
+        $0.text = "0"
         $0.font = .bodyBold
         $0.textColor = .brand
     }
@@ -62,7 +64,6 @@ final class ProfileEditView: BaseView {
         $0.textColor = .brandBlack
     }
     let nicknameLabel = UILabel().then {
-        $0.text = "옹골찬 고래밥" // 임시
         $0.font = .body
         $0.textColor = .darkGray
     }
@@ -78,7 +79,6 @@ final class ProfileEditView: BaseView {
         $0.textColor = .brandBlack
     }
     let contactLabel = UILabel().then {
-        $0.text = "010-1234-1234" // 임시
         $0.font = .body
         $0.textColor = .darkGray
     }
@@ -106,7 +106,6 @@ final class ProfileEditView: BaseView {
         $0.textColor = .brandBlack
     }
     let emailLabel = UILabel().then {
-        $0.text = "sesac@sesac.com" // 임시
         $0.font = .body
         $0.textColor = .darkGray
     }
@@ -145,7 +144,7 @@ final class ProfileEditView: BaseView {
     let logoutButton = UIButton()
     
     override func addSubviews() {
-        addSubviews([topDividerView, profileImageView, cameraImageView])
+        addSubviews([topDividerView, profileImageView, cameraImageView, camerButton])
         addSubview(firstView)
         firstView.addArrangedSubviews([sesacCoinView, nicknameView, contactView])
         sesacCoinView.addSubviews([sesacCoinTextLabel, coinCountLabel, chargeLabel, coinRightButton, chargeButton])
@@ -180,6 +179,13 @@ final class ProfileEditView: BaseView {
             $0.size.equalTo(24)
             $0.trailing.equalTo(profileImageView).offset(7)
             $0.bottom.equalTo(profileImageView).offset(5)
+        }
+        
+        camerButton.snp.makeConstraints {
+            $0.top.equalTo(profileImageView.snp.top)
+            $0.bottom.equalTo(cameraImageView.snp.bottom)
+            $0.leading.equalTo(profileImageView.snp.leading)
+            $0.trailing.equalTo(cameraImageView.snp.trailing)
         }
         
         // --- firstView ---
