@@ -11,6 +11,8 @@ import RxCocoa
 
 final class ProfileEditViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
+    let changedNickname = PublishSubject<String>()
+    let changedPhoneNumber = PublishSubject<String>()
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
@@ -63,11 +65,11 @@ final class ProfileEditViewModel: ViewModelBindable {
         // 내 프로필 이미지 수정
         input.selectedProfileImage
             .flatMap { imageData in
-                return APIManager.shared.callRequest(api: UserRouter.editProfileImage(query: ProfileImageQuery(image: imageData)), type: EditProfileImageModel.self)
+                return APIManager.shared.callRequest(api: UserRouter.editProfileImage(query: ProfileImageQuery(image: imageData)), type: EditProfileModel.self)
             }
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(let success):
+                case .success(_):
                     editImageSuccessMessage.onNext("프로필 이미지가 변경되었습니다 :D")
                 case .failure(let failure):
                     print(">>> Failed!: \(failure.errorCode)")

@@ -8,15 +8,23 @@
 import UIKit
 
 final class PhoneNumberEditView: BaseView {
-    private let phoneNumberTextField = UITextField().then {
+    var isTextFieldEmpty: Bool = false {
+        didSet {
+            confirmButton.isEnabled = !isTextFieldEmpty
+            confirmButton.configuration?.baseBackgroundColor = isTextFieldEmpty ? .brandInactive : .brand
+        }
+    }
+    
+    let phoneNumberTextField = UITextField().then {
         $0.placeholder = "전화번호를 입력하세요"
         $0.backgroundColor = .brandWhite
         $0.font = UIFont.body
         $0.layer.cornerRadius = 8
+        $0.keyboardType = .numberPad
         $0.horizonPadding(12)
     }
     
-    private let confirmButton = BrandColorButton(title: "완료")
+    let confirmButton = BrandColorButton(title: "완료")
 
     override func addSubviews() {
         addSubviews([phoneNumberTextField, confirmButton])

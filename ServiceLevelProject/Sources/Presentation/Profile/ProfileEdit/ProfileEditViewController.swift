@@ -86,23 +86,44 @@ extension ProfileEditViewController {
         profileEditView.chargeButton.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = CoinShopViewController()
+                
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
         // 닉네임 수정 버튼
         profileEditView.nicknameButton.rx.tap
-            .bind(with: self) { owner, _ in
+            .withLatestFrom(output.profileData)
+            .bind(with: self) { owner, profileData in
                 let vc = NicknameEditViewController()
+                vc.delegate = self
+                vc.currentNickname = profileData.nickname
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
         // 연락처 수정 버튼
         profileEditView.contactButton.rx.tap
-            .bind(with: self) { owner, _ in
+            .withLatestFrom(output.profileData)
+            .bind(with: self) { owner, profileData in
                 let vc = PhoneNumberEditViewController()
+                vc.delegate = self
+                vc.currentPhoneNumber = profileData.phone
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        // 수정된 닉네임 업데이트
+        viewModel.changedNickname
+            .bind(with: self) { owner, nickname in
+                owner.profileEditView.nicknameLabel.text = nickname
+            }
+            .disposed(by: disposeBag)
+        
+        // 수정된 연락처 업데이트
+        viewModel.changedPhoneNumber
+            .bind(with: self) { owner, phoneNumber in
+                owner.profileEditView.contactLabel.text = phoneNumber
             }
             .disposed(by: disposeBag)
         
@@ -158,5 +179,17 @@ extension ProfileEditViewController: PHPickerViewControllerDelegate {
         } else {
             selectedImage.onNext(nil)
         }
+    }
+}
+
+extension ProfileEditViewController: ChangedNicknameDelegate {
+    func changedNickname(data: String) {
+        viewModel.changedNickname.onNext(data)
+    }
+}
+
+extension ProfileEditViewController: ChangedPhoneNumberDelegate {
+    func changedPhoneNumber(data: String) {
+        viewModel.changedPhoneNumber.onNext(data)
     }
 }

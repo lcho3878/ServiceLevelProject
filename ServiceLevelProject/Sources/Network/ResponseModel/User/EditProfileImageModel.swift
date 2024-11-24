@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EditProfileImageModel: Decodable {
+struct EditProfileModel: Decodable {
     let userID: String
     let email: String
     let nickname: String

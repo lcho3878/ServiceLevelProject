@@ -15,6 +15,8 @@ enum UserRouter {
     case refreshToken
     case profile
     case editProfileImage(query: ProfileImageQuery)
+    case editNicknameProfile(query: EditNicknameQuery)
+    case editPhoneNumberProfile(query: EditPhoneNumberQuery)
 }
 
 extension UserRouter : TargetType {
@@ -28,7 +30,7 @@ extension UserRouter : TargetType {
             return .post
         case .refreshToken, .profile:
             return .get
-        case .editProfileImage:
+        case .editProfileImage, .editNicknameProfile, .editPhoneNumberProfile:
             return .put
         }
     }
@@ -43,7 +45,7 @@ extension UserRouter : TargetType {
             return "/users/login"
         case .refreshToken:
             return "/auth/refresh"
-        case .profile:
+        case .profile, .editNicknameProfile, .editPhoneNumberProfile:
             return "/users/me"
         case .editProfileImage:
             return "/users/me/image"
@@ -79,6 +81,13 @@ extension UserRouter : TargetType {
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.contentType.rawValue: Header.mutipart.rawValue
             ]
+        case .editNicknameProfile, .editPhoneNumberProfile:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.contentType.rawValue: Header.json.rawValue
+            ]
         }
     }
     
@@ -105,11 +114,15 @@ extension UserRouter : TargetType {
     var body: Data? {
         let encoder = JSONEncoder()
         switch self {
-        case.validationEmail(let query):
+        case let .validationEmail(query):
             return try? encoder.encode(query)
-        case .signUp(let query):
+        case let .signUp(query):
             return try? encoder.encode(query)
-        case .login(let query):
+        case let .login(query):
+            return try? encoder.encode(query)
+        case let .editNicknameProfile(query):
+            return try? encoder.encode(query)
+        case let .editPhoneNumberProfile(query):
             return try? encoder.encode(query)
         default:
             return nil

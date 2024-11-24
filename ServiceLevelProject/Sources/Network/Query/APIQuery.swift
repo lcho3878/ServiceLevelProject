@@ -55,3 +55,13 @@ struct ChannelQuery: Encodable {
 struct ProfileImageQuery: Encodable {
     let image: Data
 }
+
+// MARK: EditNickname
+struct EditNicknameQuery: Encodable {
+    let nickname: String
+}
+
+// MARK: EditPhoneNumber
+struct EditPhoneNumberQuery: Encodable {
+    let phone: String
+}
