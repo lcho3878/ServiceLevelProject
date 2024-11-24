@@ -15,6 +15,7 @@ final class ChangeChannelAdminCell: BaseTableViewCell {
         $0.backgroundColor = .systemGray
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 8
+        $0.clipsToBounds = true
     }
     
     private let userInfoStackView = UIStackView().then {
@@ -59,11 +60,27 @@ final class ChangeChannelAdminCell: BaseTableViewCell {
     
     override func configureUI() {
         selectionStyle = .none
+        
+        profileImageView.image = randomImage()
     }
+}
+
+extension ChangeChannelAdminCell {
     
     func configureCell(element: MemberData) {
         userNameLabel.text = element.nickname
         userEmailLabel.text = element.email
-        // 이미지 넣어야함
+        Task {
+            if let image = element.profileImage {
+                let data = try await APIManager.shared.loadImage(image)
+                profileImageView.image = UIImage(data: data)
+            }
+        }
+    }
+    
+    func randomImage() -> UIImage {
+        let defaultImages: [UIImage] = [.noPhotoA, .noPhotoB, .noPhotoC]
+        guard let randomImage = defaultImages.randomElement() else { return UIImage(resource: .noPhotoB)}
+        return randomImage
     }
 }
