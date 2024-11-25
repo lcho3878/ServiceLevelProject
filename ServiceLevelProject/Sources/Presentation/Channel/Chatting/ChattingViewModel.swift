@@ -10,8 +10,11 @@ import RxSwift
 import RxCocoa
 
 final class ChattingViewModel: ViewModelBindable {
+    typealias Chatting = ChannelChatHistoryModel
     let disposeBag = DisposeBag()
     let editInfo = PublishSubject<SelectedChannelData>()
+    var roodID: String?
+    var chattings: [Chatting] = []
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
@@ -21,11 +24,14 @@ final class ChattingViewModel: ViewModelBindable {
     struct Output {
         let channelName: BehaviorSubject<String>
         let inValidChannelMessage: PublishSubject<(String, String, String)>
+        let chattingOutput: PublishSubject<[Chatting]>
     }
     
     func transform(input: Input) -> Output {
         let inValidChannelMessage = PublishSubject<(String, String, String)>()
         let channelName = BehaviorSubject(value: "")
+        let chattingOutput = PublishSubject<[Chatting]>()
+        let socketTrigger = PublishSubject<Void>()
         
         editInfo
             .bind(with: self) { owner, editInfo in
@@ -34,15 +40,18 @@ final class ChattingViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         input.chattingRoomInfo
-            .flatMap { roomInfo in
+            .flatMap { [weak self] roomInfo in
+                self?.roodID = roomInfo.channelID
                 channelName.onNext(roomInfo.name)
-                return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: self.currentDate(), workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomInfo.channelID), type: [ChannelChatHistoryModel].self)
+                return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: Date.currentDate(), workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomInfo.channelID), type: [ChannelChatHistoryModel].self)
             }
             .bind(with: self) { owner, value in
                 switch value {
                 case .success(let success):
-                    print(">>> 성공!!: \(success)")
-                    // 이 응답값은 추후 소켓통신에 필요한 경우 사용
+                    print(">>> Success!")
+                    owner.chattings = success
+                    chattingOutput.onNext(owner.chattings)
+                    socketTrigger.onNext(())
                 case .failure(let failure):
                     print(">>> Failed!!: \(failure.errorCode)")
                     inValidChannelMessage.onNext(("존재하지 않는 채널", "이미 삭제된 채널입니다! 홈 화면으로 이동합니다.", "확인"))
@@ -50,12 +59,35 @@ final class ChattingViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-        return Output(channelName: channelName, inValidChannelMessage: inValidChannelMessage)
+        socketTrigger
+            .withLatestFrom(input.chattingRoomInfo)
+            .bind(with: self) { owner, roomInfo in
+                WebSocketManager.shared.router = .chatting(id: roomInfo.channelID)
+                WebSocketManager.shared.connect()
+            }
+            .disposed(by: disposeBag)
+        
+        WebSocketManager.shared.channelOutput
+            .bind(with: self) { owner, chatting in
+                owner.chattings.append(chatting)
+                chattingOutput.onNext(owner.chattings)
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(
+            channelName: channelName, 
+            inValidChannelMessage: inValidChannelMessage,
+            chattingOutput: chattingOutput
+        )
+    }
+    
+    deinit {
+        WebSocketManager.shared.disconnect()
     }
 }
 
-extension ChattingViewModel {
-    private func currentDate() -> String {
+extension Date {
+    static func currentDate() -> String {
         if let timeZone = TimeZone(identifier: "Asia/Seoul") {
             let formatter = ISO8601DateFormatter()
             formatter.timeZone = timeZone
