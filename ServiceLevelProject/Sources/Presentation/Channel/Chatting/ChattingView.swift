@@ -105,7 +105,7 @@ extension ChattingView {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 50, height: 50)
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 6
         layout.minimumInteritemSpacing = 6
         return layout
     }
