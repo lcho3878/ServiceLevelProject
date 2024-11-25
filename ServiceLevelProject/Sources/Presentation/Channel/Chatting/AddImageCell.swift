@@ -8,8 +8,17 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
 
 final class AddImageCell: BaseCollectionViewCell {
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+    }
+    
     let imageView = UIImageView().then {
         $0.backgroundColor = .systemPurple
         $0.layer.cornerRadius = 8

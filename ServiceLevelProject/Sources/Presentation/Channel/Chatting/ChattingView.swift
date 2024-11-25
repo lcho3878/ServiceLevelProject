@@ -10,6 +10,13 @@ import SnapKit
 import Then
 
 final class ChattingView: BaseView {
+    var isTextFieldEmpty: Bool = false {
+        didSet {
+            sendButton.isEnabled = !isTextFieldEmpty
+            sendButton.setImage(isTextFieldEmpty ? .send : .sendActive, for: .normal)
+        }
+    }
+    
     let chattingTableView = UITableView().then {
         $0.rowHeight = UITableView.automaticDimension
         $0.register(ChattingTableViewCell.self, forCellReuseIdentifier: ChattingTableViewCell.id)
@@ -20,7 +27,7 @@ final class ChattingView: BaseView {
         $0.layer.cornerRadius = 8
     }
     
-    private let plusButton = UIButton().then {
+    let plusButton = UIButton().then {
         let image = UIImage(resource: .plusPhoto)
         $0.setImage(image, for: .normal)
     }
@@ -31,7 +38,7 @@ final class ChattingView: BaseView {
         $0.distribution = .fillProportionally
     }
     
-    private lazy var chatTextView = UITextView().then {
+    lazy var chatTextView = UITextView().then {
         $0.font = .body
         $0.text = "메시지를 입력하세요"
         $0.textColor = .textSecondary
@@ -44,9 +51,10 @@ final class ChattingView: BaseView {
     let addImageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout()).then {
         $0.backgroundColor = .clear
         $0.register(AddImageCell.self, forCellWithReuseIdentifier: AddImageCell.id)
+        $0.isHidden = true
     }
     
-    private let sendButton = UIButton().then {
+    let sendButton = UIButton().then {
         let image = UIImage(resource: .send)
         $0.setImage(image, for: .normal)
     }
