@@ -18,6 +18,7 @@ enum WorkSpaceRouter {
     case memberlist(id: String)
     case changeOwner(id: String, query: OwnerQuery)
     case inquiry(id: String)
+    case searchKeyword(workspaceID: String, keyword: String)
 }
 
 extension WorkSpaceRouter: TargetType {
@@ -27,7 +28,7 @@ extension WorkSpaceRouter: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .list, .exit, .memberlist, .inquiry:
+        case .list, .exit, .memberlist, .inquiry, .searchKeyword:
             return .get
         case .create, .invite:
             return .post
@@ -54,6 +55,8 @@ extension WorkSpaceRouter: TargetType {
             return "/workspaces/\(id)/members"
         case .changeOwner(let id, _):
             return "workspaces/\(id)/transfer/ownership"
+        case .searchKeyword(let workspaceID, _):
+            return "/workspaces/\(workspaceID)/search"
         }
     }
     
@@ -72,7 +75,7 @@ extension WorkSpaceRouter: TargetType {
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.contentType.rawValue: Header.mutipart.rawValue
             ]
-        case .invite, .changeOwner:
+        case .invite, .changeOwner, .searchKeyword:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -84,6 +87,10 @@ extension WorkSpaceRouter: TargetType {
     
     var parameters: [String : String]? {
         switch self {
+        case let .searchKeyword(_, keyword):
+            return [
+                "keyword": keyword
+            ]
         default: return nil
         }
     }
@@ -91,6 +98,10 @@ extension WorkSpaceRouter: TargetType {
     
     var queryItems: [URLQueryItem]? {
         switch self {
+        case .searchKeyword:
+            return parameters?.map {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
         default: return nil
         }
     }

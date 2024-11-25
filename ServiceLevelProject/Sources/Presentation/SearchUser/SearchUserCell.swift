@@ -1,15 +1,15 @@
 //
-//  ChangeChannelCell.swift
+//  SearchUserCell.swift
 //  ServiceLevelProject
 //
-//  Created by YJ on 11/24/24.
+//  Created by YJ on 11/25/24.
 //
 
 import UIKit
 import SnapKit
 import Then
 
-final class ChangeChannelAdminCell: BaseTableViewCell {
+final class SearchUserCell: BaseTableViewCell {
     // MARK: UI
     let profileImageView = UIImageView().then {
         $0.backgroundColor = .systemGray
@@ -65,8 +65,8 @@ final class ChangeChannelAdminCell: BaseTableViewCell {
     }
 }
 
-extension ChangeChannelAdminCell {
-    func configureCell(element: MemberData) {
+extension SearchUserCell {
+    func configureCell(element: WorkspaceSearchUserModel.WorkspaceMembers) {
         userNameLabel.text = element.nickname
         userEmailLabel.text = element.email
         Task {
