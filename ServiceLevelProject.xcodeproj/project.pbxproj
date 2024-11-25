@@ -37,6 +37,11 @@
 		54565AE52CD1004000B5A354 /* NavigationRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AE42CD1004000B5A354 /* NavigationRepresentable.swift */; };
 		54565AE72CD1053700B5A354 /* DismissButtonPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AE62CD1053700B5A354 /* DismissButtonPresentable.swift */; };
 		54565AE92CD1056600B5A354 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54565AE82CD1056600B5A354 /* UIViewController+.swift */; };
+		545ED2FA2CF44E630026F194 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 545ED2F92CF44E630026F194 /* SocketIO */; };
+		545ED2FC2CF44E7C0026F194 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED2FB2CF44E7C0026F194 /* WebSocketManager.swift */; };
+		545ED2FE2CF466630026F194 /* SocketRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED2FD2CF466630026F194 /* SocketRouter.swift */; };
+		545ED3062CF4934E0026F194 /* ChattingUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED3052CF4934E0026F194 /* ChattingUserModel.swift */; };
+		545ED3082CF493C10026F194 /* DMChatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED3072CF493C10026F194 /* DMChatting.swift */; };
 		5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546589892CCE4FC500736BA9 /* AppDelegate.swift */; };
 		5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */; };
 		5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898D2CCE4FC500736BA9 /* AuthorizationViewController.swift */; };
@@ -192,6 +197,10 @@
 		54565AE42CD1004000B5A354 /* NavigationRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRepresentable.swift; sourceTree = "<group>"; };
 		54565AE62CD1053700B5A354 /* DismissButtonPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButtonPresentable.swift; sourceTree = "<group>"; };
 		54565AE82CD1056600B5A354 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		545ED2FB2CF44E7C0026F194 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		545ED2FD2CF466630026F194 /* SocketRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRouter.swift; sourceTree = "<group>"; };
+		545ED3052CF4934E0026F194 /* ChattingUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingUserModel.swift; sourceTree = "<group>"; };
+		545ED3072CF493C10026F194 /* DMChatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatting.swift; sourceTree = "<group>"; };
 		546589862CCE4FC500736BA9 /* ServiceLevelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceLevelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546589892CCE4FC500736BA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -323,6 +332,7 @@
 				687605BF2CE1D881008167B0 /* Alamofire in Frameworks */,
 				6876053F2CCE58F0008167B0 /* SnapKit in Frameworks */,
 				687605472CCE5948008167B0 /* RxSwift in Frameworks */,
+				545ED2FA2CF44E630026F194 /* SocketIO in Frameworks */,
 				687605422CCE5901008167B0 /* Then in Frameworks */,
 				541DC72B2CE1D2980051E898 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				541DC72D2CE1D2980051E898 /* FirebaseCrashlytics in Frameworks */,
@@ -419,6 +429,14 @@
 				684E653D2CE62E66006B2F02 /* LoginViewModel.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		545ED3002CF4927A0026F194 /* DM */ = {
+			isa = PBXGroup;
+			children = (
+				545ED3072CF493C10026F194 /* DMChatting.swift */,
+			);
+			path = DM;
 			sourceTree = "<group>";
 		};
 		5465897D2CCE4FC500736BA9 = {
@@ -790,10 +808,12 @@
 			isa = PBXGroup;
 			children = (
 				687605C12CE1D8B7008167B0 /* TargetType.swift */,
+				545ED2FB2CF44E7C0026F194 /* WebSocketManager.swift */,
 				68B96EFB2CE2031100473D8B /* UserRouter.swift */,
 				549810992CF1CC33004DD29E /* ImageRouter.swift */,
 				5490919D2CE476DC002EE538 /* WorkSpaceRouter.swift */,
 				684E65432CEB8C5E006B2F02 /* ChannelRouter.swift */,
+				545ED2FD2CF466630026F194 /* SocketRouter.swift */,
 				68B96EFD2CE2031700473D8B /* Header.swift */,
 				68B96EFF2CE2153B00473D8B /* APIManager.swift */,
 				68B96F012CE2177C00473D8B /* ErrorCode.swift */,
@@ -810,6 +830,7 @@
 				68DD92062CF36D5D00A8A466 /* User */,
 				549091A12CE491A1002EE538 /* WorkSpace */,
 				684E65452CEB9055006B2F02 /* Channel */,
+				545ED3002CF4927A0026F194 /* DM */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -838,6 +859,7 @@
 			children = (
 				549810A32CF1FF64004DD29E /* UserProfileModel.swift */,
 				68B96F092CE231E500473D8B /* SignUpModel.swift */,
+				545ED3052CF4934E0026F194 /* ChattingUserModel.swift */,
 				684E65412CE88A28006B2F02 /* RefreshToken.swift */,
 				68DD92042CF36D5200A8A466 /* EditProfileImageModel.swift */,
 			);
@@ -882,6 +904,7 @@
 				541DC72A2CE1D2980051E898 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				541DC72C2CE1D2980051E898 /* FirebaseCrashlytics */,
 				541DC72E2CE1D2980051E898 /* FirebaseMessaging */,
+				545ED2F92CF44E630026F194 /* SocketIO */,
 			);
 			productName = ServiceLevelProject;
 			productReference = 546589862CCE4FC500736BA9 /* ServiceLevelProject.app */;
@@ -919,6 +942,7 @@
 				6876054E2CCE5CA3008167B0 /* XCRemoteSwiftPackageReference "SideMenu" */,
 				687605BD2CE1D881008167B0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				541DC7292CE1D2980051E898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				545ED2F82CF44E630026F194 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 546589872CCE4FC500736BA9 /* Products */;
 			projectDirPath = "";
@@ -953,6 +977,7 @@
 				687605692CD0F21C008167B0 /* WorkspaceCell.swift in Sources */,
 				548950C62CEC838C009322C9 /* WorkSpaceMember.swift in Sources */,
 				54565AC52CCF721C00B5A354 /* UIFont+.swift in Sources */,
+				545ED3082CF493C10026F194 /* DMChatting.swift in Sources */,
 				68DD92012CF3188800A8A466 /* SettingViewController.swift in Sources */,
 				54A53FC92CD602EC00313E17 /* NicknameEditView.swift in Sources */,
 				54A53FDC2CD63A6C00313E17 /* ProfileTableViewCell.swift in Sources */,
@@ -962,6 +987,7 @@
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
 				684E65492CEBA140006B2F02 /* ChannelUnreadCountModel.swift in Sources */,
 				54A53FD52CD6347400313E17 /* PhoneNumberEditView.swift in Sources */,
+				545ED3062CF4934E0026F194 /* ChattingUserModel.swift in Sources */,
 				68DD92192CF45F7F00A8A466 /* SearchUserCell.swift in Sources */,
 				687605AE2CDE4D9D008167B0 /* DMNavigationView.swift in Sources */,
 				54565AD92CD0EEB600B5A354 /* SignupViewController.swift in Sources */,
@@ -982,6 +1008,7 @@
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
 				541DC7122CDDDEAB0051E898 /* PaddingLabel.swift in Sources */,
 				544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */,
+				545ED2FE2CF466630026F194 /* SocketRouter.swift in Sources */,
 				687605932CDB2D04008167B0 /* DirectMessageCell.swift in Sources */,
 				68DD921B2CF4679500A8A466 /* SearchUserViewModel.swift in Sources */,
 				68DD920A2CF3706200A8A466 /* PhoneNumberEditViewModel.swift in Sources */,
@@ -1062,6 +1089,7 @@
 				684E655E2CF226FC006B2F02 /* ChangeChannelCell.swift in Sources */,
 				687605722CD4C084008167B0 /* SingleButtonAlertViewController.swift in Sources */,
 				549091A02CE48DBB002EE538 /* WorkSpace.swift in Sources */,
+				545ED2FC2CF44E7C0026F194 /* WebSocketManager.swift in Sources */,
 				54565ABB2CCF628A00B5A354 /* OnboardingViewController.swift in Sources */,
 				687605A22CDE1171008167B0 /* AddChannelViewController.swift in Sources */,
 				687605982CDDF810008167B0 /* SearchChannelViewController.swift in Sources */,
@@ -1322,6 +1350,14 @@
 				minimumVersion = 11.4.0;
 			};
 		};
+		545ED2F82CF44E630026F194 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		6876053D2CCE58F0008167B0 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1387,6 +1423,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 541DC7292CE1D2980051E898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		545ED2F92CF44E630026F194 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 545ED2F82CF44E630026F194 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 		6876053E2CCE58F0008167B0 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
