@@ -115,29 +115,49 @@ final class ChattingTableViewCell: BaseTableViewCell {
 }
 
 extension ChattingTableViewCell {
-    func configureData(_ data: ChattingData) {
-        nicknameLabel.text = data.nickname
-        profileImageView.image = data.profileImage
-        messageLabel.text = data.message
-        messageLabel.isHidden = data.message == nil
-        configureImages(images: data.images)
+    typealias Chatting = ChannelChatHistoryModel
+    
+    func configureData(_ data: Chatting) {
+        nicknameLabel.text = data.user.nickname
+        Task { [weak self] in
+            let data = try await APIManager.shared.loadImage(data.user.profileImage)
+            DispatchQueue.main.async {
+                self?.profileImageView.image = UIImage(data: data)
+            }
+        }
+        messageLabel.text = data.content
+        messageLabel.isHidden = data.content.isEmpty
+        imageStackView.isHidden = true
+        if !data.files.isEmpty {
+            configureImages(files: data.files)
+        } else {
+            imageStackView.isHidden = true
+            firstImageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+            secondImageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        }
+        
     }
     
-    private func configureImages(images: [UIImage]) {
-        imageStackView.isHidden = images.isEmpty
+    private func configureImages(files: [String]) {
+        imageStackView.isHidden = files.isEmpty
         firstImageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         secondImageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-        let imageViews = images.map { image -> UIImageView in
-            let imageView = UIImageView(image: image)
+        let imageViews = files.map { file -> UIImageView in
+            let imageView = UIImageView()
+            Task {
+                let data = try await APIManager.shared.loadImage(file)
+                let image = UIImage(data: data)
+                imageView.image = image
+            }
             imageView.backgroundColor = .lightGray
             imageView.layer.cornerRadius = 8
-            imageView.contentMode = .scaleToFill
+            imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             return imageView
         }
         
-        let count = images.count
+        let count = files.count
         switch count {
         case 1:
             if let imageView = imageViews.first {
@@ -150,12 +170,14 @@ extension ChattingTableViewCell {
             for imageView in imageViews {
                 firstImageStackView.addArrangedSubview(imageView)
             }
+            firstImageStackView.snp.remakeConstraints { $0.height.equalTo(80) }
             secondImageStackView.isHidden = true
             
         case 3:
             for imageView in imageViews {
                 firstImageStackView.addArrangedSubview(imageView)
             }
+            firstImageStackView.snp.remakeConstraints { $0.height.equalTo(80) }
             secondImageStackView.isHidden = true
             
         case 4:
@@ -166,6 +188,8 @@ extension ChattingTableViewCell {
                     secondImageStackView.addArrangedSubview(imageView)
                 }
             }
+            firstImageStackView.snp.remakeConstraints { $0.height.equalTo(80) }
+            secondImageStackView.isHidden = false
         case 5:
             for (index, imageView) in imageViews.enumerated() {
                 if index < 3 {
@@ -174,8 +198,11 @@ extension ChattingTableViewCell {
                     secondImageStackView.addArrangedSubview(imageView)
                 }
             }
+            firstImageStackView.snp.remakeConstraints { $0.height.equalTo(80) }
+            secondImageStackView.isHidden = false
         default:
             break
         }
+        layoutIfNeeded()
     }
 }
