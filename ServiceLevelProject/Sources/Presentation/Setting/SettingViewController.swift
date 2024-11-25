@@ -11,9 +11,9 @@ import RxCocoa
 
 final class SettingViewController: BaseViewController {
     // MARK: Properties
-    let settingView = SettingView()
-    let viewModel = SettingViewModel()
-    let disposeBag = DisposeBag()
+    private let settingView = SettingView()
+    private let viewModel = SettingViewModel()
+    private let disposeBag = DisposeBag()
     
     // MARK: View Life Cycle
     override func loadView() {
