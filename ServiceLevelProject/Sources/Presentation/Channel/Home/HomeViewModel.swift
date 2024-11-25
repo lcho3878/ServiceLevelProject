@@ -110,7 +110,6 @@ final class HomeViewModel: ViewModelBindable {
         // 내가 속한 채널 리스트 조회
         workspaceIDInput
             .flatMap { id in
-                print(">>> workspaceID: \(id)")
                 return APIManager.shared.callRequest(api: ChannelRouter.myChannelList(workspaceID: id), type: [ChannelListModel].self)
             }
             .bind(with: self) { owner, result in
