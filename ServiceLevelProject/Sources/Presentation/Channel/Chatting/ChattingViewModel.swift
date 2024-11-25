@@ -65,7 +65,7 @@ final class ChattingViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-
+        
         // 전송버튼 활성화 / 비활성화
         Observable.combineLatest(input.sendMessageText, input.isImageListEmpty)
             .bind(with: self) { owner, value in
@@ -75,8 +75,9 @@ final class ChattingViewModel: ViewModelBindable {
                 } else {
                     isEmptyTextView.onNext(true)
                 }
-                .disposed(by: disposeBag)
-
+            }
+            .disposed(by: disposeBag)
+        
         socketTrigger
             .withLatestFrom(input.chattingRoomInfo)
             .bind(with: self) { owner, roomInfo in
@@ -98,10 +99,12 @@ final class ChattingViewModel: ViewModelBindable {
             isEmptyTextView: isEmptyTextView,
             chattingOutput: chattingOutput
         )
+        
     }
     
     deinit {
         WebSocketManager.shared.disconnect()
+        print(">>> ChattingViewModel - Deinit")
     }
 }
 
