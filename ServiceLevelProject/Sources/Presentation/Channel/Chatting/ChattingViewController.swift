@@ -16,6 +16,8 @@ final class ChattingViewController: BaseViewController {
     private let viewModel = ChattingViewModel()
     var roomInfoData: SelectedChannelData?
     
+    let testImageData = BehaviorSubject(value: ["star.fill", "heart.fill", "leaf.fill", "person.fill", "car.fill"])
+    
     // MARK: View Life Cycle
     override func loadView() {
         view = chattingView
@@ -60,6 +62,12 @@ extension ChattingViewController {
                     let vc = TabbarViewController()
                     owner.changeRootViewController(rootVC: vc)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        testImageData
+            .bind(to: chattingView.addImageCollectionView.rx.items(cellIdentifier: AddImageCell.id, cellType: AddImageCell.self)) { (row, element, cell) in
+                cell.imageView.image = UIImage(systemName: element)
             }
             .disposed(by: disposeBag)
     }
