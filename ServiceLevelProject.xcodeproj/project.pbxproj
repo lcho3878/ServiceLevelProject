@@ -155,6 +155,11 @@
 		68DD920E2CF453D000A8A466 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD920D2CF453D000A8A466 /* SettingViewModel.swift */; };
 		68DD92102CF453DF00A8A466 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD920F2CF453DF00A8A466 /* SettingView.swift */; };
 		68DD92122CF455C500A8A466 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92112CF455C500A8A466 /* SettingCell.swift */; };
+		68DD92152CF45DFE00A8A466 /* SearchUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92142CF45DFE00A8A466 /* SearchUserViewController.swift */; };
+		68DD92172CF45E3300A8A466 /* SearchUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92162CF45E3300A8A466 /* SearchUserView.swift */; };
+		68DD92192CF45F7F00A8A466 /* SearchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92182CF45F7F00A8A466 /* SearchUserCell.swift */; };
+		68DD921B2CF4679500A8A466 /* SearchUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921A2CF4679500A8A466 /* SearchUserViewModel.swift */; };
+		68DD921D2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921C2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -299,6 +304,11 @@
 		68DD920D2CF453D000A8A466 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		68DD920F2CF453DF00A8A466 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		68DD92112CF455C500A8A466 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		68DD92142CF45DFE00A8A466 /* SearchUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserViewController.swift; sourceTree = "<group>"; };
+		68DD92162CF45E3300A8A466 /* SearchUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserView.swift; sourceTree = "<group>"; };
+		68DD92182CF45F7F00A8A466 /* SearchUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserCell.swift; sourceTree = "<group>"; };
+		68DD921A2CF4679500A8A466 /* SearchUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserViewModel.swift; sourceTree = "<group>"; };
+		68DD921C2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSearchUserModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +486,7 @@
 				548940932CD4C02F001E6E40 /* Profile */,
 				687605512CCE5CC1008167B0 /* Workspace */,
 				687605AA2CDE4846008167B0 /* DM */,
+				68DD92132CF45DE100A8A466 /* SearchUser */,
 				68DD91FF2CF3187500A8A466 /* Setting */,
 			);
 			path = Presentation;
@@ -529,6 +540,7 @@
 				5490919F2CE48DBB002EE538 /* WorkSpace.swift */,
 				548950C52CEC838C009322C9 /* WorkSpaceMember.swift */,
 				549810942CEFA1D8004DD29E /* WorkSpaceInqury.swift */,
+				68DD921C2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -829,6 +841,17 @@
 			path = User;
 			sourceTree = "<group>";
 		};
+		68DD92132CF45DE100A8A466 /* SearchUser */ = {
+			isa = PBXGroup;
+			children = (
+				68DD92142CF45DFE00A8A466 /* SearchUserViewController.swift */,
+				68DD92162CF45E3300A8A466 /* SearchUserView.swift */,
+				68DD921A2CF4679500A8A466 /* SearchUserViewModel.swift */,
+				68DD92182CF45F7F00A8A466 /* SearchUserCell.swift */,
+			);
+			path = SearchUser;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -936,6 +959,7 @@
 				54565AC72CCF7F6800B5A354 /* BrandColorButton.swift in Sources */,
 				684E65492CEBA140006B2F02 /* ChannelUnreadCountModel.swift in Sources */,
 				54A53FD52CD6347400313E17 /* PhoneNumberEditView.swift in Sources */,
+				68DD92192CF45F7F00A8A466 /* SearchUserCell.swift in Sources */,
 				687605AE2CDE4D9D008167B0 /* DMNavigationView.swift in Sources */,
 				54565AD92CD0EEB600B5A354 /* SignupViewController.swift in Sources */,
 				687605532CCE5D67008167B0 /* HomeViewController.swift in Sources */,
@@ -956,11 +980,13 @@
 				541DC7122CDDDEAB0051E898 /* PaddingLabel.swift in Sources */,
 				544CA7842CDA22A90066F0AD /* TabbarViewController.swift in Sources */,
 				687605932CDB2D04008167B0 /* DirectMessageCell.swift in Sources */,
+				68DD921B2CF4679500A8A466 /* SearchUserViewModel.swift in Sources */,
 				68DD920A2CF3706200A8A466 /* PhoneNumberEditViewModel.swift in Sources */,
 				54565ABE2CCF631100B5A354 /* OnboardingView.swift in Sources */,
 				68DD92052CF36D5200A8A466 /* EditProfileImageModel.swift in Sources */,
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */,
+				68DD92172CF45E3300A8A466 /* SearchUserView.swift in Sources */,
 				54565AB32CCE610400B5A354 /* BaseView.swift in Sources */,
 				549810A42CF1FF64004DD29E /* UserProfileModel.swift in Sources */,
 				68B96F052CE2195800473D8B /* ErrorModel.swift in Sources */,
@@ -1042,6 +1068,7 @@
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
 				684E655C2CF226E1006B2F02 /* ChangeChannelAdminView.swift in Sources */,
 				687605742CD4CAE4008167B0 /* CustomAlertTransition.swift in Sources */,
+				68DD921D2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift in Sources */,
 				687605B42CDE51ED008167B0 /* DMMemberCell.swift in Sources */,
 				54565AE72CD1053700B5A354 /* DismissButtonPresentable.swift in Sources */,
 				687605652CCF99CC008167B0 /* BrandSimpeButton.swift in Sources */,
@@ -1049,6 +1076,7 @@
 				687605B22CDE4F73008167B0 /* DMViewModel.swift in Sources */,
 				54A53FD82CD636D200313E17 /* ProfileViewController.swift in Sources */,
 				687605B62CDE5940008167B0 /* DMListCell.swift in Sources */,
+				68DD92152CF45DFE00A8A466 /* SearchUserViewController.swift in Sources */,
 				684E65542CF1C204006B2F02 /* EditChannelViewModel.swift in Sources */,
 				54565AC02CCF63DF00B5A354 /* AuthorizationView.swift in Sources */,
 				541DC7252CE0F71B0051E898 /* BaseTextField.swift in Sources */,
