@@ -160,6 +160,7 @@
 		68DD92192CF45F7F00A8A466 /* SearchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92182CF45F7F00A8A466 /* SearchUserCell.swift */; };
 		68DD921B2CF4679500A8A466 /* SearchUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921A2CF4679500A8A466 /* SearchUserViewModel.swift */; };
 		68DD921D2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921C2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift */; };
+		68DD921F2CF48DDB00A8A466 /* AddImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921E2CF48DDB00A8A466 /* AddImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -309,6 +310,7 @@
 		68DD92182CF45F7F00A8A466 /* SearchUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserCell.swift; sourceTree = "<group>"; };
 		68DD921A2CF4679500A8A466 /* SearchUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserViewModel.swift; sourceTree = "<group>"; };
 		68DD921C2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSearchUserModel.swift; sourceTree = "<group>"; };
+		68DD921E2CF48DDB00A8A466 /* AddImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -508,6 +510,7 @@
 				5477F1C62CDA3959007D1A92 /* ChattingView.swift */,
 				5477F1C22CDA393B007D1A92 /* ChattingTableViewCell.swift */,
 				684E654C2CECE077006B2F02 /* ChattingViewModel.swift */,
+				68DD921E2CF48DDB00A8A466 /* AddImageCell.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -1042,6 +1045,7 @@
 				549091A82CE4A276002EE538 /* UserDefaultManager.swift in Sources */,
 				549810952CEFA1D8004DD29E /* WorkSpaceInqury.swift in Sources */,
 				687605A42CDE119D008167B0 /* AddChannelView.swift in Sources */,
+				68DD921F2CF48DDB00A8A466 /* AddImageCell.swift in Sources */,
 				687605A72CDE40D3008167B0 /* InviteMemberViewController.swift in Sources */,
 				684E65572CF1FEA6006B2F02 /* ChannelDetailsModel.swift in Sources */,
 				548950C22CEB7841009322C9 /* WorkspaceListReloadable.swift in Sources */,
