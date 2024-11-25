@@ -66,7 +66,6 @@ final class ChangeChannelAdminCell: BaseTableViewCell {
 }
 
 extension ChangeChannelAdminCell {
-    
     func configureCell(element: MemberData) {
         userNameLabel.text = element.nickname
         userEmailLabel.text = element.email
