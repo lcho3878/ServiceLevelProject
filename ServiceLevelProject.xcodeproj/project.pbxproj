@@ -152,6 +152,9 @@
 		68DD92082CF3702700A8A466 /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92072CF3702700A8A466 /* NicknameEditViewModel.swift */; };
 		68DD920A2CF3706200A8A466 /* PhoneNumberEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92092CF3706200A8A466 /* PhoneNumberEditViewModel.swift */; };
 		68DD920C2CF38E1000A8A466 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD920B2CF38E1000A8A466 /* UIImage+.swift */; };
+		68DD920E2CF453D000A8A466 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD920D2CF453D000A8A466 /* SettingViewModel.swift */; };
+		68DD92102CF453DF00A8A466 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD920F2CF453DF00A8A466 /* SettingView.swift */; };
+		68DD92122CF455C500A8A466 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92112CF455C500A8A466 /* SettingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -293,6 +296,9 @@
 		68DD92072CF3702700A8A466 /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
 		68DD92092CF3706200A8A466 /* PhoneNumberEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberEditViewModel.swift; sourceTree = "<group>"; };
 		68DD920B2CF38E1000A8A466 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		68DD920D2CF453D000A8A466 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		68DD920F2CF453DF00A8A466 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		68DD92112CF455C500A8A466 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -805,6 +811,9 @@
 			isa = PBXGroup;
 			children = (
 				68DD92002CF3188800A8A466 /* SettingViewController.swift */,
+				68DD920F2CF453DF00A8A466 /* SettingView.swift */,
+				68DD920D2CF453D000A8A466 /* SettingViewModel.swift */,
+				68DD92112CF455C500A8A466 /* SettingCell.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -940,6 +949,8 @@
 				54A53FD32CD6346D00313E17 /* PhoneNumberEditViewController.swift in Sources */,
 				68DD92032CF3514A00A8A466 /* ProfileEditViewModel.swift in Sources */,
 				6876058B2CDA33D8008167B0 /* ChangeAdminView.swift in Sources */,
+				68DD920E2CF453D000A8A466 /* SettingViewModel.swift in Sources */,
+				68DD92122CF455C500A8A466 /* SettingCell.swift in Sources */,
 				5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */,
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
 				541DC7122CDDDEAB0051E898 /* PaddingLabel.swift in Sources */,
@@ -1013,6 +1024,7 @@
 				687605812CD66A74008167B0 /* CreateWorkspaceViewController.swift in Sources */,
 				68B96EFE2CE2031700473D8B /* Header.swift in Sources */,
 				544CA78F2CDA30800066F0AD /* BaseCollectionViewCell.swift in Sources */,
+				68DD92102CF453DF00A8A466 /* SettingView.swift in Sources */,
 				541DC71F2CE0F56D0051E898 /* EditChannelViewController.swift in Sources */,
 				541DC7162CDE38960051E898 /* SettingChannelViewController.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
