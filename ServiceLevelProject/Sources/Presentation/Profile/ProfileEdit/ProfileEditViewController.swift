@@ -96,7 +96,7 @@ extension ProfileEditViewController {
             .withLatestFrom(output.profileData)
             .bind(with: self) { owner, profileData in
                 let vc = NicknameEditViewController()
-                vc.delegate = self
+                vc.delegate = owner
                 vc.currentNickname = profileData.nickname
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
@@ -107,7 +107,7 @@ extension ProfileEditViewController {
             .withLatestFrom(output.profileData)
             .bind(with: self) { owner, profileData in
                 let vc = PhoneNumberEditViewController()
-                vc.delegate = self
+                vc.delegate = owner
                 vc.currentPhoneNumber = profileData.phone
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
@@ -133,9 +133,9 @@ extension ProfileEditViewController {
                 let (title, subtitle, buttonTitle) = value
                 let alert = DoubleButtonAlertViewController()
                 alert.modalPresentationStyle = .overFullScreen
-                alert.setConfigure(title: title, subTitle: subtitle, buttonTitle: buttonTitle) { [weak self] in
+                alert.setConfigure(title: title, subTitle: subtitle, buttonTitle: buttonTitle) {
                     UserDefaultManager.removeUserData()
-                    self?.changeRootViewController(rootVC: OnboardingViewController())
+                    owner.changeRootViewController(rootVC: OnboardingViewController())
                 }
                 owner.present(alert, animated: true)
             }
