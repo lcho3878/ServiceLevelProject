@@ -19,17 +19,23 @@ final class ChattingViewModel: ViewModelBindable {
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
         let chattingRoomInfo = PublishSubject<SelectedChannelData>()
+        let sendMessageText: ControlProperty<String>
+        let sendButtonTap: ControlEvent<Void>
+        let addImageButtonTap: ControlEvent<Void>
+        let isImageListEmpty = BehaviorSubject(value: false)
     }
     
     struct Output {
         let channelName: BehaviorSubject<String>
         let inValidChannelMessage: PublishSubject<(String, String, String)>
+        let isEmptyTextView: PublishSubject<Bool>
         let chattingOutput: PublishSubject<[Chatting]>
     }
     
     func transform(input: Input) -> Output {
         let inValidChannelMessage = PublishSubject<(String, String, String)>()
         let channelName = BehaviorSubject(value: "")
+        let isEmptyTextView = PublishSubject<Bool>()
         let chattingOutput = PublishSubject<[Chatting]>()
         let socketTrigger = PublishSubject<Void>()
         
@@ -59,6 +65,18 @@ final class ChattingViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
+
+        // 전송버튼 활성화 / 비활성화
+        Observable.combineLatest(input.sendMessageText, input.isImageListEmpty)
+            .bind(with: self) { owner, value in
+                let (text, image) = value
+                if !text.isEmpty || !image {
+                    isEmptyTextView.onNext(false)
+                } else {
+                    isEmptyTextView.onNext(true)
+                }
+                .disposed(by: disposeBag)
+
         socketTrigger
             .withLatestFrom(input.chattingRoomInfo)
             .bind(with: self) { owner, roomInfo in
@@ -75,8 +93,9 @@ final class ChattingViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         return Output(
-            channelName: channelName, 
+            channelName: channelName,
             inValidChannelMessage: inValidChannelMessage,
+            isEmptyTextView: isEmptyTextView,
             chattingOutput: chattingOutput
         )
     }

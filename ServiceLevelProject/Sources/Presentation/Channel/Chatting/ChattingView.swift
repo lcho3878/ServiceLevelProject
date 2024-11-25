@@ -10,6 +10,13 @@ import SnapKit
 import Then
 
 final class ChattingView: BaseView {
+    var isTextFieldEmpty: Bool = false {
+        didSet {
+            sendButton.isEnabled = !isTextFieldEmpty
+            sendButton.setImage(isTextFieldEmpty ? .send : .sendActive, for: .normal)
+        }
+    }
+    
     let chattingTableView = UITableView().then {
         $0.rowHeight = UITableView.automaticDimension
         $0.register(ChattingTableViewCell.self, forCellReuseIdentifier: ChattingTableViewCell.id)
@@ -20,12 +27,18 @@ final class ChattingView: BaseView {
         $0.layer.cornerRadius = 8
     }
     
-    private let plusButton = UIButton().then {
+    let plusButton = UIButton().then {
         let image = UIImage(resource: .plusPhoto)
         $0.setImage(image, for: .normal)
     }
     
-    private lazy var chatTextField = UITextView().then {
+    private let chatStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 8
+        $0.distribution = .fillProportionally
+    }
+    
+    lazy var chatTextView = UITextView().then {
         $0.font = .body
         $0.text = "메시지를 입력하세요"
         $0.textColor = .textSecondary
@@ -35,28 +48,34 @@ final class ChattingView: BaseView {
         $0.delegate = self
     }
     
-    private let sendButton = UIButton().then {
+    let addImageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout()).then {
+        $0.backgroundColor = .clear
+        $0.register(AddImageCell.self, forCellWithReuseIdentifier: AddImageCell.id)
+        $0.isHidden = true
+    }
+    
+    let sendButton = UIButton().then {
         let image = UIImage(resource: .send)
         $0.setImage(image, for: .normal)
     }
     
     override func addSubviews() {
-        buttonView.addSubviews([
-            plusButton,
-            chatTextField,
-            sendButton,
-        ])
-        addSubviews([
-            chattingTableView,
-            buttonView
-        ])
+        addSubviews([chattingTableView, buttonView])
+        buttonView.addSubviews([plusButton, chatStackView, sendButton])
+        chatStackView.addArrangedSubviews([chatTextView, addImageCollectionView])
     }
     
     override func setConstraints() {
         let safe = safeAreaLayoutGuide
 
+        chattingTableView.snp.makeConstraints {
+            $0.top.equalTo(safe).offset(16)
+            $0.horizontalEdges.equalTo(safe)
+            $0.bottom.equalTo(buttonView.snp.top)
+        }
+        
         buttonView.snp.makeConstraints {
-            $0.height.equalTo(38)
+            $0.height.greaterThanOrEqualTo(38)
             $0.horizontalEdges.equalTo(safe).inset(16)
             adjustableConstraint = $0.bottom.equalTo(safe).inset(12).constraint.layoutConstraints.first
         }
@@ -67,24 +86,36 @@ final class ChattingView: BaseView {
             $0.bottom.equalToSuperview().inset(9)
         }
         
+        chatStackView.snp.makeConstraints {
+            $0.leading.equalTo(plusButton.snp.trailing).offset(8)
+            $0.trailing.equalTo(sendButton.snp.leading).offset(-8)
+            $0.verticalEdges.equalToSuperview().inset(10)
+        }
+        
+        chatTextView.snp.makeConstraints {
+            $0.height.equalTo(18)
+        }
+        
+        addImageCollectionView.snp.makeConstraints {
+            $0.height.equalTo(50)
+        }
+        
         sendButton.snp.makeConstraints {
             $0.width.equalTo(24)
             $0.bottom.equalToSuperview().inset(7)
             $0.trailing.equalToSuperview().inset(12)
         }
-        
-        chatTextField.snp.makeConstraints {
-            $0.leading.equalTo(plusButton.snp.trailing).offset(8)
-            $0.trailing.equalTo(sendButton.snp.leading).offset(8)
-            $0.height.equalTo(18)
-            $0.verticalEdges.equalToSuperview().inset(10)
-        }
-        
-        chattingTableView.snp.makeConstraints {
-            $0.top.equalTo(safe).offset(16)
-            $0.horizontalEdges.equalTo(safe)
-            $0.bottom.equalTo(buttonView.snp.top)
-        }
+    }
+}
+
+extension ChattingView {
+    static func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 6
+        layout.minimumInteritemSpacing = 6
+        return layout
     }
 }
 
@@ -117,10 +148,6 @@ extension ChattingView: UITextViewDelegate {
 
         textView.snp.updateConstraints {
             $0.height.equalTo(newHeight)
-        }
-
-        buttonView.snp.updateConstraints {
-            $0.height.equalTo(newHeight + 20)
         }
     }
 }
