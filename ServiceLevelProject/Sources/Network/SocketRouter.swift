@@ -8,7 +8,7 @@
 import Foundation
 
 enum SocketRouter {
-    case chatting(id: String)
+    case channel(id: String)
     case dm(id: String)
 }
 
@@ -19,10 +19,19 @@ extension SocketRouter {
     
     var namespace: String {
         switch self {
-        case .chatting(let id):
+        case .channel(let id):
             return "/ws-channel-\(id)"
         case .dm(let id):
-            return "ws/-dm-\(id)"
+            return "/ws/-dm-\(id)"
+        }
+    }
+    
+    var eventName: String {
+        switch self {
+        case .channel:
+            return "channel"
+        case .dm(let id):
+            return "dm"
         }
     }
 }

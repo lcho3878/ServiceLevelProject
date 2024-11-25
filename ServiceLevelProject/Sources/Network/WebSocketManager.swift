@@ -58,21 +58,16 @@ extension WebSocketManager {
         namespaceSocket?.on(clientEvent: .disconnect) { data, ack in
             print(">>> DISCONNECTED NAMESPACE")
         }
-        let eventName: String
-        switch router {
-        case .chatting:
-            eventName = "channel"
-        case .dm:
-            eventName = "dm"
-        }
-        namespaceSocket?.on(eventName) { [weak self] dataArray, ack in
+        
+        namespaceSocket?.on(router.eventName) { [weak self] dataArray, ack in
             guard let firstItem = dataArray.first else {
                 print(">>> no first")
                 return
             }
+            
             if let dictionary = firstItem as? [String: Any] {
                 switch router {
-                case .chatting:
+                case .channel:
                     if let chatting = self?.parseDictionary(of: ChannelChatting.self, dictionary: dictionary) {
                         self?.channelOutput.onNext(chatting)
                     }

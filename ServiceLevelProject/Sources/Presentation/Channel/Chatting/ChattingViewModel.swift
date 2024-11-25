@@ -62,7 +62,7 @@ final class ChattingViewModel: ViewModelBindable {
         socketTrigger
             .withLatestFrom(input.chattingRoomInfo)
             .bind(with: self) { owner, roomInfo in
-                WebSocketManager.shared.router = .chatting(id: roomInfo.channelID)
+                WebSocketManager.shared.router = .channel(id: roomInfo.channelID)
                 WebSocketManager.shared.connect()
             }
             .disposed(by: disposeBag)
