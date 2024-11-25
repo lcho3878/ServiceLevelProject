@@ -20,7 +20,6 @@ final class AddImageCell: BaseCollectionViewCell {
     }
     
     let imageView = UIImageView().then {
-        $0.backgroundColor = .systemPurple
         $0.layer.cornerRadius = 8
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
