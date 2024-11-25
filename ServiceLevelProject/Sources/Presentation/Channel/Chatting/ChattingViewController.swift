@@ -43,6 +43,10 @@ final class ChattingViewController: BaseViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem()
         navigationItem.rightBarButtonItem = rightBarButtonItem()
     }
+    
+    deinit {
+        print(">>> ChattingVC - Deinit")
+    }
 }
 
 extension ChattingViewController {
@@ -77,7 +81,7 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
-
+        
         // 선택된 이미지
         selectedImages
             .bind(to: chattingView.addImageCollectionView.rx.items(cellIdentifier: AddImageCell.id, cellType: AddImageCell.self)) { (row, element, cell) in
@@ -117,7 +121,9 @@ extension ChattingViewController {
         chattingView.plusButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.presentPicker()
-
+            }
+            .disposed(by: disposeBag)
+        
         output.chattingOutput
             .bind(to: chattingView.chattingTableView.rx.items(cellIdentifier: ChattingTableViewCell.id, cellType: ChattingTableViewCell.self)) { row, element, cell in
                 cell.configureData(element)
