@@ -46,7 +46,6 @@ final class ChattingViewController: BaseViewController {
 
 extension ChattingViewController {
     private func bind() {
-        
         let input = ChattingViewModel.Input(
             sendMessageText: chattingView.chatTextView.rx.text.orEmpty,
             sendButtonTap: chattingView.sendButton.rx.tap,
@@ -124,9 +123,20 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
+        // 채팅 리스트 업데이트 (DB, API, Socket 모든 Output)
+        let chattingOutput = output.chattingOutput.share()
+        
         output.chattingOutput
             .bind(to: chattingView.chattingTableView.rx.items(cellIdentifier: ChattingTableViewCell.id, cellType: ChattingTableViewCell.self)) { row, element, cell in
                 cell.configureData(element)
+            }
+            .disposed(by: disposeBag)
+        
+        chattingOutput
+            .bind(with: self) { owner, chattings in
+                guard !chattings.isEmpty else { return }
+                let indexPath = IndexPath(row: chattings.count - 1, section: 0)
+                owner.chattingView.chattingTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
             .disposed(by: disposeBag)
         
