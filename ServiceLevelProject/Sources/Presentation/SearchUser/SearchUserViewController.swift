@@ -23,6 +23,7 @@ final class SearchUserViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(">>> \(UserDefaultManager.accessToken)")
         bind()
     }
     
@@ -31,11 +32,12 @@ final class SearchUserViewController: BaseViewController {
     }
 }
 
-extension SearchUserViewController {
+extension SearchUserViewController: NavigationRepresentable {
     private func bind() {
         let input = SearchUserViewModel.Input(
             searchText: searchUserView.searchBar.rx.text.orEmpty,
-            searchButtonClicked: searchUserView.searchBar.rx.searchButtonClicked
+            searchButtonClicked: searchUserView.searchBar.rx.searchButtonClicked,
+            tableViewModelSelectd: searchUserView.tableView.rx.modelSelected(WorkspaceSearchUserModel.WorkspaceMembers.self)
         )
         let output = viewModel.transform(input: input)
         
@@ -57,6 +59,15 @@ extension SearchUserViewController {
         searchUserView.tableView.rx.contentOffset
             .bind(with: self) { owner, _ in
                 owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        // 셀 클릭
+        output.targetUserID
+            .bind(with: self) { owner, userID in
+                let vc = ProfileViewController()
+                vc.userID = userID
+                owner.presentNavigationController(rootViewController: vc)
             }
             .disposed(by: disposeBag)
     }

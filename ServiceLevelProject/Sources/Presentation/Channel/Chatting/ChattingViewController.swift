@@ -237,7 +237,7 @@ extension ChattingViewController {
                 imageList.append(image)
                 selectedImageList.removeAll()
                 selectedImageList.append(contentsOf: imageList)
-                let dataList = imageList.map { $0.jpegData(compressionQuality: 0.6) }
+                let dataList = imageList.map { $0.asData() }
                 selectedImageData.onNext(dataList)
             }
         }

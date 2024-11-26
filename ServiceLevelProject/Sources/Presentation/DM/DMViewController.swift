@@ -14,6 +14,7 @@ final class DMViewController: BaseViewController {
     private let dmView = DMView()
     private let viewModel = DMViewModel()
     private let disposeBag = DisposeBag()
+    let dmNavigationView = DMNavigationView()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -24,6 +25,7 @@ final class DMViewController: BaseViewController {
         super.viewDidLoad()
         
         bind()
+        setupObservers()
         dmView.emptyView.isHidden = true // 임시
         // dmView.nonEmptyView.isHidden = true // 임시
     }
@@ -56,7 +58,6 @@ extension DMViewController {
 extension DMViewController {
     private func configureNavigaionItem() {
         // titleView
-        let dmNavigationView = DMNavigationView()
         navigationItem.titleView = dmNavigationView.titleView
         
         // leftBarButtonItem
@@ -75,5 +76,26 @@ extension DMViewController {
         
         navigationItem.leftBarButtonItem = dmNavigationView.leftNaviBarItem
         navigationItem.rightBarButtonItem = dmNavigationView.rightNaviBarItem
+    }
+}
+
+extension DMViewController {
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(profileImageData(_:)),
+            name: .profileImageData,
+            object: nil)
+    }
+    
+    @objc
+    private func profileImageData(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let profileImage = userInfo["profileData"] as? Data else { 
+            print(">>> 가드 막힘")
+            return }
+        DispatchQueue.main.async {
+            self.dmNavigationView.profileButton.setImage(UIImage(data: profileImage), for: .normal)
+        }
     }
 }

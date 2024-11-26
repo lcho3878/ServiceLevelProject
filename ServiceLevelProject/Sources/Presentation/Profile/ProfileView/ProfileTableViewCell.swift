@@ -14,7 +14,7 @@ final class ProfileTableViewCell: UITableViewCell {
         $0.font = UIFont.bodyBold
     }
     
-    private let contentLable = UILabel().then {
+    let contentLabel = UILabel().then {
         $0.font = UIFont.body
         $0.textColor = .textSecondary
     }
@@ -33,7 +33,7 @@ final class ProfileTableViewCell: UITableViewCell {
 extension ProfileTableViewCell {
     private func addSubview() {
         addSubviews([
-            titleLabel, contentLable,
+            titleLabel, contentLabel,
         ])
     }
     
@@ -45,15 +45,10 @@ extension ProfileTableViewCell {
             $0.top.equalTo(safe).offset(13)
         }
         
-        contentLable.snp.makeConstraints {
+        contentLabel.snp.makeConstraints {
             $0.top.equalTo(safe).offset(13)
             $0.height.equalTo(18)
             $0.trailing.equalTo(safe).inset(12)
         }
-    }
-    
-    func configureData(_ data: TableViewRepresentable) {
-        titleLabel.text = data.titleString
-        contentLable.text = data.subTitleString
     }
 }

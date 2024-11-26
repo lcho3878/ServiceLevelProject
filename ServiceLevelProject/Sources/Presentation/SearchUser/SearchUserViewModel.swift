@@ -15,14 +15,17 @@ final class SearchUserViewModel: ViewModelBindable {
     struct Input {
         let searchText: ControlProperty<String>
         let searchButtonClicked: ControlEvent<Void>
+        let tableViewModelSelectd: ControlEvent<WorkspaceSearchUserModel.WorkspaceMembers>
     }
     
     struct Output {
         let searchResult: PublishSubject<[WorkspaceSearchUserModel.WorkspaceMembers]>
+        let targetUserID: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
         let searchResult = PublishSubject<[WorkspaceSearchUserModel.WorkspaceMembers]>()
+        let targetUserID = PublishSubject<String>()
         
         input.searchButtonClicked
             .withLatestFrom(input.searchText)
@@ -32,7 +35,6 @@ final class SearchUserViewModel: ViewModelBindable {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    print(">>> 성공!: \(success)")
                     searchResult.onNext(success.workspaceMembers)
                 case .failure(let failure):
                     print(">>> Failed!!: \(failure.errorCode)")
@@ -40,6 +42,12 @@ final class SearchUserViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-        return Output(searchResult: searchResult)
+        input.tableViewModelSelectd
+            .bind(with: self) { owner, selectedData in
+                targetUserID.onNext(selectedData.userID)
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(searchResult: searchResult, targetUserID: targetUserID)
     }
 }

@@ -17,6 +17,7 @@ enum UserRouter {
     case editProfileImage(query: ProfileImageQuery)
     case editNicknameProfile(query: EditNicknameQuery)
     case editPhoneNumberProfile(query: EditPhoneNumberQuery)
+    case targetUserProfile(userID: String)
 }
 
 extension UserRouter : TargetType {
@@ -28,7 +29,7 @@ extension UserRouter : TargetType {
         switch self {
         case .signUp, .validationEmail, .login:
             return .post
-        case .refreshToken, .profile:
+        case .refreshToken, .profile, .targetUserProfile:
             return .get
         case .editProfileImage, .editNicknameProfile, .editPhoneNumberProfile:
             return .put
@@ -49,6 +50,8 @@ extension UserRouter : TargetType {
             return "/users/me"
         case .editProfileImage:
             return "/users/me/image"
+        case .targetUserProfile(let userID):
+            return "/users/\(userID)"
         }
     }
     
@@ -68,7 +71,7 @@ extension UserRouter : TargetType {
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
                 Header.sesacKey.rawValue: Key.sesacKey,
             ]
-        case .profile:
+        case .profile, .targetUserProfile:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",

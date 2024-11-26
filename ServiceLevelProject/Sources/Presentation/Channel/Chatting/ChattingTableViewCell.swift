@@ -120,9 +120,11 @@ extension ChattingTableViewCell {
     func configureData(_ data: Chatting) {
         nicknameLabel.text = data.user.nickname
         Task { [weak self] in
-            let data = try await APIManager.shared.loadImage(data.user.profileImage)
-            DispatchQueue.main.async {
-                self?.profileImageView.image = UIImage(data: data)
+            if let image = data.user.profileImage {
+                let data = try await APIManager.shared.loadImage(image)
+                DispatchQueue.main.async {
+                    self?.profileImageView.image = UIImage(data: data)
+                }
             }
         }
         messageLabel.text = data.content

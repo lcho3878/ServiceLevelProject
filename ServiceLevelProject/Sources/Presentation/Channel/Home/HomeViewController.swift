@@ -146,6 +146,7 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         // 네비게이션뷰 UI 업데이트
+        /// 채널 커버 이미지
         output.workspaceOutput
             .bind(with: self) { owner, value in
                 owner.homeNavigationView.updateUI(value)
@@ -200,6 +201,7 @@ extension HomeViewController: NavigationRepresentable {
             .bind(with: self) { owner, _ in
                 let vc = ProfileEditViewController()
                 vc.hidesBottomBarWhenPushed = true
+                vc.delegate = owner
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -283,12 +285,26 @@ extension HomeViewController: WorkspaceChangable {
     }
 }
 
+extension HomeViewController: ChangedProfileImageDelegate {
+    func changedImageData(imageData: Data) {
+        DispatchQueue.main.async {
+            self.homeNavigationView.profileButton.setImage(UIImage(data: imageData), for: .normal)
+        }
+    }
+}
+
 extension HomeViewController {
     private func setupObservers() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(changeAdminRecieved),
             name: Notification.Name(NotificationKey.changeAdmin.rawValue),
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(profileImageData(_:)),
+            name: .profileImageData,
             object: nil)
     }
     
@@ -297,6 +313,15 @@ extension HomeViewController {
         if let userinfo = notification.userInfo,
            let message = userinfo[NotificationKey.toastMessage] as? String {
             homeView.showToast(message: message, bottomOffset: -120)
+        }
+    }
+    
+    @objc
+    private func profileImageData(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let profileImage = userInfo["profileData"] as? Data else { return }
+        DispatchQueue.main.async {
+            self.homeNavigationView.profileButton.setImage(UIImage(data: profileImage), for: .normal)
         }
     }
 }

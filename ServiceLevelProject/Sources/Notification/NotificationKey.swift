@@ -22,3 +22,7 @@ enum NotificationKey: String {
     
     static let toastMessage = "toastMessage"
 }
+
+extension Notification.Name {
+    static let profileImageData = Notification.Name("profileData")
+}
