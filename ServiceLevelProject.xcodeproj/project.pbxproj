@@ -88,7 +88,7 @@
 		684E65492CEBA140006B2F02 /* ChannelUnreadCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */; };
 		684E654B2CEC7E93006B2F02 /* AddChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654A2CEC7E93006B2F02 /* AddChannelViewModel.swift */; };
 		684E654D2CECE077006B2F02 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654C2CECE077006B2F02 /* ChattingViewModel.swift */; };
-		684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */; };
+		684E654F2CEFB210006B2F02 /* ChattingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654E2CEFB210006B2F02 /* ChattingModel.swift */; };
 		684E65542CF1C204006B2F02 /* EditChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65532CF1C204006B2F02 /* EditChannelViewModel.swift */; };
 		684E65572CF1FEA6006B2F02 /* ChannelDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */; };
 		684E65592CF225B5006B2F02 /* ChangeChannelAdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65582CF225B5006B2F02 /* ChangeChannelAdminViewController.swift */; };
@@ -250,7 +250,7 @@
 		684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUnreadCountModel.swift; sourceTree = "<group>"; };
 		684E654A2CEC7E93006B2F02 /* AddChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelViewModel.swift; sourceTree = "<group>"; };
 		684E654C2CECE077006B2F02 /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
-		684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatHistoryModel.swift; sourceTree = "<group>"; };
+		684E654E2CEFB210006B2F02 /* ChattingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingModel.swift; sourceTree = "<group>"; };
 		684E65532CF1C204006B2F02 /* EditChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelViewModel.swift; sourceTree = "<group>"; };
 		684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailsModel.swift; sourceTree = "<group>"; };
 		684E65582CF225B5006B2F02 /* ChangeChannelAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannelAdminViewController.swift; sourceTree = "<group>"; };
@@ -641,7 +641,6 @@
 			children = (
 				684E65462CEB9068006B2F02 /* ChannelListModel.swift */,
 				684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */,
-				684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */,
 				684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */,
 			);
 			path = Channel;
@@ -832,6 +831,7 @@
 			isa = PBXGroup;
 			children = (
 				68B96F042CE2195800473D8B /* ErrorModel.swift */,
+				684E654E2CEFB210006B2F02 /* ChattingModel.swift */,
 				68DD92062CF36D5D00A8A466 /* User */,
 				549091A12CE491A1002EE538 /* WorkSpace */,
 				684E65452CEB9055006B2F02 /* Channel */,
@@ -1051,7 +1051,7 @@
 				684E65422CE88A28006B2F02 /* RefreshToken.swift in Sources */,
 				687605AC2CDE4877008167B0 /* DMViewController.swift in Sources */,
 				68B96F002CE2153B00473D8B /* APIManager.swift in Sources */,
-				684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */,
+				684E654F2CEFB210006B2F02 /* ChattingModel.swift in Sources */,
 				684E654D2CECE077006B2F02 /* ChattingViewModel.swift in Sources */,
 				687605892CDA3389008167B0 /* ChangeAdminViewController.swift in Sources */,
 				684E65602CF22818006B2F02 /* ChangeChannelAdminViewModel.swift in Sources */,
