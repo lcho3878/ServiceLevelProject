@@ -25,6 +25,7 @@ final class ProfileEditViewModel: ViewModelBindable {
         let profileData: PublishSubject<UserProfileModel>
         let profileImageData: PublishSubject<Data>
         let editImageSuccessMessage: PublishSubject<String>
+        let changedImageData: PublishSubject<Data>
     }
     
     func transform(input: Input) -> Output {
@@ -33,6 +34,8 @@ final class ProfileEditViewModel: ViewModelBindable {
         let profileImage = PublishSubject<String>()
         let profileImageData = PublishSubject<Data>()
         let editImageSuccessMessage = PublishSubject<String>()
+        let changedProfileImage = PublishSubject<String?>()
+        let changedImageData = PublishSubject<Data>()
         
         // 내 프로필 정보 조회
         input.viewDidLoadTrigger
@@ -69,10 +72,22 @@ final class ProfileEditViewModel: ViewModelBindable {
             }
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(_):
+                case .success(let success):
+                    changedProfileImage.onNext(success.profileImage)
                     editImageSuccessMessage.onNext("프로필 이미지가 변경되었습니다 :D")
                 case .failure(let failure):
                     print(">>> Failed!: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        changedProfileImage
+            .bind(with: self) { owner, imageString in
+                Task {
+                    if let image = imageString {
+                        let data = try await APIManager.shared.loadImage(image)
+                        changedImageData.onNext(data)
+                    }
                 }
             }
             .disposed(by: disposeBag)
@@ -88,7 +103,8 @@ final class ProfileEditViewModel: ViewModelBindable {
             logoutAlert: logoutAlert,
             profileData: profileData,
             profileImageData: profileImageData,
-            editImageSuccessMessage: editImageSuccessMessage
+            editImageSuccessMessage: editImageSuccessMessage,
+            changedImageData: changedImageData
         )
     }
 }

@@ -146,9 +146,19 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         // 네비게이션뷰 UI 업데이트
+        /// 채널 커버 이미지
         output.workspaceOutput
             .bind(with: self) { owner, value in
                 owner.homeNavigationView.updateUI(value)
+            }
+            .disposed(by: disposeBag)
+        
+        /// 프로필 이미지
+        output.profileImageData
+            .bind(with: self) { owner, imageData in
+                DispatchQueue.main.async {
+                    owner.homeNavigationView.profileButton.setImage(UIImage(data: imageData), for: .normal)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -200,6 +210,7 @@ extension HomeViewController: NavigationRepresentable {
             .bind(with: self) { owner, _ in
                 let vc = ProfileEditViewController()
                 vc.hidesBottomBarWhenPushed = true
+                vc.delegate = owner
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -280,6 +291,14 @@ extension HomeViewController: WorkspaceChangable {
         UserDefaultManager.workspaceID = workspace.workspace_id
         workspaceIDInput.onNext(workspace.workspace_id)
         homeNavigationView.updateUI(workspace)
+    }
+}
+
+extension HomeViewController: ChangedProfileImageDelegate {
+    func changedImageData(imageData: Data) {
+        DispatchQueue.main.async {
+            self.homeNavigationView.profileButton.setImage(UIImage(data: imageData), for: .normal)
+        }
     }
 }
 

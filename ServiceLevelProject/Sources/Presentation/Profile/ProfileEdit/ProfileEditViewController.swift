@@ -14,6 +14,7 @@ final class ProfileEditViewController: BaseViewController {
     private let profileEditView = ProfileEditView()
     private let viewModel = ProfileEditViewModel()
     private let disposeBag = DisposeBag()
+    weak var delegate: ChangedProfileImageDelegate?
     
     private var selectedImage = PublishSubject<UIImage?>()
     
@@ -127,6 +128,13 @@ extension ProfileEditViewController {
             }
             .disposed(by: disposeBag)
         
+        // 수정된 이미지 홈 화면 전달
+        output.changedImageData
+            .bind(with: self) { owner, imageData in
+                owner.delegate?.changedImageData(imageData: imageData)
+            }
+            .disposed(by: disposeBag)
+        
         // 로그아웃 Alert
         output.logoutAlert
             .bind(with: self) { owner, value in
@@ -192,4 +200,8 @@ extension ProfileEditViewController: ChangedPhoneNumberDelegate {
     func changedPhoneNumber(data: String) {
         viewModel.changedPhoneNumber.onNext(data)
     }
+}
+
+protocol ChangedProfileImageDelegate: AnyObject {
+    func changedImageData(imageData: Data)
 }

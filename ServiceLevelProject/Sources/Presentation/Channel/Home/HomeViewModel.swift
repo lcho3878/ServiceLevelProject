@@ -50,14 +50,16 @@ final class HomeViewModel: ViewModelBindable {
         ])
         let myChannelIdList: PublishSubject<[String]>
         let goToMyChannel: PublishSubject<SelectedChannelData>
+        let profileImageData: PublishSubject<Data>
     }
     
     func transform(input: Input) -> Output {
         var myChannelList: [ChannelListModel] = []
         var myChannelListWithUnreadCount: [ChannelList] = []
         var myChannelIdList: [String] = []
+        let profileImage = PublishSubject<String>()
+        let profileImageData = PublishSubject<Data>()
         let workspaceIDInput = input.workspaceID.share()
-        
         let workspaceOutput = PublishSubject<WorkSpace>()
         
         input.viewDidLoadTrigger
@@ -87,6 +89,33 @@ final class HomeViewModel: ViewModelBindable {
                 
                 if let workspaceID = UserDefaultManager.workspaceID {
                     input.workspaceID.onNext(workspaceID)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 내 프로필 정보 조회
+        input.viewDidLoadTrigger
+            .flatMap { _ in
+                return APIManager.shared.callRequest(api: UserRouter.profile, type: UserProfileModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    if let image = success.profileImage {
+                        profileImage.onNext(image)
+                    }
+                case .failure(let failure):
+                    print(">>> Failed!: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 조회된 이미지 방출
+        profileImage
+            .bind(with: self) { owner, image in
+                Task {
+                    let data = try await APIManager.shared.loadImage(image)
+                    profileImageData.onNext(data)
                 }
             }
             .disposed(by: disposeBag)
@@ -204,7 +233,8 @@ final class HomeViewModel: ViewModelBindable {
             workspaceOutput: workspaceOutput,
             channelList: input.channelList,
             myChannelIdList: input.myChannelIdList,
-            goToMyChannel: input.goToMyChannel
+            goToMyChannel: input.goToMyChannel,
+            profileImageData: profileImageData
         )
     }
 }
