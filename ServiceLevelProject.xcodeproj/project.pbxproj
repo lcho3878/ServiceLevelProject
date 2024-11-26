@@ -42,6 +42,7 @@
 		545ED2FE2CF466630026F194 /* SocketRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED2FD2CF466630026F194 /* SocketRouter.swift */; };
 		545ED3062CF4934E0026F194 /* ChattingUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED3052CF4934E0026F194 /* ChattingUserModel.swift */; };
 		545ED3082CF493C10026F194 /* DMChatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED3072CF493C10026F194 /* DMChatting.swift */; };
+		545ED31C2CF6013D0026F194 /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545ED31B2CF6013D0026F194 /* Reactive.swift */; };
 		5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546589892CCE4FC500736BA9 /* AppDelegate.swift */; };
 		5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */; };
 		5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465898D2CCE4FC500736BA9 /* AuthorizationViewController.swift */; };
@@ -201,6 +202,7 @@
 		545ED2FD2CF466630026F194 /* SocketRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRouter.swift; sourceTree = "<group>"; };
 		545ED3052CF4934E0026F194 /* ChattingUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingUserModel.swift; sourceTree = "<group>"; };
 		545ED3072CF493C10026F194 /* DMChatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatting.swift; sourceTree = "<group>"; };
+		545ED31B2CF6013D0026F194 /* Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactive.swift; sourceTree = "<group>"; };
 		546589862CCE4FC500736BA9 /* ServiceLevelProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceLevelProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546589892CCE4FC500736BA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5465898B2CCE4FC500736BA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 				6876056C2CD2721C008167B0 /* UIButton+.swift */,
 				54A53FCA2CD609B800313E17 /* UITextField+.swift */,
 				68DD920B2CF38E1000A8A466 /* UIImage+.swift */,
+				545ED31B2CF6013D0026F194 /* Reactive.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1098,6 +1101,7 @@
 				54565AD02CCF977800B5A354 /* BaseViewController.swift in Sources */,
 				5476C9572CD4C7CA00E95AD4 /* ProfileEditViewController.swift in Sources */,
 				54565AB82CCE666B00B5A354 /* ViewModelBindable.swift in Sources */,
+				545ED31C2CF6013D0026F194 /* Reactive.swift in Sources */,
 				684E655C2CF226E1006B2F02 /* ChangeChannelAdminView.swift in Sources */,
 				687605742CD4CAE4008167B0 /* CustomAlertTransition.swift in Sources */,
 				68DD921D2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift in Sources */,
