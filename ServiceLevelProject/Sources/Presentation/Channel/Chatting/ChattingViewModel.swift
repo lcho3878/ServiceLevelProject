@@ -33,6 +33,8 @@ final class ChattingViewModel: ViewModelBindable {
         let isEmptyTextView: PublishSubject<Bool>
         let chattingOutput: PublishSubject<[Chatting]>
         let imageDataOutput: BehaviorSubject<[Data?]>
+        let successOutput: PublishSubject<Void>
+        let errorOutput: PublishSubject<ErrorModel>
     }
     
     func transform(input: Input) -> Output {
@@ -41,15 +43,18 @@ final class ChattingViewModel: ViewModelBindable {
         let isEmptyTextView = PublishSubject<Bool>()
         let chattingOutput = PublishSubject<[Chatting]>()
         let socketTrigger = PublishSubject<Void>()
+        let successOutput = PublishSubject<Void>()
+        let errorOutput = PublishSubject<ErrorModel>()
         let chattingQueryInput = Observable.combineLatest(input.sendMessageText, input.imageDataInput, input.isPlaceholder).share()
-        
+        let chattingRoomInfo = input.chattingRoomInfo.share()
+
         editInfo
             .bind(with: self) { owner, editInfo in
                 channelName.onNext(editInfo.name)
             }
             .disposed(by: disposeBag)
         
-        input.chattingRoomInfo
+        chattingRoomInfo
             .flatMap { [weak self] roomInfo in
                 self?.roodID = roomInfo.channelID
                 channelName.onNext(roomInfo.name)
@@ -71,8 +76,8 @@ final class ChattingViewModel: ViewModelBindable {
         
         // 전송버튼 활성화 / 비활성화
         chattingQueryInput
-            .bind { (message, datas, isPlaceholder) in
-                if message.isEmpty && datas.isEmpty {
+            .bind { (content, datas, isPlaceholder) in
+                if content.isEmpty && datas.isEmpty {
                     isEmptyTextView.onNext(true)
                 } else if isPlaceholder && datas.isEmpty {
                     isEmptyTextView.onNext(true)
@@ -81,6 +86,27 @@ final class ChattingViewModel: ViewModelBindable {
                 }
             }
             .disposed(by: disposeBag)
+        
+        // 전송버튼 클릭
+        input.sendButtonTap
+            .withLatestFrom(Observable.combineLatest(chattingRoomInfo, chattingQueryInput))
+            .flatMap { roomInfo, value in
+                let channelID = roomInfo.channelID
+                let (content, datas, isPlaceholder) = value
+                return APIManager.shared.callRequest(api: ChannelRouter.sendChatting(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: channelID, query: ChattingQuery(content: isPlaceholder ? "" : content, files: datas)), type: Chatting.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    // socket으로 전달이 오기 때문에 수신 필요 X
+                    successOutput.onNext(())
+                case .failure(let errorModel):
+                    errorOutput.onNext(errorModel)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+      
         
         socketTrigger
             .withLatestFrom(input.chattingRoomInfo)
@@ -102,7 +128,9 @@ final class ChattingViewModel: ViewModelBindable {
             inValidChannelMessage: inValidChannelMessage,
             isEmptyTextView: isEmptyTextView,
             chattingOutput: chattingOutput,
-            imageDataOutput: input.imageDataInput
+            imageDataOutput: input.imageDataInput,
+            successOutput: successOutput,
+            errorOutput: errorOutput
         )
     }
     

@@ -130,6 +130,23 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
+        // 내 채팅 전송 완료
+        output.successOutput
+            .bind(with: self) { owner, _ in
+                owner.chattingView.chatTextView.rx.text.onNext(nil)
+                owner.selectedImageList = []
+                owner.selectedAssetIdentifiers = []
+                owner.selectedImageData.onNext([])
+            }
+            .disposed(by: disposeBag)
+        
+        // 에러 핸들링
+        output.errorOutput
+            .bind(with: self) { owner, errorModel in
+                owner.chattingView.showToast(message: errorModel.errorCode, bottomOffset: -120)
+            }
+            .disposed(by: disposeBag)
+        
         chattingView.chatTextView.rx.textColor
             .bind { textColor in
                 input.isPlaceholder.onNext(textColor == UIColor.textSecondary)
