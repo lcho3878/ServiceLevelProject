@@ -18,6 +18,7 @@ final class ChattingView: BaseView {
     }
     
     let chattingTableView = UITableView().then {
+        $0.separatorStyle = .none
         $0.rowHeight = UITableView.automaticDimension
         $0.register(ChattingTableViewCell.self, forCellReuseIdentifier: ChattingTableViewCell.id)
     }
