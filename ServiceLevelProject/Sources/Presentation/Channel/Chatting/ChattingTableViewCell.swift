@@ -115,9 +115,7 @@ final class ChattingTableViewCell: BaseTableViewCell {
 }
 
 extension ChattingTableViewCell {
-    typealias Chatting = ChannelChatHistoryModel
-    
-    func configureData(_ data: Chatting) {
+    func configureData(_ data: ChattingModel) {
         nicknameLabel.text = data.user.nickname
         Task { [weak self] in
             let data = try await APIManager.shared.loadImage(data.user.profileImage)

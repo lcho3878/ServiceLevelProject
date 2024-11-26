@@ -10,11 +10,10 @@ import RxSwift
 import RxCocoa
 
 final class ChattingViewModel: ViewModelBindable {
-    typealias Chatting = ChannelChatHistoryModel
     let disposeBag = DisposeBag()
     let editInfo = PublishSubject<SelectedChannelData>()
     var roodID: String?
-    var chattings: [Chatting] = []
+    var chattings: [ChattingModel] = []
     
     struct Input {
         let viewDidLoadTrigger = PublishSubject<Void>()
@@ -31,7 +30,7 @@ final class ChattingViewModel: ViewModelBindable {
         let channelName: BehaviorSubject<String>
         let inValidChannelMessage: PublishSubject<(String, String, String)>
         let isEmptyTextView: PublishSubject<Bool>
-        let chattingOutput: PublishSubject<[Chatting]>
+        let chattingOutput: PublishSubject<[ChattingModel]>
         let imageDataOutput: BehaviorSubject<[Data?]>
         let successOutput: PublishSubject<Void>
         let errorOutput: PublishSubject<ErrorModel>
@@ -41,7 +40,7 @@ final class ChattingViewModel: ViewModelBindable {
         let inValidChannelMessage = PublishSubject<(String, String, String)>()
         let channelName = BehaviorSubject(value: "")
         let isEmptyTextView = PublishSubject<Bool>()
-        let chattingOutput = PublishSubject<[Chatting]>()
+        let chattingOutput = PublishSubject<[ChattingModel]>()
         let socketTrigger = PublishSubject<Void>()
         let successOutput = PublishSubject<Void>()
         let errorOutput = PublishSubject<ErrorModel>()
@@ -58,7 +57,7 @@ final class ChattingViewModel: ViewModelBindable {
             .flatMap { [weak self] roomInfo in
                 self?.roodID = roomInfo.channelID
                 channelName.onNext(roomInfo.name)
-                return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: Date.currentDate(), workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomInfo.channelID), type: [ChannelChatHistoryModel].self)
+                return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: Date.currentDate(), workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomInfo.channelID), type: [ChattingModel].self)
             }
             .bind(with: self) { owner, value in
                 switch value {
@@ -93,7 +92,7 @@ final class ChattingViewModel: ViewModelBindable {
             .flatMap { roomInfo, value in
                 let channelID = roomInfo.channelID
                 let (content, datas, isPlaceholder) = value
-                return APIManager.shared.callRequest(api: ChannelRouter.sendChatting(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: channelID, query: ChattingQuery(content: isPlaceholder ? "" : content, files: datas)), type: Chatting.self)
+                return APIManager.shared.callRequest(api: ChannelRouter.sendChatting(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: channelID, query: ChattingQuery(content: isPlaceholder ? "" : content, files: datas)), type: ChattingModel.self)
             }
             .bind(with: self) { owner, result in
                 switch result {
@@ -116,7 +115,7 @@ final class ChattingViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-        WebSocketManager.shared.channelOutput
+        WebSocketManager.shared.chattingOutput
             .bind(with: self) { owner, chatting in
                 owner.chattings.append(chatting)
                 chattingOutput.onNext(owner.chattings)

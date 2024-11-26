@@ -10,13 +10,11 @@ import SocketIO
 import RxSwift
 
 final class WebSocketManager {
-    typealias ChannelChatting = ChannelChatHistoryModel
     private var manager: SocketManager?
     private var socket: SocketIOClient?
     
     var router: SocketRouter?
-    var channelOutput = PublishSubject<ChannelChatting>()
-    var dmOutput = PublishSubject<DMChatting>()
+    var chattingOutput = PublishSubject<ChattingModel>()
     
     static let shared = WebSocketManager()
     
@@ -66,15 +64,8 @@ extension WebSocketManager {
             }
             
             if let dictionary = firstItem as? [String: Any] {
-                switch router {
-                case .channel:
-                    if let chatting = self?.parseDictionary(of: ChannelChatting.self, dictionary: dictionary) {
-                        self?.channelOutput.onNext(chatting)
-                    }
-                case .dm:
-                    if let chatting = self?.parseDictionary(of: DMChatting.self, dictionary: dictionary) {
-                        self?.dmOutput.onNext(chatting)
-                    }
+                if let chatting = self?.parseDictionary(of: ChattingModel.self, dictionary: dictionary) {
+                    self?.chattingOutput.onNext(chatting)
                 }
             }
         }
