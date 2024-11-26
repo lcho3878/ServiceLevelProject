@@ -19,7 +19,7 @@ final class ChattingViewController: BaseViewController {
     
     private var selections = [String : PHPickerResult]()
     private var selectedAssetIdentifiers = [String]()
-    private let selectedImageData = PublishSubject<[Data?]>()
+    private let selectedImageData = BehaviorSubject<[Data?]>(value: [])
     private var selectedImageList: [UIImage] = []
     
     // MARK: View Life Cycle
@@ -123,9 +123,43 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
+        // 채팅 리스트 업데이트 (DB, API, Socket 모든 Output)
+        let chattingOutput = output.chattingOutput.share()
+        
         output.chattingOutput
             .bind(to: chattingView.chattingTableView.rx.items(cellIdentifier: ChattingTableViewCell.id, cellType: ChattingTableViewCell.self)) { row, element, cell in
                 cell.configureData(element)
+            }
+            .disposed(by: disposeBag)
+        
+        chattingOutput
+            .bind(with: self) { owner, chattings in
+                guard !chattings.isEmpty else { return }
+                let indexPath = IndexPath(row: chattings.count - 1, section: 0)
+                owner.chattingView.chattingTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
+            .disposed(by: disposeBag)
+        
+        // 내 채팅 전송 완료
+        output.successOutput
+            .bind(with: self) { owner, _ in
+                owner.chattingView.chatTextView.rx.text.onNext(nil)
+                owner.selectedImageList = []
+                owner.selectedAssetIdentifiers = []
+                owner.selectedImageData.onNext([])
+            }
+            .disposed(by: disposeBag)
+        
+        // 에러 핸들링
+        output.errorOutput
+            .bind(with: self) { owner, errorModel in
+                owner.chattingView.showToast(message: errorModel.errorCode, bottomOffset: -120)
+            }
+            .disposed(by: disposeBag)
+        
+        chattingView.chatTextView.rx.textColor
+            .bind { textColor in
+                input.isPlaceholder.onNext(textColor == UIColor.textSecondary)
             }
             .disposed(by: disposeBag)
     }

@@ -20,10 +20,11 @@ final class ChattingViewModel: ViewModelBindable {
         let viewDidLoadTrigger = PublishSubject<Void>()
         let chattingRoomInfo = PublishSubject<SelectedChannelData>()
         let sendMessageText: ControlProperty<String>
+        let isPlaceholder = BehaviorSubject<Bool>(value: true)
         let sendButtonTap: ControlEvent<Void>
         let addImageButtonTap: ControlEvent<Void>
         let isImageListEmpty = BehaviorSubject(value: false)
-        let imageDataInput: PublishSubject<[Data?]>
+        let imageDataInput: BehaviorSubject<[Data?]>
     }
     
     struct Output {
@@ -31,7 +32,9 @@ final class ChattingViewModel: ViewModelBindable {
         let inValidChannelMessage: PublishSubject<(String, String, String)>
         let isEmptyTextView: PublishSubject<Bool>
         let chattingOutput: PublishSubject<[Chatting]>
-        let imageDataOutput: PublishSubject<[Data?]>
+        let imageDataOutput: BehaviorSubject<[Data?]>
+        let successOutput: PublishSubject<Void>
+        let errorOutput: PublishSubject<ErrorModel>
     }
     
     func transform(input: Input) -> Output {
@@ -40,15 +43,18 @@ final class ChattingViewModel: ViewModelBindable {
         let isEmptyTextView = PublishSubject<Bool>()
         let chattingOutput = PublishSubject<[Chatting]>()
         let socketTrigger = PublishSubject<Void>()
-        let imageDataOutput = PublishSubject<[Data?]>()
-        
+        let successOutput = PublishSubject<Void>()
+        let errorOutput = PublishSubject<ErrorModel>()
+        let chattingQueryInput = Observable.combineLatest(input.sendMessageText, input.imageDataInput, input.isPlaceholder).share()
+        let chattingRoomInfo = input.chattingRoomInfo.share()
+
         editInfo
             .bind(with: self) { owner, editInfo in
                 channelName.onNext(editInfo.name)
             }
             .disposed(by: disposeBag)
         
-        input.chattingRoomInfo
+        chattingRoomInfo
             .flatMap { [weak self] roomInfo in
                 self?.roodID = roomInfo.channelID
                 channelName.onNext(roomInfo.name)
@@ -69,16 +75,38 @@ final class ChattingViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         // 전송버튼 활성화 / 비활성화
-        Observable.combineLatest(input.sendMessageText, input.isImageListEmpty)
-            .bind(with: self) { owner, value in
-                let (text, image) = value
-                if !text.isEmpty || !image {
-                    isEmptyTextView.onNext(false)
-                } else {
+        chattingQueryInput
+            .bind { (content, datas, isPlaceholder) in
+                if content.isEmpty && datas.isEmpty {
                     isEmptyTextView.onNext(true)
+                } else if isPlaceholder && datas.isEmpty {
+                    isEmptyTextView.onNext(true)
+                } else {
+                    isEmptyTextView.onNext(false)
                 }
             }
             .disposed(by: disposeBag)
+        
+        // 전송버튼 클릭
+        input.sendButtonTap
+            .withLatestFrom(Observable.combineLatest(chattingRoomInfo, chattingQueryInput))
+            .flatMap { roomInfo, value in
+                let channelID = roomInfo.channelID
+                let (content, datas, isPlaceholder) = value
+                return APIManager.shared.callRequest(api: ChannelRouter.sendChatting(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: channelID, query: ChattingQuery(content: isPlaceholder ? "" : content, files: datas)), type: Chatting.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    // socket으로 전달이 오기 때문에 수신 필요 X
+                    successOutput.onNext(())
+                case .failure(let errorModel):
+                    errorOutput.onNext(errorModel)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+      
         
         socketTrigger
             .withLatestFrom(input.chattingRoomInfo)
@@ -100,7 +128,9 @@ final class ChattingViewModel: ViewModelBindable {
             inValidChannelMessage: inValidChannelMessage,
             isEmptyTextView: isEmptyTextView,
             chattingOutput: chattingOutput,
-            imageDataOutput: input.imageDataInput
+            imageDataOutput: input.imageDataInput,
+            successOutput: successOutput,
+            errorOutput: errorOutput
         )
     }
     
