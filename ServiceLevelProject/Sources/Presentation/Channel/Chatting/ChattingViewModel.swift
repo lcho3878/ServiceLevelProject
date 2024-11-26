@@ -20,6 +20,7 @@ final class ChattingViewModel: ViewModelBindable {
         let viewDidLoadTrigger = PublishSubject<Void>()
         let chattingRoomInfo = PublishSubject<SelectedChannelData>()
         let sendMessageText: ControlProperty<String>
+        let isPlaceholder = BehaviorSubject<Bool>(value: true)
         let sendButtonTap: ControlEvent<Void>
         let addImageButtonTap: ControlEvent<Void>
         let isImageListEmpty = BehaviorSubject(value: false)
@@ -40,6 +41,7 @@ final class ChattingViewModel: ViewModelBindable {
         let isEmptyTextView = PublishSubject<Bool>()
         let chattingOutput = PublishSubject<[Chatting]>()
         let socketTrigger = PublishSubject<Void>()
+        let chattingQueryInput = Observable.combineLatest(input.sendMessageText, input.imageDataInput, input.isPlaceholder).share()
         
         editInfo
             .bind(with: self) { owner, editInfo in
@@ -68,9 +70,15 @@ final class ChattingViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         // 전송버튼 활성화 / 비활성화
-        Observable.combineLatest(input.sendMessageText, input.imageDataInput)
-            .bind { (message, datas) in
-                isEmptyTextView.onNext(message.isEmpty && datas.isEmpty)
+        chattingQueryInput
+            .bind { (message, datas, isPlaceholder) in
+                if message.isEmpty && datas.isEmpty {
+                    isEmptyTextView.onNext(true)
+                } else if isPlaceholder && datas.isEmpty {
+                    isEmptyTextView.onNext(true)
+                } else {
+                    isEmptyTextView.onNext(false)
+                }
             }
             .disposed(by: disposeBag)
         

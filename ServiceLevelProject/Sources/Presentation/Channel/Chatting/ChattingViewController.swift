@@ -46,6 +46,7 @@ final class ChattingViewController: BaseViewController {
 
 extension ChattingViewController {
     private func bind() {
+        
         let input = ChattingViewModel.Input(
             sendMessageText: chattingView.chatTextView.rx.text.orEmpty,
             sendButtonTap: chattingView.sendButton.rx.tap,
@@ -126,6 +127,12 @@ extension ChattingViewController {
         output.chattingOutput
             .bind(to: chattingView.chattingTableView.rx.items(cellIdentifier: ChattingTableViewCell.id, cellType: ChattingTableViewCell.self)) { row, element, cell in
                 cell.configureData(element)
+            }
+            .disposed(by: disposeBag)
+        
+        chattingView.chatTextView.rx.textColor
+            .bind { textColor in
+                input.isPlaceholder.onNext(textColor == UIColor.textSecondary)
             }
             .disposed(by: disposeBag)
     }
