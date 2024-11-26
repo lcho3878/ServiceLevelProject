@@ -166,6 +166,7 @@
 		68DD921B2CF4679500A8A466 /* SearchUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921A2CF4679500A8A466 /* SearchUserViewModel.swift */; };
 		68DD921D2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921C2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift */; };
 		68DD921F2CF48DDB00A8A466 /* AddImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD921E2CF48DDB00A8A466 /* AddImageCell.swift */; };
+		68DD92212CF5C74A00A8A466 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DD92202CF5C74A00A8A466 /* ProfileViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -320,6 +321,7 @@
 		68DD921A2CF4679500A8A466 /* SearchUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserViewModel.swift; sourceTree = "<group>"; };
 		68DD921C2CF46B5500A8A466 /* WorkspaceSearchUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSearchUserModel.swift; sourceTree = "<group>"; };
 		68DD921E2CF48DDB00A8A466 /* AddImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageCell.swift; sourceTree = "<group>"; };
+		68DD92202CF5C74A00A8A466 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -609,6 +611,7 @@
 				54A53FD72CD636D200313E17 /* ProfileViewController.swift */,
 				54A53FD92CD636D500313E17 /* ProfileView.swift */,
 				54A53FDB2CD63A6C00313E17 /* ProfileTableViewCell.swift */,
+				68DD92202CF5C74A00A8A466 /* ProfileViewModel.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -1061,6 +1064,7 @@
 				5465898A2CCE4FC500736BA9 /* AppDelegate.swift in Sources */,
 				6876055C2CCF81AE008167B0 /* HomeViewModel.swift in Sources */,
 				687605782CD542E1008167B0 /* DoubleButtonAlertViewController.swift in Sources */,
+				68DD92212CF5C74A00A8A466 /* ProfileViewModel.swift in Sources */,
 				541DC7232CE0F57D0051E898 /* EditChannelView.swift in Sources */,
 				684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */,
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,

@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-final class ProfileViewController: BaseViewController {
+final class ProfileViewController: BaseViewController, DismissButtonPresentable {
     private let profileView = ProfileView()
+    private let viewModel = ProfileViewModel()
+    private let disposeBag = DisposeBag()
+    var userID: String?
     
     override func loadView() {
         view = profileView
@@ -17,7 +22,8 @@ final class ProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureTableView()
+        setDismissButton()
+        bind()
     }
     
     override func configureNavigation() {
@@ -25,48 +31,26 @@ final class ProfileViewController: BaseViewController {
     }
 }
 
-extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
-    private func configureTableView() {
-        profileView.profileTableView.delegate = self
-        profileView.profileTableView.dataSource = self
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ProfileContent.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.id, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
-        let data = ProfileContent.allCases[indexPath.row]
-        cell.configureData(data)
-        return cell
-    }
-}
-
 extension ProfileViewController {
-    enum ProfileContent: TableViewRepresentable, CaseIterable {
-        case nickname
-        case email
-        var titleString: String {
-            switch self {
-            case .nickname:
-                "닉네임"
-            case .email:
-                "이메일"
-            }
+    private func bind() {
+        let input = ProfileViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
+        if let userID = userID {
+            input.userID.onNext(userID)
         }
-        var subTitleString: String {
-            switch self {
-            case .nickname:
-                "내 브랜아입니다"
-            case .email:
-                "branTest3321021@gmail.com"
+        
+        output.targetUserInfo
+            .bind(with: self) { owner, info in
+                DispatchQueue.main.async {
+                    if let image = info.image {
+                        owner.profileView.profileImageView.image = UIImage(data: image)
+                    }
+                    
+                    owner.profileView.nicknameLabel.text = info.nickname
+                    owner.profileView.emailLabel.text = info.email
+                }
             }
-        }
+            .disposed(by: disposeBag)
     }
-}
-
-protocol TableViewRepresentable {
-    var titleString: String { get }
-    var subTitleString: String { get }
 }
