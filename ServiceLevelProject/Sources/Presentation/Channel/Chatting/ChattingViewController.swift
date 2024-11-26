@@ -19,7 +19,7 @@ final class ChattingViewController: BaseViewController {
     
     private var selections = [String : PHPickerResult]()
     private var selectedAssetIdentifiers = [String]()
-    private let selectedImageData = PublishSubject<[Data?]>()
+    private let selectedImageData = BehaviorSubject<[Data?]>(value: [])
     private var selectedImageList: [UIImage] = []
     
     // MARK: View Life Cycle

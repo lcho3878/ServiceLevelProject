@@ -23,7 +23,7 @@ final class ChattingViewModel: ViewModelBindable {
         let sendButtonTap: ControlEvent<Void>
         let addImageButtonTap: ControlEvent<Void>
         let isImageListEmpty = BehaviorSubject(value: false)
-        let imageDataInput: PublishSubject<[Data?]>
+        let imageDataInput: BehaviorSubject<[Data?]>
     }
     
     struct Output {
@@ -31,7 +31,7 @@ final class ChattingViewModel: ViewModelBindable {
         let inValidChannelMessage: PublishSubject<(String, String, String)>
         let isEmptyTextView: PublishSubject<Bool>
         let chattingOutput: PublishSubject<[Chatting]>
-        let imageDataOutput: PublishSubject<[Data?]>
+        let imageDataOutput: BehaviorSubject<[Data?]>
     }
     
     func transform(input: Input) -> Output {
@@ -40,7 +40,6 @@ final class ChattingViewModel: ViewModelBindable {
         let isEmptyTextView = PublishSubject<Bool>()
         let chattingOutput = PublishSubject<[Chatting]>()
         let socketTrigger = PublishSubject<Void>()
-        let imageDataOutput = PublishSubject<[Data?]>()
         
         editInfo
             .bind(with: self) { owner, editInfo in
@@ -69,14 +68,9 @@ final class ChattingViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         // 전송버튼 활성화 / 비활성화
-        Observable.combineLatest(input.sendMessageText, input.isImageListEmpty)
-            .bind(with: self) { owner, value in
-                let (text, image) = value
-                if !text.isEmpty || !image {
-                    isEmptyTextView.onNext(false)
-                } else {
-                    isEmptyTextView.onNext(true)
-                }
+        Observable.combineLatest(input.sendMessageText, input.imageDataInput)
+            .bind { (message, datas) in
+                isEmptyTextView.onNext(message.isEmpty && datas.isEmpty)
             }
             .disposed(by: disposeBag)
         
