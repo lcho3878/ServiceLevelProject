@@ -78,6 +78,7 @@
 		54A53FE12CD63DBA00313E17 /* CoinShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE02CD63DBA00313E17 /* CoinShopView.swift */; };
 		54A53FE52CD6426D00313E17 /* CoinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE42CD6426D00313E17 /* CoinTableViewCell.swift */; };
 		54A53FE72CD65E0600313E17 /* CameraImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE62CD65E0600313E17 /* CameraImageView.swift */; };
+		54CA54992CF620DD00A44FD4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 54CA54982CF620DD00A44FD4 /* RealmSwift */; };
 		684E653A2CE60FDF006B2F02 /* WorkspaceInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */; };
 		684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */; };
 		684E653E2CE62E66006B2F02 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653D2CE62E66006B2F02 /* LoginViewModel.swift */; };
@@ -329,6 +330,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54CA54992CF620DD00A44FD4 /* RealmSwift in Frameworks */,
 				541DC72F2CE1D2980051E898 /* FirebaseMessaging in Frameworks */,
 				687605452CCE5948008167B0 /* RxCocoa in Frameworks */,
 				687605BF2CE1D881008167B0 /* Alamofire in Frameworks */,
@@ -908,6 +910,7 @@
 				541DC72C2CE1D2980051E898 /* FirebaseCrashlytics */,
 				541DC72E2CE1D2980051E898 /* FirebaseMessaging */,
 				545ED2F92CF44E630026F194 /* SocketIO */,
+				54CA54982CF620DD00A44FD4 /* RealmSwift */,
 			);
 			productName = ServiceLevelProject;
 			productReference = 546589862CCE4FC500736BA9 /* ServiceLevelProject.app */;
@@ -946,6 +949,7 @@
 				687605BD2CE1D881008167B0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				541DC7292CE1D2980051E898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				545ED2F82CF44E630026F194 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				54CA54972CF620DD00A44FD4 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 546589872CCE4FC500736BA9 /* Products */;
 			projectDirPath = "";
@@ -1362,6 +1366,14 @@
 				kind = branch;
 			};
 		};
+		54CA54972CF620DD00A44FD4 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.54.1;
+			};
+		};
 		6876053D2CCE58F0008167B0 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1432,6 +1444,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 545ED2F82CF44E630026F194 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
 			productName = SocketIO;
+		};
+		54CA54982CF620DD00A44FD4 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54CA54972CF620DD00A44FD4 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		6876053E2CCE58F0008167B0 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
