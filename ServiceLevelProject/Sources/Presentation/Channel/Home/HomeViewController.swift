@@ -153,15 +153,6 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        /// 프로필 이미지
-        output.profileImageData
-            .bind(with: self) { owner, imageData in
-                DispatchQueue.main.async {
-                    owner.homeNavigationView.profileButton.setImage(UIImage(data: imageData), for: .normal)
-                }
-            }
-            .disposed(by: disposeBag)
-        
         // 채널 리스트
         output.channelList
             .bind(to: homeView.channelTableView.rx.items(cellIdentifier: ChannelCell.id, cellType: ChannelCell.self)) { (row, element, cell) in
@@ -309,6 +300,12 @@ extension HomeViewController {
             selector: #selector(changeAdminRecieved),
             name: Notification.Name(NotificationKey.changeAdmin.rawValue),
             object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(profileImageData(_:)),
+            name: .profileImageData,
+            object: nil)
     }
     
     @objc
@@ -316,6 +313,15 @@ extension HomeViewController {
         if let userinfo = notification.userInfo,
            let message = userinfo[NotificationKey.toastMessage] as? String {
             homeView.showToast(message: message, bottomOffset: -120)
+        }
+    }
+    
+    @objc
+    private func profileImageData(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let profileImage = userInfo["profileData"] as? Data else { return }
+        DispatchQueue.main.async {
+            self.homeNavigationView.profileButton.setImage(UIImage(data: profileImage), for: .normal)
         }
     }
 }

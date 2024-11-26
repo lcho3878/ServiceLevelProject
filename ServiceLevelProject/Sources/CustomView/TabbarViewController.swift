@@ -11,6 +11,14 @@ final class TabbarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabbar()
+        
+        viewControllers?.forEach {
+            if let nav = $0 as? UINavigationController {
+                let _ = nav.topViewController?.view
+            } else {
+                let _ = $0.view
+            }
+        }
     }
 }
 

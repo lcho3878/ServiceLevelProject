@@ -116,6 +116,9 @@ final class HomeViewModel: ViewModelBindable {
                 Task {
                     let data = try await APIManager.shared.loadImage(image)
                     profileImageData.onNext(data)
+                    // NotificationCenter 프로필 이미지 전송
+                    let imageData: [String: Data] = ["profileData": data]
+                    NotificationCenter.default.post(name: .profileImageData, object: nil, userInfo: imageData)
                 }
             }
             .disposed(by: disposeBag)

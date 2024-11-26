@@ -63,7 +63,7 @@ extension ProfileEditViewController {
         // 선택한 프로필 이미지
         selectedImage
             .bind(with: self) { owner, image in
-                if let selectedImage = image?.jpegData(compressionQuality: 0.6) {
+                if let selectedImage = image?.asData() {
                     input.selectedProfileImage.onNext(selectedImage)
                 }
             }

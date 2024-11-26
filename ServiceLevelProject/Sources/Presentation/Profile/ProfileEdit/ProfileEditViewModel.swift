@@ -87,6 +87,9 @@ final class ProfileEditViewModel: ViewModelBindable {
                     if let image = imageString {
                         let data = try await APIManager.shared.loadImage(image)
                         changedImageData.onNext(data)
+                        // NotificationCenter 프로필 이미지 전송
+                        let imageData: [String: Data] = ["profileData": data]
+                        NotificationCenter.default.post(name: .profileImageData, object: nil, userInfo: imageData)
                     }
                 }
             }
