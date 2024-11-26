@@ -14,3 +14,9 @@ extension UIImage {
         return randomImage
     }
 }
+
+extension UIImage {
+    func asData() -> Data? {
+        return self.jpegData(compressionQuality: 0.6)
+    }
+}

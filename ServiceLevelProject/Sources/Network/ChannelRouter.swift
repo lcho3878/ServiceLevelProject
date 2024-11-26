@@ -19,6 +19,7 @@ enum ChannelRouter {
     case editChannel(workspaceID: String, channelID: String, query: ChannelQuery)
     case channelDetails(workspaceID: String, channelID: String)
     case changeAdmin(workspaceID: String, channelID: String, query: OwnerQuery)
+    case sendChatting(workspaceID: String, channelID: String, query: ChattingQuery)
 }
 
 extension ChannelRouter : TargetType {
@@ -30,7 +31,7 @@ extension ChannelRouter : TargetType {
         switch self {
         case .channelList, .myChannelList, .unreadCount, .exitChannel, .fetchChannelChatHistory, .channelDetails:
             return .get
-        case .addChannel:
+        case .addChannel, .sendChatting:
             return .post
         case .deleteChannel:
             return .delete
@@ -61,6 +62,8 @@ extension ChannelRouter : TargetType {
             return "/workspaces/\(workspaceID)/channels/\(channelID)"
         case let .changeAdmin(workspaceID, channelID, _):
             return "/workspaces/\(workspaceID)/channels/\(channelID)/transfer/ownership"
+        case let .sendChatting(workspaceID, channelID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/chats"
         }
     }
     
@@ -72,7 +75,7 @@ extension ChannelRouter : TargetType {
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""
             ]
-        case .addChannel, .editChannel:
+        case .addChannel, .editChannel, .sendChatting:
             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
@@ -132,6 +135,15 @@ extension ChannelRouter : TargetType {
             return multipart
         case let .editChannel(_, _, query):
             appendCommonFields(for: query)
+            return multipart
+        case let.sendChatting(_, _, query):
+            let content = query.content.data(using: .utf8) ?? Data()
+            multipart.append(content, withName: "content")
+            if query.files.isEmpty { return multipart }
+            for (i, file) in query.files.enumerated() {
+                guard let file else { continue }
+                multipart.append(file, withName: "files", fileName: "\(i).jpeg", mimeType: "image/jpeg")
+            }
             return multipart
         default:
             return nil

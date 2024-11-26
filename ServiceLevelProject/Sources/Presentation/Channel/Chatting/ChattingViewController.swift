@@ -10,11 +10,6 @@ import RxSwift
 import RxCocoa
 import PhotosUI
 
-struct SelectedImage {
-    let assetId: String
-    let image: UIImage
-}
-
 final class ChattingViewController: BaseViewController {
     // MARK: Properties
     private let chattingView = ChattingView()
@@ -24,8 +19,8 @@ final class ChattingViewController: BaseViewController {
     
     private var selections = [String : PHPickerResult]()
     private var selectedAssetIdentifiers = [String]()
-    var selectedImages = PublishSubject<[UIImage]>()
-    var selectedImageList: [UIImage] = []
+    private let selectedImageData = BehaviorSubject<[Data?]>(value: [])
+    private var selectedImageList: [UIImage] = []
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -54,7 +49,8 @@ extension ChattingViewController {
         let input = ChattingViewModel.Input(
             sendMessageText: chattingView.chatTextView.rx.text.orEmpty,
             sendButtonTap: chattingView.sendButton.rx.tap,
-            addImageButtonTap: chattingView.plusButton.rx.tap
+            addImageButtonTap: chattingView.plusButton.rx.tap,
+            imageDataInput: selectedImageData
         )
         let output = viewModel.transform(input: input)
         
@@ -80,20 +76,23 @@ extension ChattingViewController {
                 }
             }
             .disposed(by: disposeBag)
-        
-        
+
         // 선택된 이미지
-        selectedImages
-            .bind(to: chattingView.addImageCollectionView.rx.items(cellIdentifier: AddImageCell.id, cellType: AddImageCell.self)) { (row, element, cell) in
-                cell.imageView.image = element
-                // 선택된 이미지 삭제
-                cell.deleteButton.rx.tap
-                    .bind(with: self) { owner, _ in
-                        owner.selectedImageList.removeAll(where: { $0 == element })
-                        owner.selectedAssetIdentifiers.remove(at: row)
-                        owner.selectedImages.onNext(owner.selectedImageList)
-                    }
-                    .disposed(by: cell.disposeBag)
+        output.imageDataOutput
+            .bind(to: chattingView.addImageCollectionView.rx.items(cellIdentifier: AddImageCell.id, cellType: AddImageCell.self)) { [weak self] (row, element, cell) in
+                guard let self else { return }
+                if let data = element {
+                    cell.imageView.image = UIImage(data: data)
+                    // 선택된 이미지 삭제
+                    cell.deleteButton.rx.tap
+                        .bind(with: self) { owner, _ in
+                            owner.selectedImageList.removeAll(where: { $0.asData() == data })
+                            owner.selectedAssetIdentifiers.remove(at: row)
+                            let datas = owner.selectedImageList.map { $0.asData() }
+                            owner.selectedImageData.onNext(datas)
+                        }
+                        .disposed(by: cell.disposeBag)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -105,7 +104,7 @@ extension ChattingViewController {
             .disposed(by: disposeBag)
         
         // 이미지 없는 경우
-        selectedImages
+        selectedImageData
             .bind(with: self) { owner, imageList in
                 if imageList.isEmpty {
                     owner.chattingView.addImageCollectionView.isHidden = true
@@ -124,9 +123,43 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
+        // 채팅 리스트 업데이트 (DB, API, Socket 모든 Output)
+        let chattingOutput = output.chattingOutput.share()
+        
         output.chattingOutput
             .bind(to: chattingView.chattingTableView.rx.items(cellIdentifier: ChattingTableViewCell.id, cellType: ChattingTableViewCell.self)) { row, element, cell in
                 cell.configureData(element)
+            }
+            .disposed(by: disposeBag)
+        
+        chattingOutput
+            .bind(with: self) { owner, chattings in
+                guard !chattings.isEmpty else { return }
+                let indexPath = IndexPath(row: chattings.count - 1, section: 0)
+                owner.chattingView.chattingTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
+            .disposed(by: disposeBag)
+        
+        // 내 채팅 전송 완료
+        output.successOutput
+            .bind(with: self) { owner, _ in
+                owner.chattingView.chatTextView.rx.text.onNext(nil)
+                owner.selectedImageList = []
+                owner.selectedAssetIdentifiers = []
+                owner.selectedImageData.onNext([])
+            }
+            .disposed(by: disposeBag)
+        
+        // 에러 핸들링
+        output.errorOutput
+            .bind(with: self) { owner, errorModel in
+                owner.chattingView.showToast(message: errorModel.errorCode, bottomOffset: -120)
+            }
+            .disposed(by: disposeBag)
+        
+        chattingView.chatTextView.rx.textColor
+            .bind { textColor in
+                input.isPlaceholder.onNext(textColor == UIColor.textSecondary)
             }
             .disposed(by: disposeBag)
     }
@@ -204,7 +237,8 @@ extension ChattingViewController {
                 imageList.append(image)
                 selectedImageList.removeAll()
                 selectedImageList.append(contentsOf: imageList)
-                selectedImages.onNext(imageList)
+                let dataList = imageList.map { $0.jpegData(compressionQuality: 0.6) }
+                selectedImageData.onNext(dataList)
             }
         }
     }
@@ -224,7 +258,7 @@ extension ChattingViewController: PHPickerViewControllerDelegate {
         selectedAssetIdentifiers = results.compactMap { $0.assetIdentifier }
         
         if selections.isEmpty {
-            selectedImages.onNext([])
+            selectedImageData.onNext([])
         } else {
             displayImage()
         }
