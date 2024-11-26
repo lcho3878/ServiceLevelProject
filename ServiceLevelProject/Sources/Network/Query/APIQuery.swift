@@ -65,3 +65,9 @@ struct EditNicknameQuery: Encodable {
 struct EditPhoneNumberQuery: Encodable {
     let phone: String
 }
+
+// MARK: Chatting
+struct ChattingQuery: Encodable {
+    let content: String
+    let files: [Data?]
+}
