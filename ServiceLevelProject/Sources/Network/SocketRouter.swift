@@ -22,7 +22,7 @@ extension SocketRouter {
         case .channel(let id):
             return "/ws-channel-\(id)"
         case .dm(let id):
-            return "/ws/-dm-\(id)"
+            return "/ws-dm-\(id)"
         }
     }
     
@@ -30,7 +30,7 @@ extension SocketRouter {
         switch self {
         case .channel:
             return "channel"
-        case .dm(let id):
+        case .dm:
             return "dm"
         }
     }
