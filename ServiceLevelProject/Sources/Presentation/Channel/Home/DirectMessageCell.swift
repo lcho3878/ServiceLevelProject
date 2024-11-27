@@ -10,12 +10,6 @@ import SnapKit
 import Then
 
 final class DirectMessageCell: BaseTableViewCell {
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        unreadBadgeView.isHidden = false
-    }
-    
     // MARK: UI
     let profileImageView = UIImageView().then {
         $0.image = UIImage.randomDefaultImage()
@@ -83,14 +77,11 @@ final class DirectMessageCell: BaseTableViewCell {
                 profileImageView.image = UIImage(data: profileImage)
             }
         }
+        
         userNameLabel.text = element.nickname
-        if element.unreadCount > 0 {
-            unreadCountLabel.text = "\(element.unreadCount)"
-            userNameLabel.font = .bodyBold
-        } else {
-            unreadBadgeView.isHidden = true
-            userNameLabel.font = .body
-        }
+        userNameLabel.font = element.unreadCount == 0 ? .body : .bodyBold
+        unreadCountLabel.text = "\(element.unreadCount)"
+        unreadBadgeView.isHidden = element.unreadCount == 0
         selectionStyle = .none
     }
 }

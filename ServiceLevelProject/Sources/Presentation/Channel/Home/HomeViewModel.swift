@@ -19,7 +19,7 @@ final class HomeViewModel: ViewModelBindable {
         let myChannelList = PublishSubject<[ChannelListModel]>()
         let channelList = BehaviorSubject(value: [ChannelList(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "", unreadCount: 0)])
         let myChannelIdList = PublishSubject<[String]>()
-        let tableViewModelSelected: ControlEvent<ChannelList>
+        let channelTableViewModelSelected: ControlEvent<ChannelList>
         let goToMyChannel = PublishSubject<SelectedChannelData>()
         
         let myDMList = PublishSubject<[DMRoomListModel]>()
@@ -211,7 +211,7 @@ final class HomeViewModel: ViewModelBindable {
             .disposed(by: disposeBag)
         
         // 채널 클릭
-        input.tableViewModelSelected
+        input.channelTableViewModelSelected
             .bind(with: self) { owner, channel in
                 input.goToMyChannel.onNext(SelectedChannelData(name: channel.name, description: channel.description, channelID: channel.channelID, ownerID: channel.ownerID))
             }
