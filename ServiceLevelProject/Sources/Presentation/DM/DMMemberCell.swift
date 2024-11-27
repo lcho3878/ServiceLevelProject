@@ -11,9 +11,10 @@ import Then
 
 final class DMMemberCell: BaseCollectionViewCell {
     let profileImageView = UIImageView().then {
+        $0.image = UIImage.randomDefaultImage()
         $0.backgroundColor = .systemGray
         $0.layer.cornerRadius = 8
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
     }
     
@@ -43,8 +44,13 @@ final class DMMemberCell: BaseCollectionViewCell {
         }
     }
     
-    func configureCell(element: MemberListTestData) {
-        profileImageView.image = UIImage(systemName: element.profileImage)
-        userNameLabel.text = element.userName
+    func configureCell(element: WorkSpaceMember) {
+        Task {
+            if let image = element.profileImage {
+                let coverImageData = try await APIManager.shared.loadImage(image)
+                profileImageView.image = UIImage(data: coverImageData)
+            }
+        }
+        userNameLabel.text = element.nickname
     }
 }
