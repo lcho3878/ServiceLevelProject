@@ -9,22 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct DirectMessageTestData {
-    let chatProfileImage: String
-    let chatFriendName: String
-    let unreadCount: Int
-}
-
-struct ChannelList {
-    let channelID: String
-    let name: String
-    let description: String?
-    let coverImage: String?
-    let ownerID: String
-    let createdAt: String
-    let unreadCount: Int
-}
-
 final class HomeViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     let isUpdateChannelList = PublishSubject<Bool>()
@@ -37,20 +21,19 @@ final class HomeViewModel: ViewModelBindable {
         let myChannelIdList = PublishSubject<[String]>()
         let tableViewModelSelected: ControlEvent<ChannelList>
         let goToMyChannel = PublishSubject<SelectedChannelData>()
+        
+        let myDMList = PublishSubject<[DMRoomListModel]>()
+        let dmList = BehaviorSubject(value: [DMList(roomID: "", createdAt: "", userID: "", nickname: "", profileImage: nil, unreadCount: 0)])
+        let roomIDList = PublishSubject<[String]>()
     }
     
     struct Output {
         let workspaceOutput: PublishSubject<WorkSpace>
         let channelList: BehaviorSubject<[ChannelList]>
-        let chatList = BehaviorSubject(value: [
-            DirectMessageTestData(chatProfileImage: "star.fill", chatFriendName: "Hue", unreadCount: 8),
-            DirectMessageTestData(chatProfileImage: "heart.fill", chatFriendName: "Jack", unreadCount: 3),
-            DirectMessageTestData(chatProfileImage: "leaf.fill", chatFriendName: "Bran", unreadCount: 0),
-            DirectMessageTestData(chatProfileImage: "person.fill", chatFriendName: "Den", unreadCount: 1)
-        ])
         let myChannelIdList: PublishSubject<[String]>
         let goToMyChannel: PublishSubject<SelectedChannelData>
         let profileImageData: PublishSubject<Data>
+        let dmList: BehaviorSubject<[DMList]>
     }
     
     func transform(input: Input) -> Output {
@@ -61,6 +44,10 @@ final class HomeViewModel: ViewModelBindable {
         let profileImageData = PublishSubject<Data>()
         let workspaceIDInput = input.workspaceID.share()
         let workspaceOutput = PublishSubject<WorkSpace>()
+        
+        var dmList: [DMRoomListModel] = []
+        var roomIDList: [String] = []
+        var dmWithUnreadCount: [DMList] = []
         
         input.viewDidLoadTrigger
             .flatMap {
@@ -81,8 +68,6 @@ final class HomeViewModel: ViewModelBindable {
             .bind(with: self) { owner, result in
                 if !result.isEmpty {
                     if let firstWorkspace = result.first {
-                        /// 아직 로그아웃 시, 삭제하는 코드 없는 관계로 다른 아이디로 로그인해도 이전 아이디 워크스페이스 뜰 수 있음.
-                        /// (다른 아이디 로그인 시, 기기에서 앱 지우기)
                         UserDefaultManager.workspaceID = firstWorkspace.workspace_id
                     }
                 }
@@ -192,7 +177,7 @@ final class HomeViewModel: ViewModelBindable {
                             input.myChannelIdList.onNext(myChannelIdList)
                             
                         case .failure(let failure):
-                            print(">>> failure: \(failure)")
+                            print(">>> failure: \(failure.errorCode)")
                         }
                     }
                 }
@@ -232,14 +217,92 @@ final class HomeViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
+        // dm리스트 조회
+        workspaceIDInput
+            .flatMap { id in
+                return APIManager.shared.callRequest(api: DMRouter.dmList(workspaceID: id), type: [DMRoomListModel].self)
+            }
+            .bind(with: self) { owner, result in
+                roomIDList = []
+                
+                switch result {
+                case .success(let success):
+                    dmList = []
+                    
+                    for room in success {
+                        roomIDList.append(room.roomID)
+                        dmList = success
+                    }
+                    input.roomIDList.onNext(roomIDList)
+                    input.myDMList.onNext(dmList)
+                case .failure(let failure):
+                    print(">>> Failed!: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // (dm 리스트) + 읽지 않은 채팅 개수
+        input.myDMList
+            .bind(with: self) { owner, success in
+                guard let workspaceID = UserDefaultManager.workspaceID else { return }
+                
+                dmList = []
+                dmWithUnreadCount = []
+                
+                for dm in success {
+                    APIManager.shared.callRequest(api: DMRouter.unreadCount(workspaceID: workspaceID, roomID: dm.roomID, after: dm.createdAt), type: DMUnreadCountModel.self) { result in
+                        switch result {
+                        case .success(let success):
+                            if dm.roomID == success.roomID {
+                                dmWithUnreadCount.append(DMList(
+                                    roomID: dm.roomID,
+                                    createdAt: dm.createdAt,
+                                    userID: dm.user.userID,
+                                    nickname: dm.user.nickname,
+                                    profileImage: dm.user.profileImage,
+                                    unreadCount: success.count)
+                                )
+                                
+                                roomIDList.append(success.roomID)
+                            }
+                            input.dmList.onNext(dmWithUnreadCount)
+                            input.roomIDList.onNext(roomIDList)
+                        case .failure(let failure):
+                            print(">>> failure: \(failure.errorCode)")
+                        }
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             workspaceOutput: workspaceOutput,
             channelList: input.channelList,
             myChannelIdList: input.myChannelIdList,
             goToMyChannel: input.goToMyChannel,
-            profileImageData: profileImageData
+            profileImageData: profileImageData,
+            dmList: input.dmList
         )
     }
+}
+
+struct DMList {
+    let roomID: String
+    let createdAt: String
+    let userID: String
+    let nickname: String
+    let profileImage: String?
+    let unreadCount: Int
+}
+
+struct ChannelList {
+    let channelID: String
+    let name: String
+    let description: String?
+    let coverImage: String?
+    let ownerID: String
+    let createdAt: String
+    let unreadCount: Int
 }
 
 struct SelectedChannelData {

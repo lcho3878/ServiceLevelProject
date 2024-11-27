@@ -10,10 +10,18 @@ import SnapKit
 import Then
 
 final class DirectMessageCell: BaseTableViewCell {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        unreadBadgeView.isHidden = false
+    }
+    
     // MARK: UI
     let profileImageView = UIImageView().then {
+        $0.image = UIImage.randomDefaultImage()
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 4
+        $0.clipsToBounds = true
     }
     let userNameLabel = UILabel().then {
         $0.textColor = .textSecondary
@@ -68,13 +76,20 @@ final class DirectMessageCell: BaseTableViewCell {
         }
     }
     
-    func configureCell(element: DirectMessageTestData) {
-        profileImageView.image = UIImage(systemName: element.chatProfileImage)
-        userNameLabel.text = element.chatFriendName
+    func configureCell(element: DMList) {
+        Task {
+            if let image = element.profileImage {
+                let profileImage = try await APIManager.shared.loadImage(image)
+                profileImageView.image = UIImage(data: profileImage)
+            }
+        }
+        userNameLabel.text = element.nickname
         if element.unreadCount > 0 {
             unreadCountLabel.text = "\(element.unreadCount)"
+            userNameLabel.font = .bodyBold
         } else {
             unreadBadgeView.isHidden = true
+            userNameLabel.font = .body
         }
         selectionStyle = .none
     }

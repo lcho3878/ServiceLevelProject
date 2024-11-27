@@ -14,15 +14,11 @@ final class HomeViewController: BaseViewController {
     // MARK: Properties
     private let homeView = HomeView()
     private let viewModel = HomeViewModel()
+    private let homeNavigationView = HomeNavigationView()
     private let disposeBag = DisposeBag()
     private var isUpdateChannel = false
     private let workspaceIDInput = PublishSubject<String>()
-    
-    // MARK: UI
-//    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
     private var menu: SideMenuNavigationController?
-    // titleView
-    let homeNavigationView = HomeNavigationView()
     
     override func loadView() {
         view = homeView
@@ -162,7 +158,7 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         // 다이렉트 메시지 리스트
-        output.chatList
+        output.dmList
             .bind(to: homeView.directMessageTableView.rx.items(cellIdentifier: DirectMessageCell.id, cellType: DirectMessageCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
                 self.homeView.updateDirectMessageTableViewLayout()

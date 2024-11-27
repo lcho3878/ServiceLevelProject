@@ -10,6 +10,12 @@ import SnapKit
 import Then
 
 final class ChannelCell: BaseTableViewCell {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        unreadBadgeView.isHidden = false
+    }
+    
     private let hasTagImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = UIImage(resource: .hashTag)
@@ -68,12 +74,14 @@ final class ChannelCell: BaseTableViewCell {
         }
     }
     
-    func configureCell(element: ChannelList) {
+    func configureCell(element: ChannelList) {        
         channelNameLabel.text = element.name
         if element.unreadCount > 0 {
             unreadCountLabel.text = "\(element.unreadCount)"
+            channelNameLabel.font = .bodyBold
         } else {
             unreadBadgeView.isHidden = true
+            channelNameLabel.font = .body
         }
         selectionStyle = .none
     }
