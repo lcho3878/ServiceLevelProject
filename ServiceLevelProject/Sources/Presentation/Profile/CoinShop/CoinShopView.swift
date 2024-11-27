@@ -32,13 +32,12 @@ final class CoinShopView: BaseView {
         $0.layer.cornerRadius = 8
         $0.register(CoinTableViewCell.self, forCellReuseIdentifier: CoinTableViewCell.id)
         $0.isScrollEnabled = false
+        $0.separatorStyle = .none
     }
     
     override func addSubviews() {
         coinView.addSubviews([titleLabel, subTitleLabel])
-        addSubviews([
-            coinView, coinTableView
-        ])
+        addSubviews([coinView, coinTableView])
     }
     
     override func setConstraints() {

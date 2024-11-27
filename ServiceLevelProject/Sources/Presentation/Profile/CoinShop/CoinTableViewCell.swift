@@ -8,56 +8,54 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
 
-final class CoinTableViewCell: UITableViewCell {
+final class CoinTableViewCell: BaseTableViewCell {
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+    }
+    
     private let titleLabel = UILabel().then {
         $0.font = .bodyBold
     }
     
-    private let subTitleLabel = UILabel().then {
-        $0.font = .title2
-        $0.textAlignment = .center
-        $0.textColor = .brandWhite
+    let amountButton = UIButton().then {
+        $0.titleLabel?.font = .title2
+        $0.setTitleColor(.brandWhite, for: .normal)
         $0.backgroundColor = .brand
         $0.layer.cornerRadius = 8
-        $0.clipsToBounds = true
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview()
-        setConstraints()
+    override func addSubviews() {
+        contentView.addSubviews([titleLabel, amountButton])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func setConstraints() {
+        let safeArea = safeAreaLayoutGuide
+        
+        titleLabel.snp.makeConstraints {
+            $0.height.equalTo(18)
+            $0.centerY.equalTo(safeArea)
+            $0.leading.equalTo(safeArea).offset(12)
+        }
+        
+        amountButton.snp.makeConstraints {
+            $0.trailing.equalTo(safeArea).inset(12)
+            $0.width.equalTo(74)
+            $0.height.equalTo(28)
+            $0.centerY.equalTo(safeArea)
+        }
     }
 }
 
 extension CoinTableViewCell {
-    private func addSubview() {
-        addSubviews([titleLabel, subTitleLabel])
-    }
-    
-    private func setConstraints() {
-        let safe = safeAreaLayoutGuide
-        titleLabel.snp.makeConstraints {
-            $0.height.equalTo(18)
-            $0.centerY.equalTo(safe)
-            $0.leading.equalTo(safe).offset(12)
-        }
-        
-        subTitleLabel.snp.makeConstraints {
-            $0.trailing.equalTo(safe).inset(12)
-            $0.width.equalTo(74)
-            $0.height.equalTo(28)
-            $0.centerY.equalTo(safe)
-        }
-        
-    }
-    
-    func configureData(_ data: TableViewRepresentable) {
-        titleLabel.text = data.titleString
-        subTitleLabel.text = data.subTitleString
+    func configureCell(element: CoinShopItemListModel) {
+        titleLabel.text = "🌱 \(element.item)"
+        amountButton.setTitle("￦\(element.amount)", for: .normal)
+        selectionStyle = .none
     }
 }
