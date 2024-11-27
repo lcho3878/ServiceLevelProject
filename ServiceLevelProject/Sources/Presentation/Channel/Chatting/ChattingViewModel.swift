@@ -78,12 +78,16 @@ final class ChattingViewModel: ViewModelBindable {
             .flatMap { [weak self] in
                 guard let roomID = self?.roomID else { return Single<Result<[ChattingModel], ErrorModel>>.never() }
                 let cursorDate = self?.chattings.last?.createdAt ?? Date.currentDate()
-                return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: cursorDate, workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomID.channelID), type: [ChattingModel].self)
+                if roomID.ownerID.isEmpty {
+                    return APIManager.shared.callRequest(api: DMRouter.chattingList(workspaceID: UserDefaultManager.workspaceID ?? "", roomID: roomID.channelID, after: cursorDate), type: [ChattingModel].self)
+                } else {
+                    return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: cursorDate, workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomID.channelID), type: [ChattingModel].self)
+                }
             }
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let success):
-                    print(">>> apichattings \(success)")
+                    print(">>> apichattings \(success.count)")
                     RealmRepository.shared.addChattings(success)
                     owner.chattings.append(contentsOf: success)
                     chattingOutput.onNext(owner.chattings)
@@ -97,8 +101,12 @@ final class ChattingViewModel: ViewModelBindable {
         // 소켓으로 채팅 가져오기
         socketTrigger
             .bind(with: self) { owner, _ in
-                guard let roodID = owner.roomID else { return }
-                WebSocketManager.shared.router = .channel(id: roodID.channelID)
+                guard let roomID = owner.roomID else { return }
+                if roomID.ownerID.isEmpty {
+                    WebSocketManager.shared.router = .dm(id: roomID.channelID)
+                } else {
+                    WebSocketManager.shared.router = .channel(id: roomID.channelID)
+                }
                 WebSocketManager.shared.connect()
             }
             .disposed(by: disposeBag)
@@ -130,7 +138,12 @@ final class ChattingViewModel: ViewModelBindable {
             .flatMap { roomInfo, value in
                 let channelID = roomInfo.channelID
                 let (content, datas, isPlaceholder) = value
-                return APIManager.shared.callRequest(api: ChannelRouter.sendChatting(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: channelID, query: ChattingQuery(content: isPlaceholder ? "" : content, files: datas)), type: ChattingModel.self)
+                let query = ChattingQuery(content: isPlaceholder ? "" : content, files: datas)
+                if roomInfo.ownerID.isEmpty {
+                    return APIManager.shared.callRequest(api: DMRouter.sendChatting(workspaceID: UserDefaultManager.workspaceID ?? "", roomID: channelID, query: query), type: ChattingModel.self)
+                } else {
+                    return APIManager.shared.callRequest(api: ChannelRouter.sendChatting(workspaceID: UserDefaultManager.workspaceID ?? "", channelID: channelID, query: query), type: ChattingModel.self)
+                }
             }
             .bind(with: self) { owner, result in
                 switch result {
