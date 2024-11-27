@@ -38,5 +38,6 @@ struct UserDefaultManager {
             if key == "fcmToken" { continue }
             UserDefaults.standard.removeObject(forKey: key)
         }
+        RealmRepository.shared.removeAllData()
     }
 }

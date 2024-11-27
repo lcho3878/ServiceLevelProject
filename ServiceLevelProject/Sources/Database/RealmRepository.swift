@@ -56,4 +56,9 @@ final class RealmRepository {
             return []
         }
     }
+    func removeAllData() {
+        try! realm.write {
+            realm.deleteAll()
+        }
+    }
 }
