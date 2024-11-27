@@ -21,13 +21,8 @@ final class RealmRepository {
     
     func addChatting(_ chatting: ChattingModel) {
         try! realm.write({
-            var userRealmModel: ChattingUserRealmModel
-             if let existingUser = realm.object(ofType: ChattingUserRealmModel.self, forPrimaryKey: chatting.user.userID) {
-                 userRealmModel = existingUser
-             } else {
-                 userRealmModel = ChattingUserRealmModel(user: chatting.user)
-                 realm.add(userRealmModel)
-             }
+            let userRealmModel = ChattingUserRealmModel(user: chatting.user)
+            realm.add(userRealmModel, update: .modified)
              
              // ChattingRealmModel 생성 및 연결
              let chattingRealmModel = ChattingRealmModel(chatting: chatting)
