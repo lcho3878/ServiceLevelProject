@@ -22,3 +22,9 @@ struct ChannelListModel: Decodable {
         case createdAt
     }
 }
+
+extension ChannelListModel {
+    var leaveDate: String {
+        return RealmRepository.shared.readleaveDate(channelID) ?? createdAt
+    }
+}

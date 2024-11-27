@@ -20,6 +20,7 @@ final class ChattingRealmModel: Object {
     
     convenience init(chatting: ChattingModel) {
         self.init()
+        self.id = chatting.id
         self.content = chatting.content
         self.createdAt = chatting.createdAt
         self.files.append(objectsIn: chatting.files)

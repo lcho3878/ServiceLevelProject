@@ -84,8 +84,8 @@ final class ChattingViewModel: ViewModelBindable {
                 switch result {
                 case .success(let success):
                     print(">>> apichattings \(success)")
+                    RealmRepository.shared.addChattings(success)
                     owner.chattings.append(contentsOf: success)
-                    RealmRepository.shared.addChattings(owner.chattings)
                     chattingOutput.onNext(owner.chattings)
                     socketTrigger.onNext(())
                 case .failure(let failure):
