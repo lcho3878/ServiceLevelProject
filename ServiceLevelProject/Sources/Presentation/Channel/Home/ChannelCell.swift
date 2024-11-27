@@ -68,13 +68,11 @@ final class ChannelCell: BaseTableViewCell {
         }
     }
     
-    func configureCell(element: ChannelList) {
+    func configureCell(element: ChannelList) {        
         channelNameLabel.text = element.name
-        if element.unreadCount > 0 {
-            unreadCountLabel.text = "\(element.unreadCount)"
-        } else {
-            unreadBadgeView.isHidden = true
-        }
+        channelNameLabel.font = element.unreadCount == 0 ?.body : .bodyBold
+        unreadCountLabel.text = "\(element.unreadCount)"
+        unreadBadgeView.isHidden = element.unreadCount == 0
         selectionStyle = .none
     }
 }

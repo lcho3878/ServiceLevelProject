@@ -14,15 +14,11 @@ final class HomeViewController: BaseViewController {
     // MARK: Properties
     private let homeView = HomeView()
     private let viewModel = HomeViewModel()
+    private let homeNavigationView = HomeNavigationView()
     private let disposeBag = DisposeBag()
     private var isUpdateChannel = false
     private let workspaceIDInput = PublishSubject<String>()
-    
-    // MARK: UI
-//    private let menu = SideMenuNavigationController(rootViewController: WorkspaceViewController())
     private var menu: SideMenuNavigationController?
-    // titleView
-    let homeNavigationView = HomeNavigationView()
     
     override func loadView() {
         view = homeView
@@ -30,7 +26,7 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         bind()
         rightSwipeAction()
         setupObservers()
@@ -64,7 +60,7 @@ extension HomeViewController {
     private func bind() {
         let input = HomeViewModel.Input(
             workspaceID: workspaceIDInput,
-            tableViewModelSelected: homeView.channelTableView.rx.modelSelected(ChannelList.self)
+            channelTableViewModelSelected: homeView.channelTableView.rx.modelSelected(ChannelList.self)
         )
         let output = viewModel.transform(input: input)
         
@@ -162,10 +158,17 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         // 다이렉트 메시지 리스트
-        output.chatList
+        output.dmList
             .bind(to: homeView.directMessageTableView.rx.items(cellIdentifier: DirectMessageCell.id, cellType: DirectMessageCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
                 self.homeView.updateDirectMessageTableViewLayout()
+            }
+            .disposed(by: disposeBag)
+        
+        // dm 클릭
+        homeView.directMessageTableView.rx.modelSelected(DMList.self)
+            .bind(with: self) { owner, dmList in
+                print(">>> dmList: \(dmList)")
             }
             .disposed(by: disposeBag)
         

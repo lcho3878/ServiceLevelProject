@@ -12,8 +12,10 @@ import Then
 final class DirectMessageCell: BaseTableViewCell {
     // MARK: UI
     let profileImageView = UIImageView().then {
+        $0.image = UIImage.randomDefaultImage()
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 4
+        $0.clipsToBounds = true
     }
     let userNameLabel = UILabel().then {
         $0.textColor = .textSecondary
@@ -68,14 +70,18 @@ final class DirectMessageCell: BaseTableViewCell {
         }
     }
     
-    func configureCell(element: DirectMessageTestData) {
-        profileImageView.image = UIImage(systemName: element.chatProfileImage)
-        userNameLabel.text = element.chatFriendName
-        if element.unreadCount > 0 {
-            unreadCountLabel.text = "\(element.unreadCount)"
-        } else {
-            unreadBadgeView.isHidden = true
+    func configureCell(element: DMList) {
+        Task {
+            if let image = element.profileImage {
+                let profileImage = try await APIManager.shared.loadImage(image)
+                profileImageView.image = UIImage(data: profileImage)
+            }
         }
+        
+        userNameLabel.text = element.nickname
+        userNameLabel.font = element.unreadCount == 0 ? .body : .bodyBold
+        unreadCountLabel.text = "\(element.unreadCount)"
+        unreadBadgeView.isHidden = element.unreadCount == 0
         selectionStyle = .none
     }
 }
