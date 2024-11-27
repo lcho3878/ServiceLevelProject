@@ -299,6 +299,12 @@ struct DMList {
     let unreadCount: Int
 }
 
+extension DMList {
+    var selectedChannelData: SelectedChannelData {
+        return SelectedChannelData(name: nickname, description: nil, channelID: roomID, ownerID: "")
+    }
+}
+
 struct ChannelList {
     let channelID: String
     let name: String
