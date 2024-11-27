@@ -169,6 +169,9 @@ extension HomeViewController {
         homeView.directMessageTableView.rx.modelSelected(DMList.self)
             .bind(with: self) { owner, dmList in
                 print(">>> dmList: \(dmList)")
+                let chattingVC = ChattingViewController()
+                chattingVC.roomInfoData = dmList.selectedChannelData
+                owner.changeRootViewController(rootVC: chattingVC, isNavigation: true)
             }
             .disposed(by: disposeBag)
         
