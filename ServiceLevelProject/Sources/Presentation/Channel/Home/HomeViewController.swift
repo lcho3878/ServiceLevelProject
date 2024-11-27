@@ -157,6 +157,13 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
+        // 다이렉트 메시지 output empty 분기처리
+        output.dmList
+            .bind(with: self) { owner, dmList in
+                owner.homeView.updateDirectMessageTableViewLayout(dmList.count)
+            }
+            .disposed(by: disposeBag)
+        
         // 다이렉트 메시지 리스트
         output.dmList
             .bind(to: homeView.directMessageTableView.rx.items(cellIdentifier: DirectMessageCell.id, cellType: DirectMessageCell.self)) { (row, element, cell) in
