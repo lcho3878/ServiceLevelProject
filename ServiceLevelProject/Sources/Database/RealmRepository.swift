@@ -56,6 +56,28 @@ final class RealmRepository {
             return []
         }
     }
+    
+    func readleaveDate(_ id: String) -> String? {
+        if let container = realm.object(ofType: ChattingContainerRealm.self, forPrimaryKey: id) {
+            if let leaveDate = container.leaveDate {
+                return leaveDate
+            } else {
+                return ""
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    func updateLeaveDate(_ id: String) {
+        if let container = realm.object(ofType: ChattingContainerRealm.self, forPrimaryKey: id) {
+            try! realm.write {
+                container.leaveDate = "\(Date())"
+                realm.add(container, update: .modified)
+            }
+        }
+    }
+    
     func removeAllData() {
         try! realm.write {
             realm.deleteAll()

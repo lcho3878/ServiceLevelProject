@@ -41,6 +41,9 @@ final class ChattingViewController: BaseViewController {
     
     deinit {
         print(">>> ChattingVC - Deinit")
+        if let roomInfoData {
+            RealmRepository.shared.updateLeaveDate(roomInfoData.channelID)
+        }
     }
 }
 

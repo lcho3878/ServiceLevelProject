@@ -11,4 +11,5 @@ import RealmSwift
 final class ChattingContainerRealm: Object {
     @Persisted(primaryKey: true) var id: String // 채널, dm 아이디
     @Persisted var chattingList: List<ChattingRealmModel>
+    @Persisted var leaveDate: String?
 }

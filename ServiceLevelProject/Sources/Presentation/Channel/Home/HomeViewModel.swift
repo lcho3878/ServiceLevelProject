@@ -140,7 +140,7 @@ final class HomeViewModel: ViewModelBindable {
                 myChannelListWithUnreadCount = []
                 
                 for channel in success {
-                    APIManager.shared.callRequest(api: ChannelRouter.unreadCount(workspaceID: workspaceID, channelID: channel.channelID, after: channel.createdAt), type: ChannelUnreadCountModel.self) { result in
+                    APIManager.shared.callRequest(api: ChannelRouter.unreadCount(workspaceID: workspaceID, channelID: channel.channelID, after: channel.leaveDate), type: ChannelUnreadCountModel.self) { result in
                         switch result {
                         case .success(let success):
                             if channel.channelID == success.channelID {
