@@ -248,7 +248,11 @@ final class HomeViewModel: ViewModelBindable {
                 
                 dmList = []
                 dmWithUnreadCount = []
-                
+                guard !success.isEmpty else {
+                    input.dmList.onNext(dmWithUnreadCount)
+                    input.roomIDList.onNext(roomIDList)
+                    return
+                }
                 for dm in success {
                     APIManager.shared.callRequest(api: DMRouter.unreadCount(workspaceID: workspaceID, roomID: dm.roomID, after: dm.createdAt), type: DMUnreadCountModel.self) { result in
                         switch result {
@@ -293,6 +297,12 @@ struct DMList {
     let nickname: String
     let profileImage: String?
     let unreadCount: Int
+}
+
+extension DMList {
+    var selectedChannelData: SelectedChannelData {
+        return SelectedChannelData(name: nickname, description: nil, channelID: roomID, ownerID: "")
+    }
 }
 
 struct ChannelList {
