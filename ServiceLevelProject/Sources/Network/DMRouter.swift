@@ -14,7 +14,6 @@ enum DMRouter {
     case create(workspaceID: String, query: CreateDMQuery)
     case chattingList(workspaceID: String, roomID: String, after: String)
     case sendChatting(workspaceID: String, roomID: String, query: ChattingQuery)
-   
 }
 
 extension DMRouter : TargetType {
@@ -49,7 +48,7 @@ extension DMRouter : TargetType {
     var header: [String : String] {
         switch self {
         case .dmList, .unreadCount, .chattingList, .sendChatting:
-             [
+             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""

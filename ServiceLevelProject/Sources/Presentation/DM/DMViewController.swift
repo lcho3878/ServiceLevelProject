@@ -14,6 +14,7 @@ final class DMViewController: BaseViewController {
     private let dmView = DMView()
     private let viewModel = DMViewModel()
     private let disposeBag = DisposeBag()
+    private let viewDidLoadTrigger = PublishSubject<Void>()
     let dmNavigationView = DMNavigationView()
     
     // MARK: View Life Cycle
@@ -33,15 +34,24 @@ final class DMViewController: BaseViewController {
     override func configureNavigation() {
         configureNavigaionItem()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewDidLoadTrigger.onNext(())
+    }
 }
 
 // MARK: bind
 extension DMViewController {
     private func bind() {
-        let input = DMViewModel.Input(collectionViewModelSelected: dmView.collectionView.rx.modelSelected(WorkSpaceMember.self))
+        let input = DMViewModel.Input(
+            viewDidLoadTrigger: viewDidLoadTrigger,
+            collectionViewModelSelected: dmView.collectionView.rx.modelSelected(WorkSpaceMember.self)
+        )
         let output = viewModel.transform(input: input)
         
-        input.viewDidLoadTrigger.onNext(())
+        viewDidLoadTrigger.onNext(())
         
         output.memberList
             .bind(to: dmView.collectionView.rx.items(cellIdentifier: DMMemberCell.id, cellType: DMMemberCell.self)) { (row, element, cell) in

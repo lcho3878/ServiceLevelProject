@@ -26,7 +26,7 @@ final class DMViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     
     struct Input {
-        let viewDidLoadTrigger = PublishSubject<Void>()
+        let viewDidLoadTrigger: PublishSubject<Void>
         let collectionViewModelSelected: ControlEvent<WorkSpaceMember>
     }
     
