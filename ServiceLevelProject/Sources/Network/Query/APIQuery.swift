@@ -71,3 +71,8 @@ struct ChattingQuery: Encodable {
     let content: String
     let files: [Data?]
 }
+
+// MARK: Create DM
+struct CreateDMQuery: Encodable {
+    let opponent_id: String
+}

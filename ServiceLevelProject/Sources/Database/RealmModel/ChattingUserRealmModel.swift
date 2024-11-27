@@ -12,7 +12,7 @@ final class ChattingUserRealmModel: Object {
     @Persisted(primaryKey: true) var userID: String
     @Persisted var email: String
     @Persisted var nickname: String
-    @Persisted var profileImage: String
+    @Persisted var profileImage: String?
     
     let chats = LinkingObjects(fromType: ChattingRealmModel.self, property: "user")
     

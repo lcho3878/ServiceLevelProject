@@ -38,8 +38,10 @@ final class DMViewController: BaseViewController {
 // MARK: bind
 extension DMViewController {
     private func bind() {
-        let input = DMViewModel.Input()
+        let input = DMViewModel.Input(collectionViewModelSelected: dmView.collectionView.rx.modelSelected(WorkSpaceMember.self))
         let output = viewModel.transform(input: input)
+        
+        input.viewDidLoadTrigger.onNext(())
         
         output.memberList
             .bind(to: dmView.collectionView.rx.items(cellIdentifier: DMMemberCell.id, cellType: DMMemberCell.self)) { (row, element, cell) in
@@ -50,6 +52,13 @@ extension DMViewController {
         output.dmList
             .bind(to: dmView.tableView.rx.items(cellIdentifier: DMListCell.id, cellType: DMListCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
+            }
+            .disposed(by: disposeBag)
+        
+        // 멤버 클릭 - DM 방 조회(생성)
+        output.dmRoomInfo
+            .bind(with: self) { owner, info in
+                print(">>> info: \(info)")
             }
             .disposed(by: disposeBag)
     }

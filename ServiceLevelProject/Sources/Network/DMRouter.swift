@@ -11,6 +11,7 @@ import Alamofire
 enum DMRouter {
     case dmList(workspaceID: String)
     case unreadCount(workspaceID: String, roomID: String, after: String)
+    case create(workspaceID: String, query: CreateDMQuery)
 }
 
 extension DMRouter : TargetType {
@@ -22,6 +23,8 @@ extension DMRouter : TargetType {
         switch self {
         case .dmList, .unreadCount:
             return .get
+        case .create:
+            return .post
         }
     }
     
@@ -31,6 +34,8 @@ extension DMRouter : TargetType {
             return "/workspaces/\(workspaceID)/dms"
         case let .unreadCount(workspaceID, roomID, _):
             return "/workspaces/\(workspaceID)/dms/\(roomID)/unreads"
+        case let .create(workspaceID, _):
+            return "/workspaces/\(workspaceID)/dms"
         }
     }
     
@@ -41,6 +46,13 @@ extension DMRouter : TargetType {
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""
+            ]
+        case .create:
+            return [
+                Header.accept.rawValue: Header.json.rawValue,
+                Header.authorization.rawValue: UserDefaultManager.accessToken ?? "",
+                Header.sesacKey.rawValue: Key.sesacKey,
+                Header.contentType.rawValue: Header.json.rawValue
             ]
         }
     }
@@ -58,7 +70,7 @@ extension DMRouter : TargetType {
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .unreadCount:
+        case .unreadCount, .create:
             return parameters?.map {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
@@ -68,7 +80,13 @@ extension DMRouter : TargetType {
     }
     
     var body: Data? {
-        return nil
+        let encoder = JSONEncoder()
+        switch self {
+        case let .create(_, query):
+            return try? encoder.encode(query)
+        default:
+            return nil
+        }
     }
     
     var multipartFormData: MultipartFormData? {
