@@ -26,20 +26,13 @@ final class DMViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     
     struct Input {
-        
+        let viewDidLoadTrigger = PublishSubject<Void>()
+        let collectionViewModelSelected: ControlEvent<WorkSpaceMember>
     }
     
     struct Output {
-        let memberList = BehaviorSubject(value: [
-            MemberListTestData(profileImage: "heart.fill", userName: "뚜비두밥"),
-            MemberListTestData(profileImage: "person.fill", userName: "고래밥"),
-            MemberListTestData(profileImage: "leaf.fill", userName: "카스타드"),
-            MemberListTestData(profileImage: "star.fill", userName: "Hue"),
-            MemberListTestData(profileImage: "paperplane.fill", userName: "Jack"),
-            MemberListTestData(profileImage: "figure.walk", userName: "Dan"),
-            MemberListTestData(profileImage: "figure.wave", userName: "Bran"),
-            MemberListTestData(profileImage: "figure.dance", userName: "ChanHo")
-        ])
+        let memberList: PublishSubject<[WorkSpaceMember]>
+        let dmRoomInfo: PublishSubject<DMList>
         
         let dmList = BehaviorSubject(value: [
             DMListTestData(profileImage: "paperplane.fill", userName: "Jack", lastChat: "오늘 정말 고생 많으셨습니다~!!", lastChatDate: "PM 11:23", unreadCount: 8),
@@ -51,6 +44,57 @@ final class DMViewModel: ViewModelBindable {
     }
     
     func transform(input: Input) -> Output {
-        return Output()
+        let workspaceMemberList = PublishSubject<[WorkSpaceMember]>()
+        let userID = PublishSubject<String>()
+        let dmRoomInfo = PublishSubject<DMList>()
+        
+        // 워크스페이스 멤버 조회
+        input.viewDidLoadTrigger
+            .flatMap { _ in
+                return APIManager.shared.callRequest(api: WorkSpaceRouter.memberlist(id: UserDefaultManager.workspaceID ?? ""), type: [WorkSpaceMember].self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    workspaceMemberList.onNext(success)
+                case .failure(let failure):
+                    print(">>> Failed!!: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 멤버 셀 클릭
+        input.collectionViewModelSelected
+            .bind(with: self) { owner, memberInfo in
+                userID.onNext(memberInfo.userID)
+            }
+            .disposed(by: disposeBag)
+        
+        // DM 방 조회(생성)
+        userID
+            .flatMap { id in
+                return APIManager.shared.callRequest(api: DMRouter.create(workspaceID: UserDefaultManager.workspaceID ?? "", query: CreateDMQuery(opponent_id: id)), type: DMRoomListModel.self)
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    let roomInfo = DMList(
+                        roomID: success.roomID,
+                        createdAt: success.createdAt,
+                        userID: success.user.userID,
+                        nickname: success.user.nickname,
+                        profileImage: success.user.profileImage,
+                        unreadCount: 0)
+                    dmRoomInfo.onNext(roomInfo)
+                case .failure(let failure):
+                    print(">>> Failed!!: \(failure.errorCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(
+            memberList: workspaceMemberList,
+            dmRoomInfo: dmRoomInfo
+        )
     }
 }
