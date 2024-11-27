@@ -248,7 +248,11 @@ final class HomeViewModel: ViewModelBindable {
                 
                 dmList = []
                 dmWithUnreadCount = []
-                
+                guard !success.isEmpty else {
+                    input.dmList.onNext(dmWithUnreadCount)
+                    input.roomIDList.onNext(roomIDList)
+                    return
+                }
                 for dm in success {
                     APIManager.shared.callRequest(api: DMRouter.unreadCount(workspaceID: workspaceID, roomID: dm.roomID, after: dm.createdAt), type: DMUnreadCountModel.self) { result in
                         switch result {
