@@ -35,4 +35,19 @@ struct ChattingModel: Decodable {
             self.id = try container.decode(String.self, forKey: .roomID)
         }
     }
+    
+    init(realmData: ChattingRealmModel) {
+        self.id = realmData.id
+        self.content = realmData.content
+        self.createdAt = realmData.createdAt
+        self.files = Array(realmData.files)
+        self.user = realmData.user!.chattingUserModel
+    }
 }
+
+extension ChattingModel {
+    var chattingRealmModel: ChattingRealmModel {
+        return ChattingRealmModel(chatting: self)
+    }
+}
+
