@@ -417,9 +417,15 @@ final class HomeView: BaseView {
         }
     }
     
-    func updateDirectMessageTableViewLayout() {
-        directMessageTableView.snp.updateConstraints {
-            $0.height.equalTo(directMessageTableView.contentSize.height)
+    func updateDirectMessageTableViewLayout(_ count: Int? = nil) {
+        if let count {
+            directMessageTableView.snp.updateConstraints {
+                $0.height.equalTo(44 * count)
+            }
+        } else {
+            directMessageTableView.snp.updateConstraints {
+                $0.height.equalTo(directMessageTableView.contentSize.height)
+            }
         }
     }
     

@@ -228,7 +228,6 @@ final class HomeViewModel: ViewModelBindable {
                 switch result {
                 case .success(let success):
                     dmList = []
-                    
                     for room in success {
                         roomIDList.append(room.roomID)
                         dmList = success
