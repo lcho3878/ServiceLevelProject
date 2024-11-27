@@ -112,6 +112,10 @@ final class ChattingTableViewCell: BaseTableViewCell {
             $0.bottom.equalTo(centerStackView)
         }
     }
+    
+    override func configureUI() {
+        selectionStyle = .none
+    }
 }
 
 extension ChattingTableViewCell {
