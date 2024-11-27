@@ -73,6 +73,7 @@ final class ChattingViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
 
+        // API 통신으로 가져오기
         apiTrigger
             .flatMap { [weak self] in
                 guard let roomID = self?.roomID else { return Single<Result<[ChattingModel], ErrorModel>>.never() }
@@ -93,27 +94,23 @@ final class ChattingViewModel: ViewModelBindable {
             }
             .disposed(by: disposeBag)
         
-//        API 통신으로 가져오기
-//        chattingRoomInfo
-//            .flatMap { [weak self] roomInfo in
-//                self?.roodID = roomInfo.channelID
-//                channelName.onNext(roomInfo.name)
-//                return APIManager.shared.callRequest(api: ChannelRouter.fetchChannelChatHistory(cursorDate: Date.currentDate(), workspaceID: UserDefaultManager.workspaceID ?? "", ChannelID: roomInfo.channelID), type: [ChattingModel].self)
-//            }
-//            .bind(with: self) { owner, value in
-//                switch value {
-//                case .success(let success):
-//                    print(">>> Success!")
-//                    owner.chattings = success
-//                    chattingOutput.onNext(owner.chattings)
-//                    socketTrigger.onNext(())
-//                case .failure(let failure):
-//                    print(">>> Failed!!: \(failure.errorCode)")
-//                    inValidChannelMessage.onNext(("존재하지 않는 채널", "이미 삭제된 채널입니다! 홈 화면으로 이동합니다.", "확인"))
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        // 소켓으로 채팅 가져오기
+        socketTrigger
+            .bind(with: self) { owner, _ in
+                guard let roodID = owner.roomID else { return }
+                WebSocketManager.shared.router = .channel(id: roodID.channelID)
+                WebSocketManager.shared.connect()
+            }
+            .disposed(by: disposeBag)
         
+        WebSocketManager.shared.chattingOutput
+            .bind(with: self) { owner, chatting in
+                RealmRepository.shared.addChatting(chatting)
+                owner.chattings.append(chatting)
+                chattingOutput.onNext(owner.chattings)
+            }
+            .disposed(by: disposeBag)
+
         // 전송버튼 활성화 / 비활성화
         chattingQueryInput
             .bind { (content, datas, isPlaceholder) in
@@ -143,25 +140,6 @@ final class ChattingViewModel: ViewModelBindable {
                 case .failure(let errorModel):
                     errorOutput.onNext(errorModel)
                 }
-            }
-            .disposed(by: disposeBag)
-        
-      
-        
-        socketTrigger
-//            .withLatestFrom(chattingRoomInfo)
-            .bind(with: self) { owner, _ in
-                guard let roodID = owner.roomID else { return }
-                WebSocketManager.shared.router = .channel(id: roodID.channelID)
-                WebSocketManager.shared.connect()
-            }
-            .disposed(by: disposeBag)
-        
-        WebSocketManager.shared.chattingOutput
-            .bind(with: self) { owner, chatting in
-                RealmRepository.shared.addChatting(chatting)
-                owner.chattings.append(chatting)
-                chattingOutput.onNext(owner.chattings)
             }
             .disposed(by: disposeBag)
         
