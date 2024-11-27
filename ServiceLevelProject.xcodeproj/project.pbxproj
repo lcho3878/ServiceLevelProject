@@ -78,6 +78,11 @@
 		54A53FE12CD63DBA00313E17 /* CoinShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE02CD63DBA00313E17 /* CoinShopView.swift */; };
 		54A53FE52CD6426D00313E17 /* CoinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE42CD6426D00313E17 /* CoinTableViewCell.swift */; };
 		54A53FE72CD65E0600313E17 /* CameraImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A53FE62CD65E0600313E17 /* CameraImageView.swift */; };
+		54CA54992CF620DD00A44FD4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 54CA54982CF620DD00A44FD4 /* RealmSwift */; };
+		54CA54A22CF62E0B00A44FD4 /* ChattingRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54A12CF62E0B00A44FD4 /* ChattingRealmModel.swift */; };
+		54CA54A82CF63BB800A44FD4 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54A72CF63BB800A44FD4 /* RealmRepository.swift */; };
+		54CA54AA2CF717DF00A44FD4 /* ChattingUserRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54A92CF717DF00A44FD4 /* ChattingUserRealmModel.swift */; };
+		54CA54AC2CF717F500A44FD4 /* ChattingContainerRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54AB2CF717F500A44FD4 /* ChattingContainerRealm.swift */; };
 		684E653A2CE60FDF006B2F02 /* WorkspaceInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */; };
 		684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */; };
 		684E653E2CE62E66006B2F02 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653D2CE62E66006B2F02 /* LoginViewModel.swift */; };
@@ -87,7 +92,7 @@
 		684E65492CEBA140006B2F02 /* ChannelUnreadCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */; };
 		684E654B2CEC7E93006B2F02 /* AddChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654A2CEC7E93006B2F02 /* AddChannelViewModel.swift */; };
 		684E654D2CECE077006B2F02 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654C2CECE077006B2F02 /* ChattingViewModel.swift */; };
-		684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */; };
+		684E654F2CEFB210006B2F02 /* ChattingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E654E2CEFB210006B2F02 /* ChattingModel.swift */; };
 		684E65542CF1C204006B2F02 /* EditChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65532CF1C204006B2F02 /* EditChannelViewModel.swift */; };
 		684E65572CF1FEA6006B2F02 /* ChannelDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */; };
 		684E65592CF225B5006B2F02 /* ChangeChannelAdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65582CF225B5006B2F02 /* ChangeChannelAdminViewController.swift */; };
@@ -241,6 +246,10 @@
 		54A53FE02CD63DBA00313E17 /* CoinShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinShopView.swift; sourceTree = "<group>"; };
 		54A53FE42CD6426D00313E17 /* CoinTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTableViewCell.swift; sourceTree = "<group>"; };
 		54A53FE62CD65E0600313E17 /* CameraImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraImageView.swift; sourceTree = "<group>"; };
+		54CA54A12CF62E0B00A44FD4 /* ChattingRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRealmModel.swift; sourceTree = "<group>"; };
+		54CA54A72CF63BB800A44FD4 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		54CA54A92CF717DF00A44FD4 /* ChattingUserRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingUserRealmModel.swift; sourceTree = "<group>"; };
+		54CA54AB2CF717F500A44FD4 /* ChattingContainerRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingContainerRealm.swift; sourceTree = "<group>"; };
 		684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialViewController.swift; sourceTree = "<group>"; };
 		684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitailView.swift; sourceTree = "<group>"; };
 		684E653D2CE62E66006B2F02 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -250,7 +259,7 @@
 		684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUnreadCountModel.swift; sourceTree = "<group>"; };
 		684E654A2CEC7E93006B2F02 /* AddChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelViewModel.swift; sourceTree = "<group>"; };
 		684E654C2CECE077006B2F02 /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
-		684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatHistoryModel.swift; sourceTree = "<group>"; };
+		684E654E2CEFB210006B2F02 /* ChattingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingModel.swift; sourceTree = "<group>"; };
 		684E65532CF1C204006B2F02 /* EditChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelViewModel.swift; sourceTree = "<group>"; };
 		684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailsModel.swift; sourceTree = "<group>"; };
 		684E65582CF225B5006B2F02 /* ChangeChannelAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannelAdminViewController.swift; sourceTree = "<group>"; };
@@ -331,6 +340,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54CA54992CF620DD00A44FD4 /* RealmSwift in Frameworks */,
 				541DC72F2CE1D2980051E898 /* FirebaseMessaging in Frameworks */,
 				687605452CCE5948008167B0 /* RxCocoa in Frameworks */,
 				687605BF2CE1D881008167B0 /* Alamofire in Frameworks */,
@@ -487,6 +497,7 @@
 		546589A82CCE56A500736BA9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				54CA549F2CF62DBB00A44FD4 /* Database */,
 				549810962CEFB287004DD29E /* Notification */,
 				549091A42CE4A1FA002EE538 /* PropertyWrapper */,
 				687605C02CE1D8AE008167B0 /* Network */,
@@ -628,6 +639,25 @@
 			path = CoinShop;
 			sourceTree = "<group>";
 		};
+		54CA549F2CF62DBB00A44FD4 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				54CA54A02CF62DC000A44FD4 /* RealmModel */,
+				54CA54A72CF63BB800A44FD4 /* RealmRepository.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		54CA54A02CF62DC000A44FD4 /* RealmModel */ = {
+			isa = PBXGroup;
+			children = (
+				54CA54A12CF62E0B00A44FD4 /* ChattingRealmModel.swift */,
+				54CA54AB2CF717F500A44FD4 /* ChattingContainerRealm.swift */,
+				54CA54A92CF717DF00A44FD4 /* ChattingUserRealmModel.swift */,
+			);
+			path = RealmModel;
+			sourceTree = "<group>";
+		};
 		684E65382CE60FC9006B2F02 /* Initial */ = {
 			isa = PBXGroup;
 			children = (
@@ -642,7 +672,6 @@
 			children = (
 				684E65462CEB9068006B2F02 /* ChannelListModel.swift */,
 				684E65482CEBA140006B2F02 /* ChannelUnreadCountModel.swift */,
-				684E654E2CEFB210006B2F02 /* ChannelChatHistoryModel.swift */,
 				684E65562CF1FEA6006B2F02 /* ChannelDetailsModel.swift */,
 			);
 			path = Channel;
@@ -833,6 +862,7 @@
 			isa = PBXGroup;
 			children = (
 				68B96F042CE2195800473D8B /* ErrorModel.swift */,
+				684E654E2CEFB210006B2F02 /* ChattingModel.swift */,
 				68DD92062CF36D5D00A8A466 /* User */,
 				549091A12CE491A1002EE538 /* WorkSpace */,
 				684E65452CEB9055006B2F02 /* Channel */,
@@ -911,6 +941,7 @@
 				541DC72C2CE1D2980051E898 /* FirebaseCrashlytics */,
 				541DC72E2CE1D2980051E898 /* FirebaseMessaging */,
 				545ED2F92CF44E630026F194 /* SocketIO */,
+				54CA54982CF620DD00A44FD4 /* RealmSwift */,
 			);
 			productName = ServiceLevelProject;
 			productReference = 546589862CCE4FC500736BA9 /* ServiceLevelProject.app */;
@@ -949,6 +980,7 @@
 				687605BD2CE1D881008167B0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				541DC7292CE1D2980051E898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				545ED2F82CF44E630026F194 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				54CA54972CF620DD00A44FD4 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 546589872CCE4FC500736BA9 /* Products */;
 			projectDirPath = "";
@@ -1019,6 +1051,7 @@
 				68DD921B2CF4679500A8A466 /* SearchUserViewModel.swift in Sources */,
 				68DD920A2CF3706200A8A466 /* PhoneNumberEditViewModel.swift in Sources */,
 				54565ABE2CCF631100B5A354 /* OnboardingView.swift in Sources */,
+				54CA54A82CF63BB800A44FD4 /* RealmRepository.swift in Sources */,
 				68DD92052CF36D5200A8A466 /* EditProfileImageModel.swift in Sources */,
 				54565AB62CCE62FA00B5A354 /* ViewRepresentable.swift in Sources */,
 				68B96F0C2CE477F600473D8B /* SignupViewModel.swift in Sources */,
@@ -1050,7 +1083,7 @@
 				684E65422CE88A28006B2F02 /* RefreshToken.swift in Sources */,
 				687605AC2CDE4877008167B0 /* DMViewController.swift in Sources */,
 				68B96F002CE2153B00473D8B /* APIManager.swift in Sources */,
-				684E654F2CEFB210006B2F02 /* ChannelChatHistoryModel.swift in Sources */,
+				684E654F2CEFB210006B2F02 /* ChattingModel.swift in Sources */,
 				684E654D2CECE077006B2F02 /* ChattingViewModel.swift in Sources */,
 				687605892CDA3389008167B0 /* ChangeAdminViewController.swift in Sources */,
 				684E65602CF22818006B2F02 /* ChangeChannelAdminViewModel.swift in Sources */,
@@ -1074,6 +1107,7 @@
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
 				541DC7182CDE389D0051E898 /* SettingChannelView.swift in Sources */,
 				54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */,
+				54CA54A22CF62E0B00A44FD4 /* ChattingRealmModel.swift in Sources */,
 				6876055A2CCF7F86008167B0 /* HomeView.swift in Sources */,
 				68B96F022CE2177C00473D8B /* ErrorCode.swift in Sources */,
 				549091A82CE4A276002EE538 /* UserDefaultManager.swift in Sources */,
@@ -1083,6 +1117,7 @@
 				687605A72CDE40D3008167B0 /* InviteMemberViewController.swift in Sources */,
 				684E65572CF1FEA6006B2F02 /* ChannelDetailsModel.swift in Sources */,
 				548950C22CEB7841009322C9 /* WorkspaceListReloadable.swift in Sources */,
+				54CA54AC2CF717F500A44FD4 /* ChattingContainerRealm.swift in Sources */,
 				687605912CDA5ED7008167B0 /* ChannelCell.swift in Sources */,
 				541DC71C2CDE51F30051E898 /* SettingChannelViewModel.swift in Sources */,
 				687605812CD66A74008167B0 /* CreateWorkspaceViewController.swift in Sources */,
@@ -1091,6 +1126,7 @@
 				68DD92102CF453DF00A8A466 /* SettingView.swift in Sources */,
 				541DC71F2CE0F56D0051E898 /* EditChannelViewController.swift in Sources */,
 				541DC7162CDE38960051E898 /* SettingChannelViewController.swift in Sources */,
+				54CA54AA2CF717DF00A44FD4 /* ChattingUserRealmModel.swift in Sources */,
 				5465898C2CCE4FC500736BA9 /* SceneDelegate.swift in Sources */,
 				6876058F2CDA396F008167B0 /* ChangeAdminCell.swift in Sources */,
 				684E655E2CF226FC006B2F02 /* ChangeChannelCell.swift in Sources */,
@@ -1366,6 +1402,14 @@
 				kind = branch;
 			};
 		};
+		54CA54972CF620DD00A44FD4 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.54.1;
+			};
+		};
 		6876053D2CCE58F0008167B0 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1436,6 +1480,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 545ED2F82CF44E630026F194 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
 			productName = SocketIO;
+		};
+		54CA54982CF620DD00A44FD4 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54CA54972CF620DD00A44FD4 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		6876053E2CCE58F0008167B0 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

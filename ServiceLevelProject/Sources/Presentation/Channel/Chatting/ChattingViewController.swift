@@ -54,11 +54,14 @@ extension ChattingViewController {
         )
         let output = viewModel.transform(input: input)
         
-        input.viewDidLoadTrigger.onNext(())
+        // 채팅 리스트 업데이트 (DB, API, Socket 모든 Output)
+        let chattingOutput = output.chattingOutput.share()
         
-        if let roomInfoData = roomInfoData {
-            input.chattingRoomInfo.onNext(roomInfoData)
-        }
+        output.chattingOutput
+            .bind(to: chattingView.chattingTableView.rx.items(cellIdentifier: ChattingTableViewCell.id, cellType: ChattingTableViewCell.self)) { row, element, cell in
+                cell.configureData(element)
+            }
+            .disposed(by: disposeBag)
         
         output.channelName
             .bind(with: self) { owner, value in
@@ -123,15 +126,6 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
-        // 채팅 리스트 업데이트 (DB, API, Socket 모든 Output)
-        let chattingOutput = output.chattingOutput.share()
-        
-        output.chattingOutput
-            .bind(to: chattingView.chattingTableView.rx.items(cellIdentifier: ChattingTableViewCell.id, cellType: ChattingTableViewCell.self)) { row, element, cell in
-                cell.configureData(element)
-            }
-            .disposed(by: disposeBag)
-        
         chattingOutput
             .bind(with: self) { owner, chattings in
                 guard !chattings.isEmpty else { return }
@@ -162,6 +156,12 @@ extension ChattingViewController {
                 input.isPlaceholder.onNext(textColor == UIColor.textSecondary)
             }
             .disposed(by: disposeBag)
+        
+        input.viewDidLoadTrigger.onNext(())
+        
+        if let roomInfoData = roomInfoData {
+            input.chattingRoomInfo.onNext(roomInfoData)
+        }
     }
     
     private func leftBarButtonItem() -> UIBarButtonItem {

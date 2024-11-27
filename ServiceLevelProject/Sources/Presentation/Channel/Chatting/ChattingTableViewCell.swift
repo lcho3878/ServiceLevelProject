@@ -112,12 +112,14 @@ final class ChattingTableViewCell: BaseTableViewCell {
             $0.bottom.equalTo(centerStackView)
         }
     }
+    
+    override func configureUI() {
+        selectionStyle = .none
+    }
 }
 
 extension ChattingTableViewCell {
-    typealias Chatting = ChannelChatHistoryModel
-    
-    func configureData(_ data: Chatting) {
+    func configureData(_ data: ChattingModel) {
         nicknameLabel.text = data.user.nickname
         Task { [weak self] in
             if let image = data.user.profileImage {

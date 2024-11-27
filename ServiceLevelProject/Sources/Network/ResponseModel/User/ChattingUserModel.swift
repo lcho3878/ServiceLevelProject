@@ -18,4 +18,16 @@ struct ChattingUserModel: Decodable {
         case email, nickname, profileImage
     }
     
+    init(realmUser data: ChattingUserRealmModel) {
+        self.userID = data.userID
+        self.email = data.email
+        self.nickname = data.nickname
+        self.profileImage = data.profileImage
+    }
+}
+
+extension ChattingUserModel {
+    var realmUser: ChattingUserRealmModel {
+        return ChattingUserRealmModel(user: self)
+    }
 }
