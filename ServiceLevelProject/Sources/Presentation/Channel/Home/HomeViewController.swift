@@ -20,6 +20,7 @@ final class HomeViewController: BaseViewController {
     private let workspaceIDInput = PublishSubject<String>()
     private var menu: SideMenuNavigationController?
     private var popFromEditView = false
+    private let dmReloadTrigger = PublishSubject<Void>()
     
     override func loadView() {
         view = homeView
@@ -57,7 +58,8 @@ extension HomeViewController {
     private func bind() {
         let input = HomeViewModel.Input(
             workspaceID: workspaceIDInput,
-            channelTableViewModelSelected: homeView.channelTableView.rx.modelSelected(ChannelList.self)
+            channelTableViewModelSelected: homeView.channelTableView.rx.modelSelected(ChannelList.self),
+            dmReloadTrigger: dmReloadTrigger
         )
         let output = viewModel.transform(input: input)
         
@@ -355,6 +357,13 @@ extension HomeViewController {
             selector: #selector(editedWorkspaceData(_:)),
             name: .editedWorkspaceData,
             object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateDMList(_:)),
+            name: .dmListUpdate,
+            object: nil
+        )
     }
     
     @objc
@@ -385,5 +394,10 @@ extension HomeViewController {
         }
         
         homeNavigationView.naviTitleLabel.text = editedData.name
+    }
+    
+    @objc
+    private func updateDMList(_ notification: Notification) {
+        dmReloadTrigger.onNext(())
     }
 }

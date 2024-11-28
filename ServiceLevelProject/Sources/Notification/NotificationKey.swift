@@ -26,4 +26,5 @@ enum NotificationKey: String {
 extension Notification.Name {
     static let profileImageData = Notification.Name("profileData")
     static let editedWorkspaceData = Notification.Name("editedData")
+    static let dmListUpdate = Notification.Name("dmListUpdate")
 }

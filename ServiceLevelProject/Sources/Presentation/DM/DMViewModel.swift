@@ -123,6 +123,7 @@ final class DMViewModel: ViewModelBindable {
                         profileImage: success.user.profileImage,
                         unreadCount: 0)
                     dmRoomInfo.onNext(roomInfo)
+                    NotificationCenter.default.post(name: .dmListUpdate, object: nil)
                 case .failure(let failure):
                     print(">>> Failed!!: \(failure.errorCode)")
                 }
