@@ -29,3 +29,9 @@ struct DMRoomListModel: Decodable {
         }
     }
 }
+
+extension DMRoomListModel {
+    var leaveDate: String {
+        return RealmRepository.shared.readleaveDate(roomID) ?? createdAt
+    }
+}

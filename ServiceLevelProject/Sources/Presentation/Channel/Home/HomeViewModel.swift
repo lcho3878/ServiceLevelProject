@@ -253,7 +253,7 @@ final class HomeViewModel: ViewModelBindable {
                     return
                 }
                 for dm in success {
-                    APIManager.shared.callRequest(api: DMRouter.unreadCount(workspaceID: workspaceID, roomID: dm.roomID, after: dm.createdAt), type: DMUnreadCountModel.self) { result in
+                    APIManager.shared.callRequest(api: DMRouter.unreadCount(workspaceID: workspaceID, roomID: dm.roomID, after: dm.leaveDate), type: DMUnreadCountModel.self) { result in
                         switch result {
                         case .success(let success):
                             if dm.roomID == success.roomID {
