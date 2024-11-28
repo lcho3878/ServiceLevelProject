@@ -14,7 +14,8 @@ final class DMViewController: BaseViewController {
     private let dmView = DMView()
     private let viewModel = DMViewModel()
     private let disposeBag = DisposeBag()
-    let dmNavigationView = DMNavigationView()
+    private let viewDidLoadTrigger = PublishSubject<Void>()
+    private let dmNavigationView = DMNavigationView()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -33,27 +34,39 @@ final class DMViewController: BaseViewController {
     override func configureNavigation() {
         configureNavigaionItem()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewDidLoadTrigger.onNext(())
+    }
 }
 
 // MARK: bind
 extension DMViewController {
     private func bind() {
-        let input = DMViewModel.Input(collectionViewModelSelected: dmView.collectionView.rx.modelSelected(WorkSpaceMember.self))
+        let input = DMViewModel.Input(
+            viewDidLoadTrigger: viewDidLoadTrigger,
+            collectionViewModelSelected: dmView.collectionView.rx.modelSelected(WorkSpaceMember.self)
+        )
         let output = viewModel.transform(input: input)
-        
-        input.viewDidLoadTrigger.onNext(())
-        
         output.memberList
             .bind(to: dmView.collectionView.rx.items(cellIdentifier: DMMemberCell.id, cellType: DMMemberCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
             }
             .disposed(by: disposeBag)
         
-        output.dmList
-            .bind(to: dmView.tableView.rx.items(cellIdentifier: DMListCell.id, cellType: DMListCell.self)) { (row, element, cell) in
-                cell.configureCell(element: element)
+        output.dmListOutput
+            .bind(to: dmView.tableView.rx.items(cellIdentifier: DMListCell.id, cellType: DMListCell.self)) { row, element, cell in
+                cell.configureCell(element)
             }
             .disposed(by: disposeBag)
+        
+//        output.dmTestData
+//            .bind(to: dmView.tableView.rx.items(cellIdentifier: DMListCell.id, cellType: DMListCell.self)) { (row, element, cell) in
+//                cell.configureCell(element: element)
+//            }
+//            .disposed(by: disposeBag)
         
         // 멤버 클릭 - DM 방 조회(생성)
         output.dmRoomInfo
@@ -61,6 +74,8 @@ extension DMViewController {
                 print(">>> info: \(info)")
             }
             .disposed(by: disposeBag)
+        
+        viewDidLoadTrigger.onNext(())
     }
 }
 

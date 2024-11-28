@@ -123,4 +123,16 @@ final class DMListCell: BaseTableViewCell {
             unreadBadgeView.isHidden = true
         }
     }
+    
+    func configureCell(_ element: DMList) {
+        profileImageView.image = UIImage.randomDefaultImage()
+        userNameLabel.text = element.nickname
+        lastChatLabel.text = element.lastChatting?.content
+        if element.unreadCount > 0 {
+            unreadCountLabel.text = "\(element.unreadCount)"
+            unreadBadgeView.isHidden = false
+        } else {
+            unreadBadgeView.isHidden = true
+        }
+    }
 }
