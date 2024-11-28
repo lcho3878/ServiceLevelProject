@@ -10,6 +10,12 @@ import SnapKit
 import Then
 
 final class DMMemberCell: BaseCollectionViewCell {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        profileImageView.image = UIImage.randomDefaultImage()
+    }
+    
     let profileImageView = UIImageView().then {
         $0.image = UIImage.randomDefaultImage()
         $0.backgroundColor = .systemGray
@@ -49,6 +55,8 @@ final class DMMemberCell: BaseCollectionViewCell {
             if let image = element.profileImage {
                 let coverImageData = try await APIManager.shared.loadImage(image)
                 profileImageView.image = UIImage(data: coverImageData)
+            } else {
+                profileImageView.image = UIImage.randomDefaultImage()
             }
         }
         userNameLabel.text = element.nickname

@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import PhotosUI
+import RxSwift
+import RxCocoa
 
 final class EditWorkspaceViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
     var workspace: WorkSpace?
     weak var delegate: WorkspaceListReloadable?
     private let editWorkspaceView = WorkspaceSettingView()
+    var selectedImage: UIImage?
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -37,14 +41,15 @@ final class EditWorkspaceViewController: BaseViewController, DismissButtonPresen
 extension EditWorkspaceViewController {
     private func configureAddTarget() {
         editWorkspaceView.createWorkspaceButton.addTarget(self, action: #selector(createButtonClicked), for: .touchUpInside)
+        
+        editWorkspaceView.editImageButton.addTarget(self, action: #selector(editImageButtonClicked), for: .touchUpInside)
     }
     
     @objc
     private func createButtonClicked() {
-        //현재는 기본 image로 워크스페이스 생성 추후에 처리해보도록 하겠습니다.
-        //이미지 추가 필요
         guard let workspace else { return }
-        let query = WorkspaceCreateQuery(name: editWorkspaceView.workspaceNameTextField.text!, description: editWorkspaceView.workspaceDescriptionTextField.text!, image: editWorkspaceView.workspaceImageView.image?.pngData())
+        guard let image = selectedImage?.asData() else { return }
+        let query = WorkspaceCreateQuery(name: editWorkspaceView.workspaceNameTextField.text!, description: editWorkspaceView.workspaceDescriptionTextField.text!, image: image)
         APIManager.shared.callRequest(api: WorkSpaceRouter.edit(id: workspace.workspace_id, query: query), type: WorkSpace.self) { [weak self] result in
             switch result {
             case .success(let value):
@@ -55,6 +60,51 @@ extension EditWorkspaceViewController {
                 print(">>> error: \(errorModel.errorCode)")
                 self?.editWorkspaceView.showToast(message: errorModel.errorCode, bottomOffset: -120)
             }
+        }
+    }
+    
+    @objc
+    private func editImageButtonClicked() {
+        presentPicker()
+    }
+}
+
+// MARK: PHPicker
+extension EditWorkspaceViewController {
+    private func presentPicker() {
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        config.filter = PHPickerFilter.images
+        config.selectionLimit = 1
+        config.selection = .ordered
+        config.preferredAssetRepresentationMode = .current
+        
+        let imagePicker = PHPickerViewController(configuration: config)
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+    
+    private func displayImage(with result: PHPickerResult) {
+        let itemProvider = result.itemProvider
+        guard itemProvider.canLoadObject(ofClass: UIImage.self) else { return }
+        
+        itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+            guard let self = self, let image = image as? UIImage else { return }
+            DispatchQueue.main.async {
+                self.selectedImage = image
+                self.editWorkspaceView.workspaceImageView.image = image
+            }
+        }
+    }
+}
+
+extension EditWorkspaceViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        dismiss(animated: true)
+
+        if let result = results.first {
+            displayImage(with: result)
+        } else {
+            selectedImage = nil
         }
     }
 }
