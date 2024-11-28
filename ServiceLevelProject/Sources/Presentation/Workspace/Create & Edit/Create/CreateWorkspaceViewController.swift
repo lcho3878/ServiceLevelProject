@@ -37,20 +37,18 @@ final class CreateWorkspaceViewController: BaseViewController, DismissButtonPres
 extension CreateWorkspaceViewController {
     private func configureAddTarget() {
         createWorkspaceView.createWorkspaceButton.addTarget(self, action: #selector(createButtonClicked), for: .touchUpInside)
-        
         createWorkspaceView.selectImageButton.addTarget(self, action: #selector(editImageButtonClicked), for: .touchUpInside)
     }
     
     @objc
     private func createButtonClicked() {
-        guard let image = selectedImage?.asData() else { return }
-        let query = WorkspaceCreateQuery(name: createWorkspaceView.workspaceNameTextField.text!, description: createWorkspaceView.workspaceDescriptionTextField.text!, image: image)
+        let query = WorkspaceCreateQuery(name: createWorkspaceView.workspaceNameTextField.text!, description: createWorkspaceView.workspaceDescriptionTextField.text!, image: selectedImage?.asData() ?? nil )
         APIManager.shared.callRequest(api: WorkSpaceRouter.create(query: query), type: WorkSpace.self) { [weak self] result in
             switch result {
             case .success(let value):
                 print(value)
-                self?.delegate?.reloadWorkspaceList()
                 self?.dismiss(animated: true)
+                self?.changeRootViewController(rootVC: TabbarViewController())
             case .failure(let errorModel):
                 self?.createWorkspaceView.showToast(message: errorModel.errorCode, bottomOffset: -120)
             }

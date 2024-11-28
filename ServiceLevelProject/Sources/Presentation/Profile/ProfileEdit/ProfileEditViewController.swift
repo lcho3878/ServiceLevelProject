@@ -15,6 +15,7 @@ final class ProfileEditViewController: BaseViewController {
     private let viewModel = ProfileEditViewModel()
     private let disposeBag = DisposeBag()
     weak var delegate: ChangedProfileImageDelegate?
+    weak var didPopDelegate: PopFromEditProfileViewDelegate?
     
     private var selectedImage = PublishSubject<UIImage?>()
     
@@ -26,6 +27,12 @@ final class ProfileEditViewController: BaseViewController {
         super.viewDidLoad()
         
         bind()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        configureViewDidDisappear()
     }
     
     override func configureNavigation() {
@@ -190,6 +197,12 @@ extension ProfileEditViewController: PHPickerViewControllerDelegate {
     }
 }
 
+extension ProfileEditViewController {
+    private func configureViewDidDisappear() {
+        didPopDelegate?.popFromEdit(fromProfileView: true)
+    }
+}
+
 extension ProfileEditViewController: ChangedNicknameDelegate {
     func changedNickname(data: String) {
         viewModel.changedNickname.onNext(data)
@@ -204,4 +217,8 @@ extension ProfileEditViewController: ChangedPhoneNumberDelegate {
 
 protocol ChangedProfileImageDelegate: AnyObject {
     func changedImageData(imageData: Data)
+}
+
+protocol PopFromEditProfileViewDelegate: AnyObject {
+    func popFromEdit(fromProfileView: Bool)
 }
