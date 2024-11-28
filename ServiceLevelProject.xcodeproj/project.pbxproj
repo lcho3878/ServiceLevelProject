@@ -1347,6 +1347,7 @@
 				DEVELOPMENT_TEAM = 3G6N8FDHBM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ServiceLevelProject/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Mingle;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1380,6 +1381,7 @@
 				DEVELOPMENT_TEAM = 3G6N8FDHBM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ServiceLevelProject/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Mingle;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
