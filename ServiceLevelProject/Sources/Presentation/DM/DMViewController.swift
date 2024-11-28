@@ -65,7 +65,19 @@ extension DMViewController {
         // 멤버 클릭 - DM 방 조회(생성)
         output.dmRoomInfo
             .bind(with: self) { owner, info in
-                print(">>> info: \(info)")
+                let chattingVC = ChattingViewController()
+                chattingVC.roomInfoData = info.selectedChannelData
+                chattingVC.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(chattingVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        dmView.tableView.rx.modelSelected(DMList.self)
+            .bind(with: self) { owner, dmList in
+                let vc = ChattingViewController()
+                vc.roomInfoData = dmList.selectedChannelData
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         

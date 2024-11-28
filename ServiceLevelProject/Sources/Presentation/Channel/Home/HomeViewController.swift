@@ -137,7 +137,8 @@ extension HomeViewController {
                 // 채팅뷰로 바로 이동
                 let vc = ChattingViewController()
                 vc.roomInfoData = selectedData
-                owner.changeRootViewController(rootVC: vc, isNavigation: true)
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -175,10 +176,10 @@ extension HomeViewController {
         // dm 클릭
         homeView.directMessageTableView.rx.modelSelected(DMList.self)
             .bind(with: self) { owner, dmList in
-                print(">>> dmList: \(dmList)")
-                let chattingVC = ChattingViewController()
-                chattingVC.roomInfoData = dmList.selectedChannelData
-                owner.changeRootViewController(rootVC: chattingVC, isNavigation: true)
+                let vc = ChattingViewController()
+                vc.roomInfoData = dmList.selectedChannelData
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
