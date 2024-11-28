@@ -49,7 +49,7 @@ extension DMRouter : TargetType {
     var header: [String : String] {
         switch self {
         case .dmList, .unreadCount, .chattingList, .sendChatting:
-             [
+             return [
                 Header.accept.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: Key.sesacKey,
                 Header.authorization.rawValue: UserDefaultManager.accessToken ?? ""
