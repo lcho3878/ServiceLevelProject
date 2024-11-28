@@ -19,6 +19,7 @@ final class HomeViewController: BaseViewController {
     private var isUpdateChannel = false
     private let workspaceIDInput = PublishSubject<String>()
     private var menu: SideMenuNavigationController?
+    private var popFromEditView = false
     
     override func loadView() {
         view = homeView
@@ -30,16 +31,12 @@ final class HomeViewController: BaseViewController {
         bind()
         rightSwipeAction()
         setupObservers()
-        homeView.emptyBgView.isHidden = true // 임시
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if isUpdateChannel {
-            viewModel.isUpdateChannelList.onNext(true)
-            isUpdateChannel = false
-        }
+        configureViewWillAppear()
     }
     
     override func configureNavigation() {
@@ -64,8 +61,12 @@ extension HomeViewController {
         )
         let output = viewModel.transform(input: input)
         
-        // viewDidLoadTrigger
-        input.viewDidLoadTrigger.onNext(())
+        output.hasWorkspace
+            .bind(with: self) { owner, value in
+                owner.homeView.hasWorkspace = value
+                owner.tabBarController?.tabBar.isHidden = !value
+            }
+            .disposed(by: disposeBag)
         
         // EmptyView - 워크스페이스 생성 버튼
         homeView.createWorkspaceButton.rx.tap
@@ -183,6 +184,9 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         homeView.updateTableViewLayout()
+        
+        // viewDidLoadTrigger
+        viewModel.viewDidLoadTrigger.onNext(())
     }
 }
 
@@ -214,6 +218,7 @@ extension HomeViewController: NavigationRepresentable {
             .bind(with: self) { owner, _ in
                 let vc = ProfileEditViewController()
                 vc.hidesBottomBarWhenPushed = true
+                vc.didPopDelegate = owner
                 vc.delegate = owner
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
@@ -283,6 +288,24 @@ extension HomeViewController {
     }
 }
 
+extension HomeViewController{
+    private func configureViewWillAppear() {
+        if isUpdateChannel {
+            viewModel.isUpdateChannelList.onNext(true)
+            isUpdateChannel = false
+        }
+        
+        viewModel.popFromEditView
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.viewModel.viewDidLoadTrigger.onNext(())
+                    owner.popFromEditView = false
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
 extension HomeViewController: UpdateChannelDelegate {
     func updateChannelorNot(isUpdate: Bool?) {
         guard let isUpdate = isUpdate else { return }
@@ -306,6 +329,12 @@ extension HomeViewController: ChangedProfileImageDelegate {
     }
 }
 
+extension HomeViewController: PopFromEditProfileViewDelegate {
+    func popFromEdit(fromProfileView: Bool) {
+        viewModel.popFromEditView.onNext(fromProfileView)
+    }
+}
+
 extension HomeViewController {
     private func setupObservers() {
         NotificationCenter.default.addObserver(
@@ -318,6 +347,12 @@ extension HomeViewController {
             self,
             selector: #selector(profileImageData(_:)),
             name: .profileImageData,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(editedWorkspaceData(_:)),
+            name: .editedWorkspaceData,
             object: nil)
     }
     
@@ -336,5 +371,18 @@ extension HomeViewController {
         DispatchQueue.main.async {
             self.homeNavigationView.profileButton.setImage(UIImage(data: profileImage), for: .normal)
         }
+    }
+    
+    @objc
+    private func editedWorkspaceData(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let editedData = userInfo["editedData"] as? WorkSpace else { return }
+        
+        Task {
+            let coverImageData = try await APIManager.shared.loadImage(editedData.coverImage)
+            homeNavigationView.coverButton.setImage(UIImage(data: coverImageData), for: .normal)
+        }
+        
+        homeNavigationView.naviTitleLabel.text = editedData.name
     }
 }

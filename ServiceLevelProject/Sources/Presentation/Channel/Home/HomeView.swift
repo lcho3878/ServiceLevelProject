@@ -10,6 +10,13 @@ import SnapKit
 import Then
 
 final class HomeView: BaseView {
+    var hasWorkspace: Bool = false {
+        didSet {
+            emptyBgView.isHidden = hasWorkspace
+            floatingButton.isHidden = !hasWorkspace
+            scrollView.isHidden = !hasWorkspace
+        }
+    }
     // MARK: UI
     // emptyView UI
     private let topDividerView = UIView().then {

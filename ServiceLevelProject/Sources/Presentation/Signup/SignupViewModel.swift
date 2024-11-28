@@ -81,7 +81,8 @@ final class SignupViewModel: ViewModelBindable {
             }
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(_):
+                case .success(let success):
+                    UserDefaultManager.saveUserData(user: success)
                     isSignUpCompleted.onNext(())
                 case .failure(let failure):
                     print(">>> fail!!: \(failure)") // 실패 로직 필요

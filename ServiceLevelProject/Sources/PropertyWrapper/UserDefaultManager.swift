@@ -39,5 +39,6 @@ struct UserDefaultManager {
             UserDefaults.standard.removeObject(forKey: key)
         }
         RealmRepository.shared.removeAllData()
+        UserDefaults.standard.synchronize()
     }
 }
