@@ -111,7 +111,14 @@ final class DMListCell: BaseTableViewCell {
     }
     
     func configureCell(_ element: DMList) {
-        profileImageView.image = UIImage.randomDefaultImage()
+        Task {
+            if let image = element.profileImage {
+                let imageData = try await APIManager.shared.loadImage(image)
+                profileImageView.image = UIImage(data: imageData)
+            } else {
+                profileImageView.image = UIImage.randomDefaultImage()
+            }
+        }
         userNameLabel.text = element.nickname
         lastChatLabel.text = element.lastChatting?.content
         lastChatDateLabel.text = element.lastChatting?.createdAt.formatting(format: "aa hh:mm")
