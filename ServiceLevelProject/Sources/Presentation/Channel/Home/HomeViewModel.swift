@@ -26,6 +26,7 @@ final class HomeViewModel: ViewModelBindable {
         let myDMList = PublishSubject<[DMRoomListModel]>()
         let dmList = BehaviorSubject(value: [DMList(roomID: "", createdAt: "", userID: "", nickname: "", profileImage: nil, unreadCount: 0)])
         let roomIDList = PublishSubject<[String]>()
+        let dmReloadTrigger: PublishSubject<Void>
     }
     
     struct Output {
@@ -214,6 +215,30 @@ final class HomeViewModel: ViewModelBindable {
         input.channelTableViewModelSelected
             .bind(with: self) { owner, channel in
                 input.goToMyChannel.onNext(SelectedChannelData(name: channel.name, description: channel.description, channelID: channel.channelID, ownerID: channel.ownerID))
+            }
+            .disposed(by: disposeBag)
+        
+        input.dmReloadTrigger
+            .withLatestFrom(workspaceIDInput)
+            .flatMap { id in
+                print(">>> REload Trigger")
+                return APIManager.shared.callRequest(api: DMRouter.dmList(workspaceID: id), type: [DMRoomListModel].self)
+            }
+            .bind(with: self) { owner, result in
+                roomIDList = []
+                
+                switch result {
+                case .success(let success):
+                    dmList = []
+                    for room in success {
+                        roomIDList.append(room.roomID)
+                        dmList = success
+                    }
+                    input.roomIDList.onNext(roomIDList)
+                    input.myDMList.onNext(dmList)
+                case .failure(let failure):
+                    print(">>> Failed!: \(failure.errorCode)")
+                }
             }
             .disposed(by: disposeBag)
         
