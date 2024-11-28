@@ -110,20 +110,6 @@ final class DMListCell: BaseTableViewCell {
         }
     }
     
-    func configureCell(element: DMListTestData) {
-        profileImageView.image = UIImage(systemName: element.profileImage)
-        userNameLabel.text = element.userName
-        lastChatLabel.text = element.lastChat
-        lastChatDateLabel.text = element.lastChatDate
-        
-        if element.unreadCount > 0 {
-            unreadCountLabel.text = "\(element.unreadCount)"
-            unreadBadgeView.isHidden = false
-        } else {
-            unreadBadgeView.isHidden = true
-        }
-    }
-    
     func configureCell(_ element: DMList) {
         profileImageView.image = UIImage.randomDefaultImage()
         userNameLabel.text = element.nickname

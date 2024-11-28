@@ -62,12 +62,6 @@ extension DMViewController {
             }
             .disposed(by: disposeBag)
         
-//        output.dmTestData
-//            .bind(to: dmView.tableView.rx.items(cellIdentifier: DMListCell.id, cellType: DMListCell.self)) { (row, element, cell) in
-//                cell.configureCell(element: element)
-//            }
-//            .disposed(by: disposeBag)
-        
         // 멤버 클릭 - DM 방 조회(생성)
         output.dmRoomInfo
             .bind(with: self) { owner, info in
