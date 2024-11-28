@@ -5,15 +5,14 @@
 //  Created by YJ on 11/2/24.
 //
 
-import Foundation
+import UIKit
 import PhotosUI
-import RxSwift
-import RxCocoa
 
 final class EditWorkspaceViewController: BaseViewController, DismissButtonPresentable {
     // MARK: Properties
     var workspace: WorkSpace?
     weak var delegate: WorkspaceListReloadable?
+    weak var editedDataDelegate: EditedDataDelegate?
     private let editWorkspaceView = WorkspaceSettingView()
     var selectedImage: UIImage?
     
@@ -42,7 +41,7 @@ extension EditWorkspaceViewController {
     private func configureAddTarget() {
         editWorkspaceView.createWorkspaceButton.addTarget(self, action: #selector(createButtonClicked), for: .touchUpInside)
         
-        editWorkspaceView.editImageButton.addTarget(self, action: #selector(editImageButtonClicked), for: .touchUpInside)
+        editWorkspaceView.selectImageButton.addTarget(self, action: #selector(editImageButtonClicked), for: .touchUpInside)
     }
     
     @objc
@@ -55,6 +54,12 @@ extension EditWorkspaceViewController {
             case .success(let value):
                 print(">>> \(value)")
                 self?.delegate?.reloadWorkspaceList()
+                self?.editedDataDelegate?.editData(editedData: value)
+                
+                // NotificationCenter 변경 사항 전송
+                let editedData: [String: WorkSpace] = ["editedData": value]
+                NotificationCenter.default.post(name: .editedWorkspaceData, object: nil, userInfo: editedData)
+                
                 self?.dismiss(animated: true)
             case .failure(let errorModel):
                 print(">>> error: \(errorModel.errorCode)")
@@ -113,7 +118,15 @@ extension EditWorkspaceViewController: PHPickerViewControllerDelegate {
 extension EditWorkspaceViewController {
     private func configureTextFields() {
         guard let workspace else { return }
+        Task {
+            let coverImageData = try await APIManager.shared.loadImage(workspace.coverImage)
+            editWorkspaceView.workspaceImageView.image = UIImage(data: coverImageData)
+        }
         editWorkspaceView.workspaceNameTextField.text = workspace.name
         editWorkspaceView.workspaceDescriptionTextField.text = workspace.description
     }
+}
+
+protocol EditedDataDelegate: AnyObject {
+    func editData(editedData: WorkSpace)
 }

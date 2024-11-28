@@ -319,6 +319,12 @@ extension HomeViewController {
             selector: #selector(profileImageData(_:)),
             name: .profileImageData,
             object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(editedWorkspaceData(_:)),
+            name: .editedWorkspaceData,
+            object: nil)
     }
     
     @objc
@@ -336,5 +342,18 @@ extension HomeViewController {
         DispatchQueue.main.async {
             self.homeNavigationView.profileButton.setImage(UIImage(data: profileImage), for: .normal)
         }
+    }
+    
+    @objc
+    private func editedWorkspaceData(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let editedData = userInfo["editedData"] as? WorkSpace else { return }
+        
+        Task {
+            let coverImageData = try await APIManager.shared.loadImage(editedData.coverImage)
+            homeNavigationView.coverButton.setImage(UIImage(data: coverImageData), for: .normal)
+        }
+        
+        homeNavigationView.naviTitleLabel.text = editedData.name
     }
 }

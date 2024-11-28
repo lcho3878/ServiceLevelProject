@@ -21,7 +21,7 @@ final class WorkspaceSettingView: BaseView {
     
     private let cameraImageView = CameraImageView()
     
-    let editImageButton = UIButton()
+    let selectImageButton = UIButton()
     
     private let workspaceNameLabel = UILabel().then {
         $0.text = "워크스페이스 이름"
@@ -57,7 +57,7 @@ final class WorkspaceSettingView: BaseView {
     
     // MARK: Functions
     override func addSubviews() {
-        addSubviews([workspaceImageView, cameraImageView, editImageButton, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
+        addSubviews([workspaceImageView, workspaceImageView, cameraImageView, selectImageButton, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
     }
     
     override func setConstraints() {
@@ -69,13 +69,17 @@ final class WorkspaceSettingView: BaseView {
             $0.height.width.equalTo(70)
         }
         
+        workspaceImageView.snp.makeConstraints {
+            $0.edges.equalTo(workspaceImageView)
+        }
+        
         cameraImageView.snp.makeConstraints {
             $0.trailing.equalTo(workspaceImageView).offset(7)
             $0.bottom.equalTo(workspaceImageView).offset(5)
             $0.height.width.equalTo(24)
         }
         
-        editImageButton.snp.makeConstraints {
+        selectImageButton.snp.makeConstraints {
             $0.edges.equalTo(workspaceImageView)
         }
         
