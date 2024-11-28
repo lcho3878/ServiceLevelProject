@@ -124,7 +124,7 @@ final class WorkspaceCell: UITableViewCell, ViewRepresentable {
     
     func configureCell(element: WorkSpace) {
         nameLabel.text = element.name
-        createdAtLabel.text = element.createdAt
+        createdAtLabel.text = element.createdAt.formatting(format: "yy. MM. dd")
         workspaceID = element.workspace_id
         
         Task {
