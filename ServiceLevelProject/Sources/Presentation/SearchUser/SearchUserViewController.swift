@@ -23,7 +23,6 @@ final class SearchUserViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(">>> \(UserDefaultManager.accessToken)")
         bind()
     }
     

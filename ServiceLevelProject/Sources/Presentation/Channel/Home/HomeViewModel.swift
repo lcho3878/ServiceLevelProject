@@ -12,9 +12,10 @@ import RxCocoa
 final class HomeViewModel: ViewModelBindable {
     let disposeBag = DisposeBag()
     let isUpdateChannelList = PublishSubject<Bool>()
+    let popFromEditView = PublishSubject<Bool>()
+    let viewDidLoadTrigger = PublishSubject<Void>()
     
     struct Input {
-        let viewDidLoadTrigger = PublishSubject<Void>()
         let workspaceID: PublishSubject<String>
         let myChannelList = PublishSubject<[ChannelListModel]>()
         let channelList = BehaviorSubject(value: [ChannelList(channelID: "", name: "", description: nil, coverImage: nil, ownerID: "", createdAt: "", unreadCount: 0)])
@@ -34,6 +35,7 @@ final class HomeViewModel: ViewModelBindable {
         let goToMyChannel: PublishSubject<SelectedChannelData>
         let profileImageData: PublishSubject<Data>
         let dmList: BehaviorSubject<[DMList]>
+        let hasWorkspace: PublishSubject<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -49,37 +51,35 @@ final class HomeViewModel: ViewModelBindable {
         var roomIDList: [String] = []
         var dmWithUnreadCount: [DMList] = []
         
-        input.viewDidLoadTrigger
-            .flatMap {
-                if UserDefaultManager.workspaceID == nil {
-                    return APIManager.shared.callRequest(api: WorkSpaceRouter.list, type: [WorkSpace].self)
-                        .map { result in
-                            switch result {
-                            case .success(let workspaces):
-                                return workspaces
-                            case .failure(let error):
-                                throw error
-                            }
-                        }
-                } else {
-                    return Single.just([])
-                }
+        let hasWorkspace = PublishSubject<Bool>()
+        
+        viewDidLoadTrigger
+            .flatMap { _ in
+                return APIManager.shared.callRequest(api: WorkSpaceRouter.list, type: [WorkSpace].self)
             }
             .bind(with: self) { owner, result in
-                if !result.isEmpty {
-                    if let firstWorkspace = result.first {
-                        UserDefaultManager.workspaceID = firstWorkspace.workspace_id
+                switch result {
+                case .success(let success):
+                    if !success.isEmpty {
+                        if let firstWorkspace = success.first {
+                            UserDefaultManager.workspaceID = firstWorkspace.workspace_id
+                            hasWorkspace.onNext(true)
+                        }
+                    } else {
+                        hasWorkspace.onNext(false)
                     }
-                }
-                
-                if let workspaceID = UserDefaultManager.workspaceID {
-                    input.workspaceID.onNext(workspaceID)
+                    
+                    if let workspaceID = UserDefaultManager.workspaceID {
+                        input.workspaceID.onNext(workspaceID)
+                    }
+                case .failure(let failure):
+                    print(">>> Failed!: \(failure.errorCode)")
                 }
             }
             .disposed(by: disposeBag)
         
         // 내 프로필 정보 조회
-        input.viewDidLoadTrigger
+        viewDidLoadTrigger
             .flatMap { _ in
                 return APIManager.shared.callRequest(api: UserRouter.profile, type: UserProfileModel.self)
             }
@@ -90,7 +90,7 @@ final class HomeViewModel: ViewModelBindable {
                         profileImage.onNext(image)
                     }
                 case .failure(let failure):
-                    print(">>> Failed!: \(failure.errorCode)")
+                    print(">>> Failed! 내정보 조회: \(failure.errorCode)")
                 }
             }
             .disposed(by: disposeBag)
@@ -284,7 +284,8 @@ final class HomeViewModel: ViewModelBindable {
             myChannelIdList: input.myChannelIdList,
             goToMyChannel: input.goToMyChannel,
             profileImageData: profileImageData,
-            dmList: input.dmList
+            dmList: input.dmList,
+            hasWorkspace: hasWorkspace
         )
     }
 }

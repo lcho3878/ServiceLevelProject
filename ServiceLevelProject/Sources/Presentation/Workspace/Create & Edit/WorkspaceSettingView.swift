@@ -13,13 +13,15 @@ final class WorkspaceSettingView: BaseView {
     // MARK: UI
     let workspaceImageView = UIImageView().then {
         $0.image = UIImage(resource: .defaultProfile)
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .brand
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
     }
     
     private let cameraImageView = CameraImageView()
+    
+    let selectImageButton = UIButton()
     
     private let workspaceNameLabel = UILabel().then {
         $0.text = "워크스페이스 이름"
@@ -55,7 +57,7 @@ final class WorkspaceSettingView: BaseView {
     
     // MARK: Functions
     override func addSubviews() {
-        addSubviews([workspaceImageView, cameraImageView, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
+        addSubviews([workspaceImageView, workspaceImageView, cameraImageView, selectImageButton, workspaceNameLabel, workspaceNameTextField, workspaceDescriptionLabel, workspaceDescriptionTextField, createWorkspaceButton])
     }
     
     override func setConstraints() {
@@ -67,10 +69,18 @@ final class WorkspaceSettingView: BaseView {
             $0.height.width.equalTo(70)
         }
         
+        workspaceImageView.snp.makeConstraints {
+            $0.edges.equalTo(workspaceImageView)
+        }
+        
         cameraImageView.snp.makeConstraints {
             $0.trailing.equalTo(workspaceImageView).offset(7)
             $0.bottom.equalTo(workspaceImageView).offset(5)
             $0.height.width.equalTo(24)
+        }
+        
+        selectImageButton.snp.makeConstraints {
+            $0.edges.equalTo(workspaceImageView)
         }
         
         workspaceNameLabel.snp.makeConstraints {

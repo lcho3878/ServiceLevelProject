@@ -14,7 +14,6 @@ enum DMRouter {
     case create(workspaceID: String, query: CreateDMQuery)
     case chattingList(workspaceID: String, roomID: String, after: String)
     case sendChatting(workspaceID: String, roomID: String, query: ChattingQuery)
-   
 }
 
 extension DMRouter : TargetType {

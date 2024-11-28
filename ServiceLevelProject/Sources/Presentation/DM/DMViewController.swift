@@ -50,6 +50,7 @@ extension DMViewController {
             collectionViewModelSelected: dmView.collectionView.rx.modelSelected(WorkSpaceMember.self)
         )
         let output = viewModel.transform(input: input)
+
         output.memberList
             .bind(to: dmView.collectionView.rx.items(cellIdentifier: DMMemberCell.id, cellType: DMMemberCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
