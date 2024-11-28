@@ -297,6 +297,8 @@ struct DMList {
     let nickname: String
     let profileImage: String?
     let unreadCount: Int
+    
+    var lastChatting: ChattingModel? = nil
 }
 
 extension DMList {

@@ -15,7 +15,7 @@ final class DMViewController: BaseViewController {
     private let viewModel = DMViewModel()
     private let disposeBag = DisposeBag()
     private let viewDidLoadTrigger = PublishSubject<Void>()
-    let dmNavigationView = DMNavigationView()
+    private let dmNavigationView = DMNavigationView()
     
     // MARK: View Life Cycle
     override func loadView() {
@@ -50,27 +50,39 @@ extension DMViewController {
             collectionViewModelSelected: dmView.collectionView.rx.modelSelected(WorkSpaceMember.self)
         )
         let output = viewModel.transform(input: input)
-        
-        viewDidLoadTrigger.onNext(())
-        
+
         output.memberList
             .bind(to: dmView.collectionView.rx.items(cellIdentifier: DMMemberCell.id, cellType: DMMemberCell.self)) { (row, element, cell) in
                 cell.configureCell(element: element)
             }
             .disposed(by: disposeBag)
         
-        output.dmList
-            .bind(to: dmView.tableView.rx.items(cellIdentifier: DMListCell.id, cellType: DMListCell.self)) { (row, element, cell) in
-                cell.configureCell(element: element)
+        output.dmListOutput
+            .bind(to: dmView.tableView.rx.items(cellIdentifier: DMListCell.id, cellType: DMListCell.self)) { row, element, cell in
+                cell.configureCell(element)
             }
             .disposed(by: disposeBag)
         
         // 멤버 클릭 - DM 방 조회(생성)
         output.dmRoomInfo
             .bind(with: self) { owner, info in
-                print(">>> info: \(info)")
+                let chattingVC = ChattingViewController()
+                chattingVC.roomInfoData = info.selectedChannelData
+                chattingVC.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(chattingVC, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        dmView.tableView.rx.modelSelected(DMList.self)
+            .bind(with: self) { owner, dmList in
+                let vc = ChattingViewController()
+                vc.roomInfoData = dmList.selectedChannelData
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewDidLoadTrigger.onNext(())
     }
 }
 

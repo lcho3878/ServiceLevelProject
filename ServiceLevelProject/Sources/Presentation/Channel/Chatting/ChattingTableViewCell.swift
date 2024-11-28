@@ -36,7 +36,6 @@ final class ChattingTableViewCell: BaseTableViewCell {
     }
     
     private let dateLabel = UILabel().then {
-        $0.text = "08:16 오전"
         $0.font = .caption
         $0.textColor = .textSecondary
     }
@@ -129,6 +128,7 @@ extension ChattingTableViewCell {
                 }
             }
         }
+        dateLabel.text = data.createdAt.formatting(format: "hh:mm a")
         messageLabel.text = data.content
         messageLabel.isHidden = data.content.isEmpty
         imageStackView.isHidden = true

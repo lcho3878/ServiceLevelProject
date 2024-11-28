@@ -72,7 +72,7 @@ final class RealmRepository {
     func updateLeaveDate(_ id: String) {
         if let container = realm.object(ofType: ChattingContainerRealm.self, forPrimaryKey: id) {
             try! realm.write {
-                container.leaveDate = "\(Date())"
+                container.leaveDate = Date().asISOSTring()
                 realm.add(container, update: .modified)
             }
         }

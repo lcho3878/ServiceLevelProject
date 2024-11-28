@@ -174,8 +174,7 @@ extension ChattingViewController {
         
         button.rx.tap
             .bind(with: self) { owner, _ in
-                let vc = TabbarViewController()
-                owner.changeRootViewController(rootVC: vc)
+                owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
         
