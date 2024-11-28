@@ -65,6 +65,10 @@ final class DMViewModel: ViewModelBindable {
         dmRoomList
             .bind { rooms in
                 dmList = []
+                guard !rooms.isEmpty else {
+                    dmListOutput.onNext(dmList)
+                    return
+                }
                 for room in rooms {
                     APIManager.shared.callRequest(api: DMRouter.chattingList(workspaceID: UserDefaultManager.workspaceID ?? "", roomID: room.roomID, after: room.leaveDate), type: [ChattingModel].self) { result in
                         switch result {
