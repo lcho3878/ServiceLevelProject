@@ -83,6 +83,8 @@
 		54CA54A82CF63BB800A44FD4 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54A72CF63BB800A44FD4 /* RealmRepository.swift */; };
 		54CA54AA2CF717DF00A44FD4 /* ChattingUserRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54A92CF717DF00A44FD4 /* ChattingUserRealmModel.swift */; };
 		54CA54AC2CF717F500A44FD4 /* ChattingContainerRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54AB2CF717F500A44FD4 /* ChattingContainerRealm.swift */; };
+		54CA54AE2CF8922500A44FD4 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54AD2CF8922500A44FD4 /* Date+.swift */; };
+		54CA54B02CF8930400A44FD4 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA54AF2CF8930400A44FD4 /* String+.swift */; };
 		684E653A2CE60FDF006B2F02 /* WorkspaceInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */; };
 		684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */; };
 		684E653E2CE62E66006B2F02 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684E653D2CE62E66006B2F02 /* LoginViewModel.swift */; };
@@ -256,6 +258,8 @@
 		54CA54A72CF63BB800A44FD4 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		54CA54A92CF717DF00A44FD4 /* ChattingUserRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingUserRealmModel.swift; sourceTree = "<group>"; };
 		54CA54AB2CF717F500A44FD4 /* ChattingContainerRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingContainerRealm.swift; sourceTree = "<group>"; };
+		54CA54AD2CF8922500A44FD4 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		54CA54AF2CF8930400A44FD4 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		684E65392CE60FDF006B2F02 /* WorkspaceInitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialViewController.swift; sourceTree = "<group>"; };
 		684E653B2CE61997006B2F02 /* WorkspaceInitailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitailView.swift; sourceTree = "<group>"; };
 		684E653D2CE62E66006B2F02 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -723,6 +727,8 @@
 				54A53FCA2CD609B800313E17 /* UITextField+.swift */,
 				68DD920B2CF38E1000A8A466 /* UIImage+.swift */,
 				545ED31B2CF6013D0026F194 /* Reactive.swift */,
+				54CA54AD2CF8922500A44FD4 /* Date+.swift */,
+				54CA54AF2CF8930400A44FD4 /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1070,6 +1076,7 @@
 				6876058B2CDA33D8008167B0 /* ChangeAdminView.swift in Sources */,
 				68DD920E2CF453D000A8A466 /* SettingViewModel.swift in Sources */,
 				68DD92122CF455C500A8A466 /* SettingCell.swift in Sources */,
+				54CA54B02CF8930400A44FD4 /* String+.swift in Sources */,
 				5465898E2CCE4FC500736BA9 /* AuthorizationViewController.swift in Sources */,
 				6876053C2CCE58B1008167B0 /* Key.swift in Sources */,
 				541DC7122CDDDEAB0051E898 /* PaddingLabel.swift in Sources */,
@@ -1134,6 +1141,7 @@
 				541DC7232CE0F57D0051E898 /* EditChannelView.swift in Sources */,
 				684E653C2CE61997006B2F02 /* WorkspaceInitailView.swift in Sources */,
 				687605562CCE6991008167B0 /* UIView+.swift in Sources */,
+				54CA54AE2CF8922500A44FD4 /* Date+.swift in Sources */,
 				687605672CD0EE4D008167B0 /* WorkspaceViewModel.swift in Sources */,
 				541DC7182CDE389D0051E898 /* SettingChannelView.swift in Sources */,
 				54A53FCB2CD609B800313E17 /* UITextField+.swift in Sources */,
